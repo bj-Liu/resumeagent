@@ -1,0 +1,19 @@
+web_type : "firefox" # "chrome" or "firefox" or "edge"
+LLM_TYPE : 'qwen' #openai , "qwen" 
+
+# LLM settings
+# openai settings
+is_azure : True
+AZURE_OPENAI_ENDPOINT : 
+AZURE_OPENAI_KEY : 
+AZURE_OPENAI_API_VERSION : 
+
+OPENAI_API_KEY : 
+OPENAI_PROXY_URL : 
+OPENAI_BASE_URL : 
+
+# qwen settings
+DASHSCOPE_API_KEY : 
+
+
+

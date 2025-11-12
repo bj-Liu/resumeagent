@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>
+   张三 - 技能展示
+  </title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@latest/dist/tailwind.min.css" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+  <style>
+   @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap');
+    body {
+      font-family: 'Noto Sans SC', sans-serif;
+      background: linear-gradient(135deg, #f9fafb 0%, #eef2ff 100%);
+    }
+    .tag-cloud span {
+      transition: all 0.3s ease;
+      display: inline-block;
+      cursor: pointer;
+    }
+    .tag-cloud span:hover {
+      transform: scale(1.1);
+      text-shadow: 0 0 8px rgba(99, 102, 241, 0.5);
+    }
+    .skill-tag {
+      transition: all 0.2s ease;
+    }
+    .skill-tag:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .highlighted {
+      background-color: #dbeafe !important;
+      border-color: #3b82f6 !important;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3) !important;
+    }
+    .fade-in {
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    /* 精确指定雅思徽章颜色 */
+    .ielts-badge {
+      background-color: #4CAF50 !important;
+    }
+  </style>
+ </head>
+ <body class="text-gray-800">
+  <!-- 导航栏 -->
+  <nav class="bg-white shadow-sm py-4 px-6 flex justify-between items-center sticky top-0 z-50">
+   <h1 class="text-xl font-bold text-indigo-700">
+    张三 · 技能体系
+   </h1>
+   <a class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition duration-200 flex items-center gap-2" href="index.html">
+    <i class="fas fa-home">
+    </i>
+    返回主页
+   </a>
+  </nav>
+  <!-- 主内容区 -->
+  <main class="max-w-6xl mx-auto px-4 py-10 space-y-12">
+   <!-- 搜索栏 -->
+   <div class="bg-white p-6 rounded-xl shadow-md">
+    <div class="relative">
+     <input class="w-full p-4 pl-12 pr-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition" id="searchInput" placeholder="🔍 输入关键词搜索技能（如：多模态、LLM、CV...）" type="text"/>
+     <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400">
+     </i>
+    </div>
+   </div>
+   <!-- 语言能力区块 -->
+   <section class="bg-white p-8 rounded-xl shadow-md fade-in">
+    <div class="flex items-center gap-3 mb-6">
+     <i class="fas fa-language text-indigo-600 text-2xl">
+     </i>
+     <h2 class="text-2xl font-bold text-gray-800">
+      语言能力
+     </h2>
+    </div>
+    <div class="flex flex-wrap gap-4" id="languageSkills">
+     <div class="px-5 py-3 bg-blue-50 rounded-lg border border-blue-200 skill-tag">
+      <span class="font-medium">
+       中文（母语）
+      </span>
+     </div>
+     <div class="px-5 py-3 bg-blue-50 rounded-lg border border-blue-200 skill-tag">
+      <span class="font-medium">
+       英语
+      </span>
+     </div>
+     <div class="px-5 py-3 ielts-badge text-white font-bold rounded-lg shadow-md flex items-center gap-2 skill-tag">
+      <i class="fas fa-certificate">
+      </i>
+      IELTS 7.5
+     </div>
+    </div>
+   </section>
+   <!-- 技术栈区块 -->
+   <section class="bg-white p-8 rounded-xl shadow-md fade-in">
+    <div class="flex items-center gap-3 mb-6">
+     <i class="fas fa-code text-indigo-600 text-2xl">
+     </i>
+     <h2 class="text-2xl font-bold text-gray-800">
+      技术栈
+     </h2>
+    </div>
+    <div class="tag-cloud flex flex-wrap gap-3 p-4 bg-gray-50 rounded-lg min-h-[150px]" id="techStackCloud">
+     <!-- 动态标签云将由JS填充 -->
+    </div>
+   </section>
+   <!-- 研究领域区块 -->
+   <section class="bg-white p-8 rounded-xl shadow-md fade-in">
+    <div class="flex items-center gap-3 mb-6">
+     <i class="fas fa-flask text-indigo-600 text-2xl">
+     </i>
+     <h2 class="text-2xl font-bold text-gray-800">
+      研究领域
+     </h2>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="researchAreas">
+     <!-- 研究领域卡片将由JS填充 -->
+    </div>
+   </section>
+   <!-- 关联项目/论文弹出面板 -->
+   <div class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 p-4" id="relatedPanel">
+    <div class="bg-white rounded-xl max-w-3xl w-full max-h-[80vh] overflow-y-auto shadow-2xl p-6 relative">
+     <button class="absolute top-4 right-4 text-gray-500 hover:text-gray-800" id="closePanel">
+      <i class="fas fa-times text-xl">
+      </i>
+     </button>
+     <h3 class="text-2xl font-bold mb-4 text-indigo-700" id="panelTitle">
+     </h3>
+     <div class="space-y-4" id="panelContent">
+     </div>
+    </div>
+   </div>
+  </main>
+  <script>
+   // 技能数据结构
+    const skillsData = {
+      techStack: [
+        { name: "Python", size: "text-xl", weight: "font-semibold", related: [] },
+        { name: "PyTorch", size: "text-lg", weight: "font-medium", related: [] },
+        { name: "多模态", size: "text-2xl", weight: "font-bold", related: ["多模态大模型架构设计"] },
+        { name: "LLaMA", size: "text-xl", weight: "font-semibold", related: ["LLM指令微调"] },
+        { name: "BLIP-2", size: "text-lg", weight: "font-medium", related: ["跨模态对齐"] },
+        { name: "LLaVA", size: "text-lg", weight: "font-medium", related: ["多模态大模型"] },
+        { name: "ChatGLM", size: "text-lg", weight: "font-medium", related: ["知识增强"] },
+        { name: "元技能解耦", size: "text-xl", weight: "font-semibold", related: ["Embodied AI中的元技能解耦"] },
+        { name: "Transformer", size: "text-lg", weight: "font-medium", related: [] },
+        { name: "CUDA", size: "text-base", weight: "font-normal", related: ["计算机视觉任务优化"] },
+        { name: "OpenCV", size: "text-base", weight: "font-normal", related: ["计算机视觉任务优化"] },
+        { name: "SHAP", size: "text-base", weight: "font-normal", related: ["网络可解释性方法"] }
+      ],
+      researchAreas: [
+        {
+          title: "多模态大模型",
+          icon: "💻",
+          description: "聚焦于视觉-语言联合建模，探索高效对齐机制与知识注入策略。",
+          papers: [
+            "Zhang et al., 'MM-Align: Efficient Cross-modal Alignment via Contrastive Learning', CVPR 2023.",
+            "Zhang et al., 'Knowledge-Augmented Multimodal LLMs for Visual Reasoning', NeurIPS 2023."
+          ],
+          projects: ["华为诺亚方舟实验室：多模态对齐算法研发"]
+        },
+        {
+          title: "Embodied AI",
+          icon: "🤖",
+          description: "研究智能体在物理环境中的感知-决策-行动闭环，重点解决元技能解耦问题。",
+          papers: [
+            "Zhang et al., 'Meta-Skill Disentanglement in Embodied Agents', ICRA 2024.",
+            "Zhang et al., 'Hierarchical Policy Learning for Long-horizon Tasks', CoRL 2023.",
+            "Zhang et al., 'Cross-Environment Generalization via Skill Abstraction', ICLR 2024."
+          ],
+          projects: ["ETH Zurich 实习：具身智能体仿真平台开发"]
+        },
+        {
+          title: "计算机视觉",
+          icon: "💻",
+          description: "致力于目标检测、分割与三维重建的精度与效率优化。",
+          papers: [
+            "Zhang et al., 'EfficientDet++: Adaptive Feature Fusion for Real-time Detection', ECCV 2022."
+          ],
+          projects: ["商汤科技实习：工业级视觉检测系统优化"]
+        },
+        {
+          title: "网络可解释性",
+          icon: "🔬",
+          description: "开发新型归因方法，提升深度模型决策透明度与可信度。",
+          papers: [
+            "Zhang et al., 'Causal Attribution for Deep Neural Networks', AAAI 2023."
+          ],
+          projects: ["学术项目：基于SHAP的医疗影像诊断解释系统"]
+        }
+      ]
+    };
+
+    // 渲染技术栈标签云
+    function renderTechStack() {
+      const container = document.getElementById('techStackCloud');
+      container.innerHTML = '';
+      skillsData.techStack.forEach(skill => {
+        const tag = document.createElement('span');
+        tag.className = `${skill.size} ${skill.weight} skill-tag px-3 py-2 bg-indigo-50 text-indigo-700 rounded-full border border-indigo-200 hover:bg-indigo-100 cursor-pointer`;
+        tag.textContent = skill.name;
+        tag.dataset.related = JSON.stringify(skill.related);
+        tag.dataset.skillName = skill.name;
+        tag.addEventListener('click', (e) => {
+          // 移除之前所有高亮
+          document.querySelectorAll('.skill-tag').forEach(el => el.classList.remove('highlighted'));
+          // 高亮当前点击的标签
+          e.target.classList.add('highlighted');
+          showRelatedContent(skill.name, skill.related);
+        });
+        container.appendChild(tag);
+      });
+    }
+
+    // 渲染研究领域
+    function renderResearchAreas() {
+      const container = document.getElementById('researchAreas');
+      container.innerHTML = '';
+      skillsData.researchAreas.forEach((area, index) => {
+        const card = document.createElement('div');
+        card.className = 'p-6 border border-gray-200 rounded-xl hover:shadow-md transition';
+        card.innerHTML = `
+          <div class="flex items-start gap-4">
+            <span class="text-3xl">${area.icon}</span>
+            <div>
+              <h3 class="text-xl font-bold text-gray-800 mb-2">${area.title}</h3>
+              <p class="text-gray-600 mb-4">${area.description}</p>
+              <button class="view-details-btn text-indigo-600 font-medium hover:underline flex items-center gap-1" data-index="${index}">
+                查看关联成果 <i class="fas fa-arrow-right text-sm"></i>
+              </button>
+            </div>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+
+      // 为所有查看按钮添加事件监听
+      document.querySelectorAll('.view-details-btn').forEach(button => {
+        button.addEventListener('click', (e) => {
+          const index = e.currentTarget.dataset.index;
+          showAreaDetailsByIndex(parseInt(index));
+        });
+      });
+    }
+
+    // 显示关联内容（通用）
+    function showRelatedContent(title, relatedItems) {
+      if (relatedItems.length === 0) return;
+
+      const panel = document.getElementById('relatedPanel');
+      const panelTitle = document.getElementById('panelTitle');
+      const panelContent = document.getElementById('panelContent');
+
+      panelTitle.textContent = `关联内容：${title}`;
+      panelContent.innerHTML = '';
+
+      const ul = document.createElement('ul');
+      ul.className = 'list-disc pl-5 space-y-2';
+      relatedItems.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = item;
+        ul.appendChild(li);
+      });
+      panelContent.appendChild(ul);
+
+      panel.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    // 通过索引显示研究领域详情
+    function showAreaDetailsByIndex(index) {
+      const area = skillsData.researchAreas[index];
+      if (!area) return;
+
+      const panel = document.getElementById('relatedPanel');
+      const panelTitle = document.getElementById('panelTitle');
+      const panelContent = document.getElementById('panelContent');
+
+      panelTitle.textContent = area.title;
+      panelContent.innerHTML = `
+        <p class="mb-4">${area.description}</p>
+        <h4 class="font-bold text-lg mb-2 text-gray-700">相关论文：</h4>
+        <ul class="list-disc pl-5 mb-4 space-y-1">
+          ${area.papers.map(p => `<li>${p}</li>`).join('')}
+        </ul>
+        <h4 class="font-bold text-lg mb-2 text-gray-700">相关项目：</h4>
+        <ul class="list-disc pl-5 space-y-1">
+          ${area.projects.map(p => `<li>${p}</li>`).join('')}
+        </ul>
+      `;
+
+      panel.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    // 搜索过滤：仅过滤语言和技术栈中的技能标签
+    document.getElementById('searchInput').addEventListener('input', function(e) {
+      const query = e.target.value.toLowerCase();
+      // 仅选择语言区块和技术栈区块中的技能标签
+      const languageTags = document.querySelectorAll('#languageSkills .skill-tag');
+      const techTags = document.querySelectorAll('#techStackCloud .skill-tag');
+      const allTags = [...languageTags, ...techTags];
+      
+      allTags.forEach(tag => {
+        const text = tag.textContent.toLowerCase();
+        if (text.includes(query)) {
+          tag.classList.remove('opacity-40', 'pointer-events-none');
+          tag.classList.add('opacity-100');
+        } else {
+          tag.classList.remove('opacity-100');
+          tag.classList.add('opacity-40', 'pointer-events-none');
+        }
+      });
+    });
+
+    // 关闭弹出面板
+    document.getElementById('closePanel').addEventListener('click', () => {
+      document.getElementById('relatedPanel').classList.add('hidden');
+      document.body.style.overflow = '';
+      // 移除所有高亮
+      document.querySelectorAll('.skill-tag').forEach(el => el.classList.remove('highlighted'));
+    });
+
+    // 点击遮罩层关闭
+    document.getElementById('relatedPanel').addEventListener('click', (e) => {
+      if (e.target.id === 'relatedPanel') {
+        document.getElementById('closePanel').click();
+      }
+    });
+
+    // 初始化
+    document.addEventListener('DOMContentLoaded', () => {
+      renderTechStack();
+      renderResearchAreas();
+    });
+  </script>
+ </body>
+</html>

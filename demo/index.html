@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="zh-CN">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>
+   张三 - 个人主页
+  </title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@latest/dist/tailwind.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+  <style>
+   body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background-color: #ffffff;
+    }
+    .dark body {
+      background-color: #0d1b2a;
+    }
+    .fade-in-up {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+    .fade-in-up.appear {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    /* 轮播淡入淡出 */
+    .carousel-item {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+      pointer-events: none;
+    }
+    .carousel-item.active {
+      opacity: 1;
+      position: relative;
+      pointer-events: auto;
+    }
+    .tag-cloud span {
+      transition: transform 0.2s, color 0.2s, box-shadow 0.2s;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    .tag-cloud span:hover {
+      transform: scale(1.08);
+      z-index: 10;
+    }
+    /* 按钮微动效 */
+    .cta-button {
+      transition: transform 0.2s, background-color 0.2s;
+    }
+    .cta-button:hover {
+      transform: translateY(-2px);
+    }
+  </style>
+ </head>
+ <body class="text-gray-800 dark:text-gray-100 transition-colors duration-300">
+  <!-- 主题切换按钮 -->
+  <button class="fixed top-4 right-4 z-50 p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 shadow-md hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors" id="theme-toggle">
+   <svg class="h-5 w-5" fill="none" id="theme-icon" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+    </path>
+   </svg>
+  </button>
+  <!-- 导航栏 -->
+  <nav class="fixed top-0 left-0 w-full z-40 bg-white/80 dark:bg-[#0d1b2a]/90 backdrop-blur-sm border-b border-gray-200 dark:border-gray-800">
+   <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+    <div class="text-lg font-bold text-blue-900 dark:text-blue-300">
+     张三
+    </div>
+    <div class="hidden md:flex space-x-6">
+     <a class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors" href="#about">
+      关于
+     </a>
+     <a class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors" href="#research">
+      研究方向
+     </a>
+     <a class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors" href="#publications">
+      学术成果
+     </a>
+     <a class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors" href="#projects">
+      项目经历
+     </a>
+     <a class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors" href="#skills">
+      专业技能
+     </a>
+     <a class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors" href="#contact">
+      联系
+     </a>
+    </div>
+    <div class="md:hidden">
+     <button class="text-gray-800 dark:text-gray-200 focus:outline-none" id="mobile-menu-button">
+      <svg class="h-6 w-6" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+       <path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+       </path>
+      </svg>
+     </button>
+    </div>
+   </div>
+   <!-- 移动端菜单 -->
+   <div class="hidden md:hidden bg-white dark:bg-[#0d1b2a] border-t border-gray-200 dark:border-gray-800" id="mobile-menu">
+    <div class="container mx-auto px-4 py-3 flex flex-col space-y-3">
+     <a class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors mobile-link" href="#about">
+      关于
+     </a>
+     <a class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors mobile-link" href="#research">
+      研究方向
+     </a>
+     <a class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors mobile-link" href="#publications">
+      学术成果
+     </a>
+     <a class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors mobile-link" href="#projects">
+      项目经历
+     </a>
+     <a class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors mobile-link" href="#skills">
+      专业技能
+     </a>
+     <a class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors mobile-link" href="#contact">
+      联系
+     </a>
+    </div>
+   </div>
+  </nav>
+  <!-- 主内容区 -->
+  <main class="pt-20 pb-12">
+   <!-- 关于区域 -->
+   <section class="container mx-auto px-4 py-12 fade-in-up" id="about">
+    <div class="text-center max-w-3xl mx-auto">
+     <h1 class="text-4xl md:text-5xl font-bold mb-4 text-gray-900 dark:text-white">
+      张三
+     </h1>
+     <p class="text-xl text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+      清华大学计算机系硕士
+     </p>
+     <a class="inline-block text-blue-600 dark:text-blue-400 hover:underline text-lg" href="mailto:zhangsan@tsinghua.edu.com">
+      zhangsan@tsinghua.edu.com
+     </a>
+    </div>
+   </section>
+   <!-- 研究方向 -->
+   <section class="container mx-auto px-4 py-12 fade-in-up" id="research">
+    <h2 class="text-3xl font-bold text-center mb-8 text-gray-900 dark:text-white">
+     研究方向
+    </h2>
+    <div class="tag-cloud flex flex-wrap justify-center gap-4 max-w-4xl mx-auto">
+     <span class="px-5 py-2.5 bg-blue-100 dark:bg-blue-900/60 text-blue-800 dark:text-blue-200 rounded-full text-xl font-semibold">
+      多模态大模型
+     </span>
+     <span class="px-4 py-2 bg-purple-100 dark:bg-purple-900/60 text-purple-800 dark:text-purple-200 rounded-full text-lg font-medium">
+      Embodied AI
+     </span>
+     <span class="px-4 py-2 bg-green-100 dark:bg-green-900/60 text-green-800 dark:text-green-200 rounded-full text-lg font-medium">
+      计算机视觉
+     </span>
+     <span class="px-4 py-2 bg-amber-100 dark:bg-amber-900/60 text-amber-800 dark:text-amber-200 rounded-full text-base font-medium">
+      网络可解释性
+     </span>
+    </div>
+   </section>
+   <!-- 预览区域 -->
+   <section class="container mx-auto px-4 py-12">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+     <!-- 学术成果 -->
+     <div class="bg-gray-50 dark:bg-gray-800/40 p-6 rounded-xl shadow-sm fade-in-up" id="publications">
+      <h3 class="text-2xl font-bold mb-4 text-gray-900 dark:text-white">
+       学术成果
+      </h3>
+      <div class="mb-4">
+       <h4 class="font-semibold text-lg text-blue-700 dark:text-blue-400">
+        CVPR 2024
+       </h4>
+       <p class="mt-2 text-gray-700 dark:text-gray-300 leading-relaxed">
+        提出一种新型元能力解耦框架，显著提升多模态模型在零样本任务中的泛化能力。
+       </p>
+       <span class="inline-block mt-2 px-2.5 py-1 bg-red-100 dark:bg-red-900/50 text-red-800 dark:text-red-200 text-sm rounded font-medium">
+        元能力解耦
+       </span>
+      </div>
+      <a class="cta-button inline-block mt-4 px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-lg transition-all" href="publications.html">
+       查看更多
+      </a>
+     </div>
+     <!-- 项目经历 -->
+     <div class="bg-gray-50 dark:bg-gray-800/40 p-6 rounded-xl shadow-sm fade-in-up" id="projects">
+      <h3 class="text-2xl font-bold mb-4 text-gray-900 dark:text-white">
+       项目经历
+      </h3>
+      <div class="relative h-32" id="project-carousel">
+       <div class="carousel-item active">
+        <h4 class="font-semibold text-blue-700 dark:text-blue-400">
+         字节跳动
+        </h4>
+        <p class="mt-2 text-gray-700 dark:text-gray-300 leading-relaxed">
+         设计多任务指令增强机制，提升智能体在复杂场景下的决策一致性。
+        </p>
+       </div>
+       <div class="carousel-item">
+        <h4 class="font-semibold text-blue-700 dark:text-blue-400">
+         腾讯
+        </h4>
+        <p class="mt-2 text-gray-700 dark:text-gray-300 leading-relaxed">
+         构建多模态数据引擎，支持亿级图文对的高效检索与对齐。
+        </p>
+       </div>
+       <div class="carousel-item">
+        <h4 class="font-semibold text-blue-700 dark:text-blue-400">
+         华为
+        </h4>
+        <p class="mt-2 text-gray-700 dark:text-gray-300 leading-relaxed">
+         开发知识注入系统，实现大模型推理过程中的动态外部知识融合。
+        </p>
+       </div>
+       <div class="flex justify-center mt-4 space-x-2">
+        <button aria-label="转到字节跳动项目" class="carousel-control w-3 h-3 rounded-full bg-gray-300 dark:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500" data-index="0">
+        </button>
+        <button aria-label="转到腾讯项目" class="carousel-control w-3 h-3 rounded-full bg-gray-300 dark:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500" data-index="1">
+        </button>
+        <button aria-label="转到华为项目" class="carousel-control w-3 h-3 rounded-full bg-gray-300 dark:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500" data-index="2">
+        </button>
+       </div>
+      </div>
+      <a class="cta-button inline-block mt-6 px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-lg transition-all" href="projects.html">
+       查看更多
+      </a>
+     </div>
+     <!-- 专业技能 -->
+     <div class="bg-gray-50 dark:bg-gray-800/40 p-6 rounded-xl shadow-sm fade-in-up" id="skills">
+      <h3 class="text-2xl font-bold mb-4 text-gray-900 dark:text-white">
+       专业技能
+      </h3>
+      <div class="space-y-3">
+       <div>
+        <span class="font-medium text-gray-900 dark:text-gray-200">
+         语言能力：
+        </span>
+        <span class="inline-block px-2.5 py-1 bg-teal-100 dark:bg-teal-900/50 text-teal-800 dark:text-teal-200 rounded font-medium">
+         雅思7.5
+        </span>
+       </div>
+       <div>
+        <span class="font-medium text-gray-900 dark:text-gray-200">
+         技术栈：
+        </span>
+        <div class="mt-2 flex flex-wrap gap-2">
+         <span class="px-2.5 py-1 bg-indigo-100 dark:bg-indigo-900/50 text-indigo-800 dark:text-indigo-200 rounded text-sm font-medium">
+          PyTorch
+         </span>
+         <span class="px-2.5 py-1 bg-indigo-100 dark:bg-indigo-900/50 text-indigo-800 dark:text-indigo-200 rounded text-sm font-medium">
+          Transformer
+         </span>
+         <span class="px-2.5 py-1 bg-indigo-100 dark:bg-indigo-900/50 text-indigo-800 dark:text-indigo-200 rounded text-sm font-medium">
+          CLIP
+         </span>
+         <span class="px-2.5 py-1 bg-indigo-100 dark:bg-indigo-900/50 text-indigo-800 dark:text-indigo-200 rounded text-sm font-medium">
+          LangChain
+         </span>
+        </div>
+       </div>
+      </div>
+      <a class="cta-button inline-block mt-6 px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-lg transition-all" href="skills.html">
+       查看更多
+      </a>
+     </div>
+    </div>
+   </section>
+   <!-- 联系方式 -->
+   <section class="container mx-auto px-4 py-12 fade-in-up text-center" id="contact">
+    <h2 class="text-3xl font-bold mb-6 text-gray-900 dark:text-white">
+     联系我
+    </h2>
+    <a class="cta-button inline-block px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900 text-white rounded-lg text-lg font-medium transition-all" href="mailto:zhangsan@tsinghua.edu.com">
+     发送邮件
+    </a>
+   </section>
+  </main>
+  <script>
+   // 主题切换
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeIcon = document.getElementById('theme-icon');
+    const htmlEl = document.documentElement;
+
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    if (savedTheme === 'dark') {
+      htmlEl.classList.add('dark');
+      themeIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />';
+    }
+
+    themeToggle.addEventListener('click', () => {
+      htmlEl.classList.toggle('dark');
+      const isDark = htmlEl.classList.contains('dark');
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      if (isDark) {
+        themeIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />';
+      } else {
+        themeIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />';
+      }
+    });
+
+    // 移动端菜单
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobileLinks = document.querySelectorAll('.mobile-link');
+
+    mobileMenuButton.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+      });
+    });
+
+    // 轮播图逻辑
+    let currentProjectIndex = 0;
+    const projectItems = document.querySelectorAll('#project-carousel .carousel-item');
+    const projectControls = document.querySelectorAll('.carousel-control');
+    let carouselInterval;
+    const carouselContainer = document.getElementById('project-carousel');
+
+    function showProject(index) {
+      projectItems.forEach((item, i) => {
+        item.classList.toggle('active', i === index);
+      });
+      projectControls.forEach((btn, i) => {
+        if (i === index) {
+          btn.classList.replace('bg-gray-300', 'bg-blue-500');
+          btn.classList.replace('dark:bg-gray-600', 'dark:bg-blue-500');
+        } else {
+          btn.classList.replace('bg-blue-500', 'bg-gray-300');
+          btn.classList.replace('dark:bg-blue-500', 'dark:bg-gray-600');
+        }
+      });
+      currentProjectIndex = index;
+    }
+
+    projectControls.forEach((btn, index) => {
+      btn.addEventListener('click', () => {
+        clearInterval(carouselInterval);
+        showProject(index);
+        startCarousel();
+      });
+    });
+
+    function nextProject() {
+      const nextIndex = (currentProjectIndex + 1) % projectItems.length;
+      showProject(nextIndex);
+    }
+
+    function startCarousel() {
+      carouselInterval = setInterval(nextProject, 8000);
+    }
+
+    // 暂停/恢复轮播
+    carouselContainer.addEventListener('mouseenter', () => {
+      clearInterval(carouselInterval);
+    });
+    carouselContainer.addEventListener('mouseleave', () => {
+      startCarousel();
+    });
+
+    startCarousel();
+
+    // 页面加载动画
+    document.addEventListener('DOMContentLoaded', () => {
+      const fadeElements = document.querySelectorAll('.fade-in-up');
+      fadeElements.forEach((el, index) => {
+        setTimeout(() => {
+          el.classList.add('appear');
+        }, 150 * index);
+      });
+    });
+  </script>
+ </body>
+</html>

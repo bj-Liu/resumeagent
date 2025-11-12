@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>
+   项目经历 - 个人主页
+  </title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@latest/dist/tailwind.min.css" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+  <style>
+   @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap');
+    body {
+      font-family: 'Noto Sans SC', sans-serif;
+      background: linear-gradient(135deg, #f9fafb 0%, #eef2ff 100%);
+      color: #1f2937;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, #6366f1, #8b5cf6);
+      box-shadow: 0 0 10px rgba(99, 102, 241, 0.3);
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 0;
+    }
+    @media (max-width: 768px) {
+      .timeline::before {
+        left: 24px;
+      }
+    }
+    .project-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+    }
+    .project-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+    .tech-stack {
+      font-family: 'Courier New', monospace;
+      background: #f5f5f5;
+      padding: 8px;
+      border-radius: 4px;
+      font-size: 0.875rem;
+      margin-top: 0.5rem;
+    }
+    .print-only {
+      display: none;
+    }
+    @media print {
+      .no-print {
+        display: none !important;
+      }
+      .print-only {
+        display: block !important;
+        text-align: center;
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 20px;
+        color: black;
+      }
+      body {
+        background: white;
+        color: black;
+      }
+      .project-card:hover {
+        transform: none;
+        box-shadow: none;
+      }
+      .timeline::before {
+        background: #ccc;
+        box-shadow: none;
+      }
+      .divider {
+        display: none;
+      }
+    }
+    .fade-in {
+      animation: fadeIn 0.6s ease-out forwards;
+      opacity: 0;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    /* Custom tooltip */
+    .tooltip-container {
+      position: relative;
+      display: inline-block;
+    }
+    .tooltip-text {
+      visibility: hidden;
+      width: 280px;
+      background-color: #1f2937;
+      color: #fff;
+      text-align: center;
+      border-radius: 6px;
+      padding: 8px 12px;
+      position: absolute;
+      z-index: 10;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0;
+      transition: opacity 0.2s, visibility 0.2s;
+      font-size: 0.85rem;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+    }
+    .tooltip-container:hover .tooltip-text {
+      visibility: visible;
+      opacity: 1;
+    }
+    .tooltip-arrow {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      margin-left: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: #1f2937 transparent transparent transparent;
+    }
+    .copy-btn {
+      transition: all 0.2s ease;
+    }
+    .copy-btn.copied {
+      transform: scale(1.05);
+      background-color: #dcfce7 !important;
+      color: #166534 !important;
+    }
+  </style>
+ </head>
+ <body class="min-h-screen py-12 px-4 sm:px-6 lg:px-8">
+  <!-- 打印专用标题 -->
+  <div class="print-only">
+   项目经历 - 简历版
+  </div>
+  <!-- 导航按钮 -->
+  <div class="no-print max-w-4xl mx-auto mb-10 flex flex-wrap justify-center gap-3">
+   <a class="px-5 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition-colors shadow-md" href="index.html">
+    返回主页
+   </a>
+   <button class="px-5 py-2 bg-[#FE2C55] text-white rounded-lg hover:bg-[#e0254a] transition-colors shadow-md" onclick="filterByCompany('ByteDance')">
+    仅显示字节跳动
+   </button>
+   <button class="px-5 py-2 bg-[#00B050] text-white rounded-lg hover:bg-[#009a45] transition-colors shadow-md" onclick="filterByCompany('Tencent')">
+    仅显示腾讯
+   </button>
+   <button class="px-5 py-2 bg-[#FF6F00] text-white rounded-lg hover:bg-[#e66300] transition-colors shadow-md" onclick="filterByCompany('Huawei')">
+    仅显示华为
+   </button>
+   <button class="px-5 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors shadow-md" onclick="filterByCompany('All')">
+    显示全部
+   </button>
+  </div>
+  <!-- 时间轴容器 -->
+  <div class="timeline relative max-w-4xl mx-auto">
+   <!-- 字节跳动 -->
+   <div class="project-item mb-12 fade-in" data-company="ByteDance">
+    <div class="flex flex-col md:flex-row items-start md:items-center relative z-10">
+     <div class="md:absolute md:left-0 md:transform md:-translate-x-full md:ml-0 mb-4 md:mb-0 w-full md:w-auto text-right pr-4 md:pr-0">
+      <span class="inline-block px-3 py-1 bg-indigo-100 text-indigo-800 rounded-full text-sm font-medium">
+       2023.06 – 2024.03
+      </span>
+     </div>
+     <div class="project-card bg-white rounded-xl p-6 shadow-lg w-full md:ml-16 md:w-[calc(100%-120px)]">
+      <div class="flex flex-wrap items-center gap-3 mb-4">
+       <div class="tooltip-container">
+        <span class="px-3 py-1 rounded-full text-white text-sm font-medium" style="background-color: #FE2C55;">
+         字节跳动 · AI Lab
+        </span>
+        <div class="tooltip-text">
+         字节跳动 AI实验室：聚焦大模型基础研究与应用落地
+         <div class="tooltip-arrow">
+         </div>
+        </div>
+       </div>
+       <span class="text-gray-500 text-sm">
+        多模态大模型研发工程师
+       </span>
+      </div>
+      <h3 class="text-xl font-bold text-gray-900 mb-4">
+       基于多模态思维链的视觉问答系统优化
+      </h3>
+      <div class="space-y-4">
+       <div>
+        <div class="flex items-start gap-2">
+         <i class="fas fa-exclamation-triangle text-yellow-500 mt-1 text-base">
+         </i>
+         <div>
+          <h4 class="font-semibold text-gray-800">
+           挑战
+          </h4>
+          <p class="mt-1 text-gray-700">
+           现有VQA模型在复杂推理场景下准确率不足，缺乏对图像与文本语义的深度对齐能力。
+          </p>
+         </div>
+        </div>
+       </div>
+       <div>
+        <div class="flex items-start gap-2">
+         <i class="fas fa-tools text-blue-500 mt-1 text-base">
+         </i>
+         <div>
+          <h4 class="font-semibold text-gray-800">
+           方法
+          </h4>
+          <p class="mt-1 text-gray-700">
+           设计
+           <span class="font-semibold text-indigo-600">
+            多模态思维链（Multimodal Chain-of-Thought）
+           </span>
+           框架，结合
+           <span class="font-semibold text-indigo-600">
+            LLaMA
+           </span>
+           语言模型与
+           <span class="font-semibold text-indigo-600">
+            BLIP-2
+           </span>
+           视觉编码器，引入
+           <span class="font-semibold text-indigo-600">
+            知识图谱对齐
+           </span>
+           机制增强语义理解。
+          </p>
+          <div class="tech-stack mt-2">
+           LLaMA · BLIP-2 · PyTorch · HuggingFace Transformers · Knowledge Graph Alignment
+          </div>
+         </div>
+        </div>
+       </div>
+       <div>
+        <div class="flex items-start gap-2">
+         <i class="fas fa-check-circle text-green-500 mt-1 text-base">
+         </i>
+         <div class="flex-1">
+          <h4 class="font-semibold text-gray-800">
+           成果
+          </h4>
+          <p class="mt-1 text-gray-700">
+           在ScienceQA数据集上准确率提升
+           <span class="font-bold text-green-600">
+            12.3%
+           </span>
+           ，推理速度优化
+           <span class="font-bold text-green-600">
+            35%
+           </span>
+           ；相关技术已集成至公司内部AI平台。
+          </p>
+          <div class="mt-3 flex justify-end">
+           <button class="copy-btn px-3 py-1.5 bg-green-100 text-green-700 text-sm rounded-md hover:bg-green-200 transition-colors flex items-center gap-1" onclick="copySummary(this)">
+            <i class="fas fa-copy">
+            </i>
+            复制成果摘要
+           </button>
+          </div>
+          <textarea class="hidden">在ScienceQA数据集上准确率提升12.3%，推理速度优化35%；相关技术已集成至公司内部AI平台。</textarea>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+    <div class="divider h-px bg-gray-100 my-6 w-full md:w-[calc(100%-120px)] md:ml-16 no-print">
+    </div>
+   </div>
+   <!-- 腾讯 -->
+   <div class="project-item mb-12 fade-in" data-company="Tencent">
+    <div class="flex flex-col md:flex-row items-start md:items-center relative z-10">
+     <div class="md:absolute md:left-0 md:transform md:-translate-x-full md:ml-0 mb-4 md:mb-0 w-full md:w-auto text-right pr-4 md:pr-0">
+      <span class="inline-block px-3 py-1 bg-indigo-100 text-indigo-800 rounded-full text-sm font-medium">
+       2022.03 – 2023.05
+      </span>
+     </div>
+     <div class="project-card bg-white rounded-xl p-6 shadow-lg w-full md:ml-16 md:w-[calc(100%-120px)]">
+      <div class="flex flex-wrap items-center gap-3 mb-4">
+       <div class="tooltip-container">
+        <span class="px-3 py-1 rounded-full text-white text-sm font-medium" style="background-color: #00B050;">
+         腾讯 · AI Lab
+        </span>
+        <div class="tooltip-text">
+         腾讯 AI Lab：致力于人工智能前沿技术研究与产业应用
+         <div class="tooltip-arrow">
+         </div>
+        </div>
+       </div>
+       <span class="text-gray-500 text-sm">
+        具身智能算法研究员
+       </span>
+      </div>
+      <h3 class="text-xl font-bold text-gray-900 mb-4">
+       面向机器人任务的多模态指令理解系统
+      </h3>
+      <div class="space-y-4">
+       <div>
+        <div class="flex items-start gap-2">
+         <i class="fas fa-exclamation-triangle text-yellow-500 mt-1 text-base">
+         </i>
+         <div>
+          <h4 class="font-semibold text-gray-800">
+           挑战
+          </h4>
+          <p class="mt-1 text-gray-700">
+           机器人难以理解自然语言指令中的空间关系与动作序列，导致任务执行失败率高。
+          </p>
+         </div>
+        </div>
+       </div>
+       <div>
+        <div class="flex items-start gap-2">
+         <i class="fas fa-tools text-blue-500 mt-1 text-base">
+         </i>
+         <div>
+          <h4 class="font-semibold text-gray-800">
+           方法
+          </h4>
+          <p class="mt-1 text-gray-700">
+           构建端到端
+           <span class="font-semibold text-indigo-600">
+            具身智能
+           </span>
+           模型，融合
+           <span class="font-semibold text-indigo-600">
+            LLaVA
+           </span>
+           视觉语言模型与3D场景图，设计
+           <span class="font-semibold text-indigo-600">
+            动作-语言对齐损失函数
+           </span>
+           。
+          </p>
+          <div class="tech-stack mt-2">
+           LLaVA · ROS · 3D Scene Graph · PyTorch3D · NVIDIA Isaac Sim
+          </div>
+         </div>
+        </div>
+       </div>
+       <div>
+        <div class="flex items-start gap-2">
+         <i class="fas fa-check-circle text-green-500 mt-1 text-base">
+         </i>
+         <div class="flex-1">
+          <h4 class="font-semibold text-gray-800">
+           成果
+          </h4>
+          <p class="mt-1 text-gray-700">
+           在ALFRED基准测试中任务成功率提升至
+           <span class="font-bold text-green-600">
+            78.5%
+           </span>
+           （SOTA +9.2%），获腾讯AI Lab年度创新奖。
+          </p>
+          <div class="mt-3 flex justify-end">
+           <button class="copy-btn px-3 py-1.5 bg-green-100 text-green-700 text-sm rounded-md hover:bg-green-200 transition-colors flex items-center gap-1" onclick="copySummary(this)">
+            <i class="fas fa-copy">
+            </i>
+            复制成果摘要
+           </button>
+          </div>
+          <textarea class="hidden">在ALFRED基准测试中任务成功率提升至78.5%（SOTA +9.2%），获腾讯AI Lab年度创新奖。</textarea>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+    <div class="divider h-px bg-gray-100 my-6 w-full md:w-[calc(100%-120px)] md:ml-16 no-print">
+    </div>
+   </div>
+   <!-- 华为 -->
+   <div class="project-item mb-12 fade-in" data-company="Huawei">
+    <div class="flex flex-col md:flex-row items-start md:items-center relative z-10">
+     <div class="md:absolute md:left-0 md:transform md:-translate-x-full md:ml-0 mb-4 md:mb-0 w-full md:w-auto text-right pr-4 md:pr-0">
+      <span class="inline-block px-3 py-1 bg-indigo-100 text-indigo-800 rounded-full text-sm font-medium">
+       2021.07 – 2022.02
+      </span>
+     </div>
+     <div class="project-card bg-white rounded-xl p-6 shadow-lg w-full md:ml-16 md:w-[calc(100%-120px)]">
+      <div class="flex flex-wrap items-center gap-3 mb-4">
+       <div class="tooltip-container">
+        <span class="px-3 py-1 rounded-full text-white text-sm font-medium" style="background-color: #FF6F00;">
+         华为 · 诺亚方舟实验室
+        </span>
+        <div class="tooltip-text">
+         华为诺亚方舟实验室：专注AI基础研究与行业解决方案
+         <div class="tooltip-arrow">
+         </div>
+        </div>
+       </div>
+       <span class="text-gray-500 text-sm">
+        多模态算法实习生
+       </span>
+      </div>
+      <h3 class="text-xl font-bold text-gray-900 mb-4">
+       跨模态检索系统的轻量化部署
+      </h3>
+      <div class="space-y-4">
+       <div>
+        <div class="flex items-start gap-2">
+         <i class="fas fa-exclamation-triangle text-yellow-500 mt-1 text-base">
+         </i>
+         <div>
+          <h4 class="font-semibold text-gray-800">
+           挑战
+          </h4>
+          <p class="mt-1 text-gray-700">
+           现有跨模态模型参数量大、推理延迟高，难以在边缘设备部署。
+          </p>
+         </div>
+        </div>
+       </div>
+       <div>
+        <div class="flex items-start gap-2">
+         <i class="fas fa-tools text-blue-500 mt-1 text-base">
+         </i>
+         <div>
+          <h4 class="font-semibold text-gray-800">
+           方法
+          </h4>
+          <p class="mt-1 text-gray-700">
+           基于
+           <span class="font-semibold text-indigo-600">
+            ChatGLM
+           </span>
+           进行蒸馏压缩，结合
+           <span class="font-semibold text-indigo-600">
+            知识图谱对齐
+           </span>
+           保留语义信息，使用MindSpore Lite实现端侧推理。
+          </p>
+          <div class="tech-stack mt-2">
+           ChatGLM · Knowledge Distillation · MindSpore Lite · ONNX · Huawei Ascend
+          </div>
+         </div>
+        </div>
+       </div>
+       <div>
+        <div class="flex items-start gap-2">
+         <i class="fas fa-check-circle text-green-500 mt-1 text-base">
+         </i>
+         <div class="flex-1">
+          <h4 class="font-semibold text-gray-800">
+           成果
+          </h4>
+          <p class="mt-1 text-gray-700">
+           模型体积压缩至原版
+           <span class="font-bold text-green-600">
+            1/8
+           </span>
+           ，推理速度提升
+           <span class="font-bold text-green-600">
+            5.2倍
+           </span>
+           ，成功部署于华为手机端搜索功能。
+          </p>
+          <div class="mt-3 flex justify-end">
+           <button class="copy-btn px-3 py-1.5 bg-green-100 text-green-700 text-sm rounded-md hover:bg-green-200 transition-colors flex items-center gap-1" onclick="copySummary(this)">
+            <i class="fas fa-copy">
+            </i>
+            复制成果摘要
+           </button>
+          </div>
+          <textarea class="hidden">模型体积压缩至原版1/8，推理速度提升5.2倍，成功部署于华为手机端搜索功能。</textarea>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+  <script>
+   // 过滤功能
+    function filterByCompany(company) {
+      const items = document.querySelectorAll('.project-item');
+      items.forEach(item => {
+        if (company === 'All' || item.dataset.company === company) {
+          item.style.display = 'block';
+          item.classList.remove('fade-in');
+          void item.offsetWidth;
+          item.classList.add('fade-in');
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    }
+
+    // 复制成果摘要
+    function copySummary(button) {
+      const textarea = button.closest('.project-card').querySelector('textarea');
+      const text = textarea.value;
+      
+      navigator.clipboard.writeText(text).then(() => {
+        button.classList.add('copied');
+        button.innerHTML = '<i class="fas fa-check"></i> 已复制！';
+        setTimeout(() => {
+          button.classList.remove('copied');
+          button.innerHTML = '<i class="fas fa-copy"></i> 复制成果摘要';
+        }, 1500);
+      }).catch(err => {
+        console.error('复制失败:', err);
+      });
+    }
+
+    // 初始化：显示全部
+    document.addEventListener('DOMContentLoaded', () => {
+      filterByCompany('All');
+    });
+  </script>
+ </body>
+</html>

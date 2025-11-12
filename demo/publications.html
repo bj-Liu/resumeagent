@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>
+   张三 - 论文发表
+  </title>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+  <style>
+   /* 自定义字体大小：1.4em ≈ 1.125rem (Tailwind text-lg is 1.125rem) */
+    .text-paper-title {
+      font-size: 1.4em;
+      line-height: 1.4;
+    }
+
+    /* 深蓝左侧条 */
+    .paper-card {
+      position: relative;
+      padding-left: 1.25rem !important; /* pl-5 = 1.25rem */
+    }
+    .paper-card::before {
+      content: '';
+      position: absolute;
+      inset-y: 0;
+      left: 0;
+      width: 3px;
+      background-color: #1e3a8a; /* 深蓝色 */
+      border-radius: 2px 0 0 2px;
+    }
+
+    /* 折叠动画 */
+    .collapse-content {
+      max-height: 1000px;
+      overflow: hidden;
+      transition: max-height 0.3s ease-out;
+    }
+    .collapse-content.collapsed {
+      max-height: 0;
+    }
+
+    /* Tooltip with arrow */
+    .conference-tooltip {
+      position: relative;
+      display: inline-block;
+    }
+    .conference-tooltip .tooltip-text {
+      visibility: hidden;
+      width: 120px;
+      background-color: #1e3a8a;
+      color: white;
+      text-align: center;
+      border-radius: 6px;
+      padding: 6px 0;
+      position: absolute;
+      z-index: 20;
+      bottom: 125%;
+      left: 50%;
+      margin-left: -60px;
+      opacity: 0;
+      transition: opacity 0.3s;
+      font-size: 0.75rem;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+    }
+    .conference-tooltip .tooltip-text::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      margin-left: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: #1e3a8a transparent transparent transparent;
+    }
+    .conference-tooltip:hover .tooltip-text {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    /* Toast notification */
+    #toast {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background-color: #047857; /* green-700 */
+      color: white;
+      padding: 12px 24px;
+      border-radius: 8px;
+      box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+      transform: translateY(-100px);
+      opacity: 0;
+      transition: all 0.3s ease;
+      z-index: 50;
+    }
+    #toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* Smooth scroll highlight */
+    .paper-card.highlight {
+      animation: highlight 2s ease-in-out;
+    }
+    @keyframes highlight {
+      0% { box-shadow: 0 0 0 0 rgba(30, 58, 138, 0.4); }
+      50% { box-shadow: 0 0 0 8px rgba(30, 58, 138, 0.2); }
+      100% { box-shadow: 0 0 0 0 rgba(30, 58, 138, 0); }
+    }
+
+    /* Ensure smooth scrolling */
+    html {
+      scroll-behavior: smooth;
+    }
+  </style>
+ </head>
+ <body class="bg-gradient-to-br from-gray-50 to-blue-50 min-h-screen py-12 px-4 sm:px-6 lg:px-8">
+  <!-- Toast container -->
+  <div id="toast">
+   BibTeX 已复制！
+  </div>
+  <div class="max-w-4xl mx-auto">
+   <!-- 顶部导航 -->
+   <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-10 gap-4">
+    <h1 class="text-3xl font-bold text-gray-800">
+     张三 · 论文发表
+    </h1>
+    <a class="px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition duration-200 shadow-md w-full sm:w-auto text-center" href="index.html">
+     返回主页
+    </a>
+   </div>
+   <!-- 功能按钮组 -->
+   <div class="flex flex-wrap gap-3 mb-8">
+    <button class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition shadow-md flex items-center gap-2" id="filterBtn">
+     <i class="fas fa-filter">
+     </i>
+     按会议筛选
+    </button>
+    <button class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition shadow-md flex items-center gap-2" onclick="exportAllBibTeX()">
+     <i class="fas fa-file-export">
+     </i>
+     导出全部参考文献
+    </button>
+   </div>
+   <!-- 筛选模态框 -->
+   <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-30 hidden" id="filterModal">
+    <div class="bg-white rounded-xl p-6 w-full max-w-sm mx-4">
+     <h3 class="text-lg font-semibold mb-4">
+      选择会议
+     </h3>
+     <div class="space-y-2 mb-6">
+      <label class="flex items-center">
+       <input checked="" name="conference" type="radio" value=""/>
+       全部
+      </label>
+      <label class="flex items-center">
+       <input name="conference" type="radio" value="AAAI"/>
+       AAAI
+      </label>
+      <label class="flex items-center">
+       <input name="conference" type="radio" value="ICLR"/>
+       ICLR
+      </label>
+      <label class="flex items-center">
+       <input name="conference" type="radio" value="CVPR"/>
+       CVPR
+      </label>
+      <label class="flex items-center">
+       <input name="conference" type="radio" value="NeurIPS"/>
+       NeurIPS
+      </label>
+      <label class="flex items-center">
+       <input name="conference" type="radio" value="IJCAI"/>
+       IJCAI
+      </label>
+     </div>
+     <div class="flex justify-end gap-2">
+      <button class="px-4 py-2 bg-gray-200 rounded-lg" onclick="closeFilterModal()">
+       取消
+      </button>
+      <button class="px-4 py-2 bg-blue-600 text-white rounded-lg" onclick="applyFilter()">
+       确定
+      </button>
+     </div>
+    </div>
+   </div>
+   <!-- 论文列表 -->
+   <div class="space-y-6" id="papers-container">
+    <!-- Paper 1 -->
+    <div class="paper-card relative bg-gradient-to-r from-white to-blue-50 rounded-xl shadow-lg p-6 border border-gray-200 hover:shadow-xl transition-all duration-300" id="paper1">
+     <div class="absolute top-4 right-4 text-gray-500 text-sm font-medium">
+      <span class="conference-tooltip">
+       CVPR 2024
+       <span class="tooltip-text">
+        IEEE/CVF CVPR
+       </span>
+      </span>
+     </div>
+     <h2 class="text-paper-title font-bold text-gray-900 mb-2">
+      <a class="hover:text-blue-600 transition" href="#paper1">
+       元能力解耦驱动的多模态大模型架构
+      </a>
+     </h2>
+     <p class="italic text-gray-700 mb-3">
+      张三
+     </p>
+     <div class="collapse-content" data-expanded="true">
+      <p class="text-gray-600 mb-3">
+       本文提出一种新型多模态大模型架构，通过元能力解耦机制实现视觉与语言表征的高效融合，在多个基准任务上取得SOTA性能。
+      </p>
+      <div class="flex flex-wrap items-center gap-3 mt-2">
+       <button class="text-blue-600 hover:underline text-sm font-medium" onclick="toggleAbstract(this)">
+        收起简介
+       </button>
+       <button class="text-blue-600 hover:underline text-sm font-medium flex items-center gap-1" onclick="copyBibTeX('bibtex1')">
+        <i class="fas fa-copy text-xs">
+        </i>
+        复制 BibTeX
+       </button>
+      </div>
+     </div>
+     <pre class="hidden" id="bibtex1">@inproceedings{zhang2024decoupled,
+  title={Meta-Capability Disentangled Multimodal Large Model Architecture},
+  author={Zhang, San},
+  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+  year={2024}
+}</pre>
+    </div>
+    <!-- Paper 2 -->
+    <div class="paper-card relative bg-gradient-to-r from-white to-blue-50 rounded-xl shadow-lg p-6 border border-gray-200 hover:shadow-xl transition-all duration-300" id="paper2">
+     <div class="absolute top-4 right-4 text-gray-500 text-sm font-medium">
+      <span class="conference-tooltip">
+       NeurIPS 2023
+       <span class="tooltip-text">
+        NeurIPS
+       </span>
+      </span>
+     </div>
+     <h2 class="text-paper-title font-bold text-gray-900 mb-2">
+      <a class="hover:text-blue-600 transition" href="#paper2">
+       具身智能中的跨模态策略迁移框架
+      </a>
+     </h2>
+     <p class="italic text-gray-700 mb-3">
+      张三
+     </p>
+     <div class="collapse-content" data-expanded="true">
+      <p class="text-gray-600 mb-3">
+       针对具身智能场景，我们设计了一种跨模态策略迁移框架，显著提升智能体在未知环境中的泛化能力与任务完成效率。
+      </p>
+      <div class="flex flex-wrap items-center gap-3 mt-2">
+       <button class="text-blue-600 hover:underline text-sm font-medium" onclick="toggleAbstract(this)">
+        收起简介
+       </button>
+       <button class="text-blue-600 hover:underline text-sm font-medium flex items-center gap-1" onclick="copyBibTeX('bibtex2')">
+        <i class="fas fa-copy text-xs">
+        </i>
+        复制 BibTeX
+       </button>
+      </div>
+     </div>
+     <pre class="hidden" id="bibtex2">@inproceedings{zhang2023embodied,
+  title={Cross-Modal Policy Transfer Framework for Embodied Intelligence},
+  author={Zhang, San},
+  booktitle={Advances in Neural Information Processing Systems (NeurIPS)},
+  year={2023}
+}</pre>
+    </div>
+    <!-- Paper 3 -->
+    <div class="paper-card relative bg-gradient-to-r from-white to-blue-50 rounded-xl shadow-lg p-6 border border-gray-200 hover:shadow-xl transition-all duration-300" id="paper3">
+     <div class="absolute top-4 right-4 text-gray-500 text-sm font-medium">
+      <span class="conference-tooltip">
+       ICLR 2023
+       <span class="tooltip-text">
+        ICLR
+       </span>
+      </span>
+     </div>
+     <h2 class="text-paper-title font-bold text-gray-900 mb-2">
+      <a class="hover:text-blue-600 transition" href="#paper3">
+       基于可解释注意力的视觉-语言对齐机制
+      </a>
+     </h2>
+     <p class="italic text-gray-700 mb-3">
+      张三
+     </p>
+     <div class="collapse-content" data-expanded="true">
+      <p class="text-gray-600 mb-3">
+       提出一种可解释的注意力机制，用于增强视觉与语言模态间的语义对齐，并提供人类可理解的决策依据。
+      </p>
+      <div class="flex flex-wrap items-center gap-3 mt-2">
+       <button class="text-blue-600 hover:underline text-sm font-medium" onclick="toggleAbstract(this)">
+        收起简介
+       </button>
+       <button class="text-blue-600 hover:underline text-sm font-medium flex items-center gap-1" onclick="copyBibTeX('bibtex3')">
+        <i class="fas fa-copy text-xs">
+        </i>
+        复制 BibTeX
+       </button>
+      </div>
+     </div>
+     <pre class="hidden" id="bibtex3">@inproceedings{zhang2023explainable,
+  title={Explainable Attention for Vision-Language Alignment},
+  author={Zhang, San},
+  booktitle={International Conference on Learning Representations (ICLR)},
+  year={2023}
+}</pre>
+    </div>
+    <!-- Paper 4 -->
+    <div class="paper-card relative bg-gradient-to-r from-white to-blue-50 rounded-xl shadow-lg p-6 border border-gray-200 hover:shadow-xl transition-all duration-300" id="paper4">
+     <div class="absolute top-4 right-4 text-gray-500 text-sm font-medium">
+      <span class="conference-tooltip">
+       AAAI 2022
+       <span class="tooltip-text">
+        AAAI
+       </span>
+      </span>
+     </div>
+     <h2 class="text-paper-title font-bold text-gray-900 mb-2">
+      <a class="hover:text-blue-600 transition" href="#paper4">
+       网络可解释性驱动的鲁棒视觉识别
+      </a>
+     </h2>
+     <p class="italic text-gray-700 mb-3">
+      张三
+     </p>
+     <div class="collapse-content" data-expanded="true">
+      <p class="text-gray-600 mb-3">
+       利用网络可解释性技术构建鲁棒视觉识别系统，在对抗攻击和分布外数据下保持高准确率。
+      </p>
+      <div class="flex flex-wrap items-center gap-3 mt-2">
+       <button class="text-blue-600 hover:underline text-sm font-medium" onclick="toggleAbstract(this)">
+        收起简介
+       </button>
+       <button class="text-blue-600 hover:underline text-sm font-medium flex items-center gap-1" onclick="copyBibTeX('bibtex4')">
+        <i class="fas fa-copy text-xs">
+        </i>
+        复制 BibTeX
+       </button>
+      </div>
+     </div>
+     <pre class="hidden" id="bibtex4">@inproceedings{zhang2022robust,
+  title={Robust Visual Recognition via Network Interpretability},
+  author={Zhang, San},
+  booktitle={Proceedings of the AAAI Conference on Artificial Intelligence},
+  year={2022}
+}</pre>
+    </div>
+    <!-- Paper 5 -->
+    <div class="paper-card relative bg-gradient-to-r from-white to-blue-50 rounded-xl shadow-lg p-6 border border-gray-200 hover:shadow-xl transition-all duration-300" id="paper5">
+     <div class="absolute top-4 right-4 text-gray-500 text-sm font-medium">
+      <span class="conference-tooltip">
+       IJCAI 2021
+       <span class="tooltip-text">
+        IJCAI
+       </span>
+      </span>
+     </div>
+     <h2 class="text-paper-title font-bold text-gray-900 mb-2">
+      <a class="hover:text-blue-600 transition" href="#paper5">
+       多模态表示学习中的结构化先验建模
+      </a>
+     </h2>
+     <p class="italic text-gray-700 mb-3">
+      张三
+     </p>
+     <div class="collapse-content" data-expanded="true">
+      <p class="text-gray-600 mb-3">
+       引入结构化先验知识到多模态表示学习中，有效提升模型在低资源场景下的泛化能力。
+      </p>
+      <div class="flex flex-wrap items-center gap-3 mt-2">
+       <button class="text-blue-600 hover:underline text-sm font-medium" onclick="toggleAbstract(this)">
+        收起简介
+       </button>
+       <button class="text-blue-600 hover:underline text-sm font-medium flex items-center gap-1" onclick="copyBibTeX('bibtex5')">
+        <i class="fas fa-copy text-xs">
+        </i>
+        复制 BibTeX
+       </button>
+      </div>
+     </div>
+     <pre class="hidden" id="bibtex5">@inproceedings{zhang2021structured,
+  title={Structured Prior Modeling in Multimodal Representation Learning},
+  author={Zhang, San},
+  booktitle={Proceedings of the International Joint Conference on Artificial Intelligence (IJCAI)},
+  year={2021}
+}</pre>
+    </div>
+   </div>
+   <!-- Footer -->
+   <footer class="mt-12 pt-6 border-t border-gray-200 text-center text-gray-500 text-sm">
+    © 2024 张三. 保留所有权利。
+   </footer>
+  </div>
+  <script>
+   // Highlight card on anchor navigation
+    document.addEventListener('DOMContentLoaded', () => {
+      const hash = window.location.hash;
+      if (hash) {
+        const element = document.querySelector(hash);
+        if (element) {
+          element.classList.add('highlight');
+          setTimeout(() => element.classList.remove('highlight'), 2000);
+        }
+      }
+
+      // Handle filter button click
+      document.getElementById('filterBtn').addEventListener('click', () => {
+        document.getElementById('filterModal').classList.remove('hidden');
+      });
+    });
+
+    function closeFilterModal() {
+      document.getElementById('filterModal').classList.add('hidden');
+    }
+
+    function applyFilter() {
+      const selected = document.querySelector('input[name="conference"]:checked').value;
+      const cards = document.querySelectorAll('.paper-card');
+      cards.forEach(card => {
+        if (!selected) {
+          card.classList.remove('hidden');
+        } else {
+          const conferenceText = card.querySelector('.absolute.top-4.right-4').textContent.trim();
+          if (conferenceText.startsWith(selected)) {
+            card.classList.remove('hidden');
+          } else {
+            card.classList.add('hidden');
+          }
+        }
+      });
+      closeFilterModal();
+    }
+
+    // 折叠/展开简介
+    function toggleAbstract(button) {
+      const content = button.closest('.paper-card').querySelector('.collapse-content');
+      const isExpanded = content.getAttribute('data-expanded') === 'true';
+      content.classList.toggle('collapsed', isExpanded);
+      content.setAttribute('data-expanded', !isExpanded);
+      button.textContent = isExpanded ? '展开简介' : '收起简介';
+    }
+
+    // Toast helper
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2500);
+    }
+
+    // 复制单篇BibTeX
+    function copyBibTeX(bibtexId) {
+      const bibtex = document.getElementById(bibtexId).textContent;
+      navigator.clipboard.writeText(bibtex).then(() => {
+        showToast('BibTeX 已复制到剪贴板！');
+      }).catch(err => {
+        console.error('复制失败:', err);
+        showToast('复制失败，请手动复制。');
+      });
+    }
+
+    // 导出全部BibTeX
+    function exportAllBibTeX() {
+      let allBibTeX = '';
+      const bibtexElements = document.querySelectorAll('pre[id^="bibtex"]');
+      bibtexElements.forEach(el => {
+        allBibTeX += el.textContent + '\n\n';
+      });
+      navigator.clipboard.writeText(allBibTeX).then(() => {
+        showToast('全部参考文献已复制到剪贴板！');
+      }).catch(err => {
+        console.error('导出失败:', err);
+        showToast('导出失败，请手动复制。');
+      });
+    }
+  </script>
+ </body>
+</html>
