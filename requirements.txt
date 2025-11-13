@@ -1,0 +1,11 @@
+openai
+pillow
+pyyaml  
+Requests
+selenium
+tenacity
+webdriver_manager
+yaspin
+bs4
+anthropic
+zhipuai
