@@ -14,7 +14,12 @@ It supports both text-based descriptions and optional image templates for layout
 
 You can view a demo video here:  
 
-[demo.webm](https://github.com/user-attachments/assets/df4a030a-6321-4b35-a20a-1e9a7c4d8550)
+<p>
+  <video src="https://github.com/user-attachments/assets/df4a030a-6321-4b35-a20a-1e9a7c4d8550" controls width="600">
+    Your browser does not support the video tag.
+  </video>
+</p>
+
 ---
 
 ## 🔑 Key Features
