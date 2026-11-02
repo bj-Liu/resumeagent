@@ -120,9 +120,11 @@
     }
   },
   "deployment": {
-    "status": "workflow_configured",
-    "commit_sha": null,
-    "reason": "GitHub Pages is configured for Actions; actual publication results are recorded in docs/RELEASE_CHECKS.md."
+    "status": "deployed",
+    "commit_sha": "3a8151b4fb8889a1d2e9590e3f6bcb1e61a91314",
+    "url": "https://bj-liu.github.io/resumeagent/",
+    "workflow_url": "https://github.com/bj-Liu/resumeagent/actions/runs/41502441363",
+    "browser_verification": "Live Edge checks passed at 1440px and 390px"
   },
   "cost_notice": "Mock usage is synthetic. Estimates are not actual charges. No new paid model calls in release checks."
 }

@@ -18,13 +18,24 @@ class QuietHandler(SimpleHTTPRequestHandler):
         pass
 
 
-def check(folder, output, browser='edge', driver_path=None):
+class PreviewServer(ThreadingHTTPServer):
+    def handle_error(self, request, client_address):
+        # Chromium may close a speculative HTTP connection during navigation.
+        # Assertion, rendering and unexpected server errors still propagate.
+        if isinstance(sys.exc_info()[1], (ConnectionResetError, BrokenPipeError)):
+            return
+        super().handle_error(request, client_address)
+
+
+def check(folder, output, browser='edge', driver_path=None, url=None):
     folder, output = Path(folder).resolve(), Path(output).resolve()
     if not folder.is_relative_to(ROOT / 'release-dist'):
         raise ValueError('Serve only an isolated release-dist build, never private workspace files')
+    if url and url != 'https://bj-liu.github.io/resumeagent/':
+        raise ValueError('Live release verification is restricted to the project Pages URL')
     output.mkdir(parents=True, exist_ok=True)
     # A prefix exercises project Pages URLs instead of only domain-root hosting.
-    server = ThreadingHTTPServer(('127.0.0.1', 0), partial(QuietHandler, directory=str(folder.parent)))
+    server = PreviewServer(('127.0.0.1', 0), partial(QuietHandler, directory=str(folder.parent)))
     thread = Thread(target=server.serve_forever, daemon=True)
     thread.start()
     browser_api = Webserver(web_type=browser, driver_path=driver_path)
@@ -40,7 +51,7 @@ def check(folder, output, browser='edge', driver_path=None):
             if browser in ('edge','chrome'):
                 driver.execute_cdp_cmd('Emulation.setDeviceMetricsOverride',
                     {'width':width,'height':1000,'deviceScaleFactor':1,'mobile':width==390})
-            driver.get(f'http://127.0.0.1:{server.server_port}/{folder.name}/')
+            driver.get(url or f'http://127.0.0.1:{server.server_port}/{folder.name}/')
             driver.set_script_timeout(15)
             driver.execute_async_script('''const done=arguments[arguments.length-1];
               const images=[...document.images]; images.forEach(i=>i.loading='eager');
@@ -99,5 +110,6 @@ if __name__ == '__main__':
     parser.add_argument('--output', default='test-artifacts/release/showcase')
     parser.add_argument('--browser', default='edge', choices=['edge', 'chrome', 'firefox'])
     parser.add_argument('--driver-path')
+    parser.add_argument('--url',help='Optional project GitHub Pages URL for live verification')
     args = parser.parse_args()
-    check(args.folder, args.output, args.browser, args.driver_path)
+    check(args.folder, args.output, args.browser, args.driver_path, args.url)

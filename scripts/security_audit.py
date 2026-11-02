@@ -12,9 +12,12 @@ from prepare_release import ROOT, candidate_files, known_credentials
 
 PATTERNS = [
     ('provider_token', re.compile(rb'(?<![\w-])(?:sk-[A-Za-z0-9_-]{24,}|gh[pousr]_[A-Za-z0-9]{30,}|github_pat_[A-Za-z0-9_]{40,})')),
+    ('aws_access_key', re.compile(rb'\b(?:AKIA|ASIA)[A-Z0-9]{16}\b')),
+    ('google_api_key', re.compile(rb'\bAIza[0-9A-Za-z_-]{35}\b')),
+    ('slack_token', re.compile(rb'\bxox[baprs]-[0-9A-Za-z-]{20,}\b')),
     ('private_key', re.compile(rb'-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----')),
 ]
-ASSIGNMENT = re.compile(rb'''(?i)(?:[\w-]*(?:api[_-]?key|secret|password|access[_-]?token|auth[_-]?token)[\w-]*)["']?[ \t]*[:=][ \t]*["']?([a-zA-Z0-9_./+\-=]{16,})["']?[ \t]*(?=[,}\r\n]|$)''')
+ASSIGNMENT = re.compile(rb'''(?i)(?:[\w-]*(?:api[_-]?key|secret|password|access[_-]?token|auth[_-]?token)[\w-]*|\btoken\b)["']?[ \t]*[:=][ \t]*["']?([a-zA-Z0-9_./+\-=]{16,})["']?[ \t]*(?=[,}\r\n]|$)''')
 
 
 def kinds(data, credentials):
@@ -68,19 +71,23 @@ def audit(repo, executable, output):
     objects=git(repo,executable,'rev-list','--objects','--all').decode('utf-8').splitlines()
     history_findings=[]
     blobs=0
+    metadata_objects=0
     for line in objects:
         sha,_,name=line.partition(' ')
         objtype=git(repo,executable,'cat-file','-t',sha).strip()
-        if objtype!=b'blob':
+        if objtype not in (b'blob',b'commit',b'tag'):
             continue
-        blobs+=1
-        data=git(repo,executable,'cat-file','blob',sha)
+        if objtype==b'blob':
+            blobs+=1
+        else:
+            metadata_objects+=1
+        data=git(repo,executable,'cat-file',objtype.decode(),sha)
         found=kinds(data,credentials)
         if found:
             commits=git(repo,executable,'log','--all','--format=%H',f'--find-object={sha}').decode().splitlines()
-            history_findings.append({'blob':sha,'path_hint':name,'kinds':found,'commits':commits})
-    report={'scope':{'workspace_text_files':reviewed,'proposed_files':len(proposed),'tracked_files':len([p for p in tracked if p]),
-                     'reachable_commits':int(git(repo,executable,'rev-list','--count','--all')),'reachable_blobs':blobs,
+            history_findings.append({'object':sha,'object_type':objtype.decode(),'path_hint':name,'kinds':found,'commits':commits})
+    report={'scope':{'head':git(repo,executable,'rev-parse','HEAD').decode().strip(),'workspace_text_files':reviewed,'proposed_files':len(proposed),'tracked_files':len([p for p in tracked if p]),
+                     'reachable_commits':int(git(repo,executable,'rev-list','--count','--all')),'reachable_blobs':blobs,'metadata_objects':metadata_objects,
                      'remote_main':git(repo,executable,'rev-parse','origin/main').decode().strip()},
             'workspace_findings':workspace_findings,'candidate_findings':candidate_findings,
             'tracked_findings':tracked_findings,'history_findings':history_findings,

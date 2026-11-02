@@ -10,6 +10,8 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def write(source):
     source = Path(source)
+    existing_path=ROOT/'showcase/data/evidence.json'
+    existing=json.loads(existing_path.read_text(encoding='utf-8')) if existing_path.exists() else {}
     log = (source / 'full-tests.log').read_text(encoding='utf-8')
     match = re.search(r'Ran (\d+) tests in ([\d.]+)s', log)
     if not match or not re.search(r'^OK(?: \(skipped=\d+\))?$', log, re.M):
@@ -42,13 +44,13 @@ def write(source):
             'total_usage_including_recovery':benchmark['total_usage_including_recovery'],
             'visual_evaluation':benchmark['visual_evaluation']
         },
-        'demo':{'video_url':None,'recording_status':'not_recorded',
+        'demo':{'video_url':existing.get('demo',{}).get('video_url'),'recording_status':existing.get('demo',{}).get('recording_status','not_recorded'),
                 'screenshot':{'file':'assets/generated-homepage.png','sha256':hashlib.sha256(image.read_bytes()).hexdigest(),
                 'kind':'historical real Selenium screenshot of fictional profile',
                 'source':'Earlier local prompt-design experiment; qwen3.8-flash; revised index.html',
                 'release_validation':False,'visual_quality_score':None}},
-        'deployment':{'status':'workflow_configured','commit_sha':None,
-                      'reason':'GitHub Pages is configured for Actions; actual publication results are recorded in docs/RELEASE_CHECKS.md.'},
+        'deployment':existing.get('deployment',{'status':'workflow_configured','commit_sha':None,
+                      'reason':'GitHub Pages is configured for Actions; actual publication results are recorded in docs/RELEASE_CHECKS.md.'}),
         'cost_notice':'Mock usage is synthetic. Estimates are not actual charges. No new paid model calls in release checks.'
     }
     target = ROOT/'showcase/data/evidence.json'

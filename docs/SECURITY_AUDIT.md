@@ -12,9 +12,16 @@ are included in this report.
 - Scanned all 38 tracked files of original main and every blob reachable from all
   fetched branches/tags: **5 commits, 41 unique file blobs**. Remote main was
   `0edc63aa3b74b817d573c265c39d0e719fa791e2`.
+- Before publishing release commit `3a8151b`, rescanned all **146 tracked files**
+  and the expanded **6-commit / 158-blob** reachable history, including that new
+  commit. Candidate, tracked source and history scans all had zero findings.
 - Used exact matching against locally configured credential values, recognized
   provider token/private-key formats and high-entropy credential assignments.
   Findings contain paths, object IDs and classifications, never matched values.
+- Scanned raw commit/tag metadata as well as reachable file blobs, so commit
+  messages are not omitted. Provider formats include OpenAI/Qwen, GitHub,
+  AWS, Google, Slack and private-key blocks; unknown local values are checked by
+  exact matching. Five synthetic detector tests run in CI without real secrets.
 - Inspected README/showcase copy, the published fictional-profile screenshot,
   architecture and original diagram-style video cover. There is no new recording
   containing a terminal, provider dashboard, credentials or private profile.

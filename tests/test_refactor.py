@@ -120,7 +120,7 @@ class RefactorTests(unittest.TestCase):
         self.agent.publish_task(basic_information='Profile', img='reference.png')
         self.agent.update_html_css(PAGES[0], '<html></html>',None)
         messages = self.agent.get_refine_messages(PAGES[0])
-        self.assertEqual([b['url'] for b in messages[0]['content'] if b['type']=='image'], ['reference.png', str(Path(self.temp.name)/'index.png')])
+        self.assertEqual([b['url'] for b in messages[0]['content'] if b['type']=='image'], ['reference.png', str((Path(self.temp.name)/'index.png').resolve())])
         self.agent.vision = False
         self.assertFalse(any(b['type']=='image' for b in self.agent.get_refine_messages(PAGES[0])[0]['content']))
 

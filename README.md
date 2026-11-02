@@ -11,8 +11,8 @@ planning and generating the website.
 [Architecture](docs/architecture.md) · [Demo script](docs/DEMO_SCRIPT.md) ·
 [Release verification](docs/RELEASE_CHECKS.md) · [Security audit](docs/SECURITY_AUDIT.md) · [MIT license](LICENSE)
 
-> The showcase URL is the intended GitHub Pages destination. Deployment status is
-> recorded in the release checks; a prepared site is not evidence of deployment.
+The live showcase is deployed with GitHub Actions. Its evidence section separates
+measured tests, historical generated output and the still-unrecorded demo video.
 
 ## Project overview
 

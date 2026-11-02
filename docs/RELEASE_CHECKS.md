@@ -98,8 +98,29 @@ was resolved by the maintainer before any backup/main write.
 
 GitHub Pages is configured with `build_type: workflow` at
 <https://bj-liu.github.io/resumeagent/>. Configuration is distinct from successful
-deployment; actual Action/deployment verification is recorded after publication.
-The final clone's full test suite and staged/history secret scan gate the main push.
+deployment. The initial release was published as
+[`3a8151b4fb8889a1d2e9590e3f6bcb1e61a91314`](https://github.com/bj-Liu/resumeagent/commit/3a8151b4fb8889a1d2e9590e3f6bcb1e61a91314).
+Its [Pages build and deployment](https://github.com/bj-Liu/resumeagent/actions/runs/41502441363)
+both completed successfully. Real Edge verification of the **live** URL passed
+at 1440 px and 390 px: no horizontal overflow or missing images; role tabs,
+keyboard navigation, mobile menu and copy command worked. The
+[clean-runner Python test workflow](https://github.com/bj-Liu/resumeagent/actions/workflows/tests.yml)
+provides independent installation/compilation/regression results.
+
+The initial CI run exposed a Windows 8.3 temporary-directory alias in one test's
+expected screenshot path (`RUNNER~1` versus `runneradmin`). The production tool
+already returns a resolved path. The test now resolves its expected path too,
+keeping the same strict message assertion rather than changing application paths.
+Five synthetic secret-detector regressions also cover real-looking tokens, exact
+matches, entropy review and the two false-positive cases found during the audit.
+
+Normal HTTPS Git push repeatedly failed with network resets. As an authorized
+transport fallback, the official Git Data API uploaded the exact Git blob objects,
+verified the root tree and commit SHA against the local clone, and updated main
+with `force: false`. The original parent and backup branch were verified before
+the update. This was a normal fast-forward of the same local commit, not a new
+root history or a force push. The local tracking reference was updated only after
+the remote SHA was independently confirmed. No branch protection was bypassed.
 
 The prepared Pages workflow validates and stages only the isolated showcase,
 uploads its artifact after successful checks, and deploys through the official
