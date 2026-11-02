@@ -1,0 +1,3 @@
+# Build-time validation only; not needed by the ResumeAgent application.
+html5lib==1.1
+tinycss2==1.4.0

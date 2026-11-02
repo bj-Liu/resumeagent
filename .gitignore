@@ -201,7 +201,39 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
-=======
 __pycache__/
 *.pyc
->>>>>>> eaaa969 (Initial commit: upload resumeagent folder)
+
+# Local Selenium driver cache used for verification
+.selenium-cache/
+
+# Harness local state and generated personal information
+storage/*.sqlite3*
+storage/runs/*
+!storage/runs/.gitkeep
+storage/outputs/*
+!storage/outputs/.gitkeep
+logs/*.lock
+test-artifacts/**/*.sqlite3*
+
+# Private MCP Run database, profiles and generated sites
+storage/mcp/
+
+# Local config contains credentials; existing tracked copies still require manual history cleanup.
+/resumeagent/config.yaml
+
+# Active local provider credentials
+/config.yaml
+
+# Release work, backups and private runtime artifacts
+/.release-backups/
+/.release-work/
+/release-dist/
+/test-artifacts/
+/logs/
+/saves/
+/se-metadata.json
+/gui_creative_studio_v7_bundle.zip
+/local_img_storage_*.json
+/.env.*
+!/.env.example

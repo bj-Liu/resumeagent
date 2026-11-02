@@ -1,0 +1,128 @@
+{
+  "schema_version": 1,
+  "checked_date": "2026-11-03",
+  "environment": {
+    "python": "3.10.21",
+    "os": "Windows",
+    "conda": "machine_learning"
+  },
+  "tests": {
+    "total": 95,
+    "passed": 94,
+    "skipped": 1,
+    "failures": 0,
+    "seconds": 219.063
+  },
+  "real_browser": {
+    "status": "passed",
+    "browser": "Edge / Selenium",
+    "tests": 1,
+    "model_backend": "mock"
+  },
+  "mcp": {
+    "status": "passed",
+    "transport": "official SDK stdio",
+    "tools": 3,
+    "model_backend": "mock",
+    "browser_backend": "mock"
+  },
+  "gui": {
+    "status": "passed",
+    "method": "real Tk startup and mocked Harness workflow in isolated subprocesses"
+  },
+  "benchmark": {
+    "batch_id": "20261102T175314185016Z",
+    "backend": "mock",
+    "browser": "mock",
+    "token_source": "synthetic_fixture_usage",
+    "paid_api_calls": 0,
+    "primary_total": 6,
+    "primary_completed": 6,
+    "recovery_total": 6,
+    "recovery_completed": 6,
+    "variants": {
+      "baseline": {
+        "tasks_total": 3,
+        "task_success_rate": 1.0,
+        "pages_expected": 7,
+        "page_generation_success_rate": 1.0,
+        "page_completion_rate": 1.0,
+        "average_execution_seconds": 2.2337571665799865,
+        "prompt_tokens": 2400,
+        "completion_tokens": 960,
+        "api_cost_estimate": 0.026399999999999996,
+        "api_cost_actual": null,
+        "average_iterations_per_expected_page": 0.0,
+        "recovery_attempts": 3,
+        "recovery_success_rate": 1.0,
+        "html_validation_pass_rate": 1.0,
+        "usage_complete": true,
+        "visual_quality_score": null
+      },
+      "refined": {
+        "tasks_total": 3,
+        "task_success_rate": 1.0,
+        "pages_expected": 7,
+        "page_generation_success_rate": 1.0,
+        "page_completion_rate": 1.0,
+        "average_execution_seconds": 4.236340366614361,
+        "prompt_tokens": 3800,
+        "completion_tokens": 1520,
+        "api_cost_estimate": 0.0418,
+        "api_cost_actual": null,
+        "average_iterations_per_expected_page": 1.0,
+        "recovery_attempts": 3,
+        "recovery_success_rate": 1.0,
+        "html_validation_pass_rate": 1.0,
+        "usage_complete": true,
+        "visual_quality_score": null
+      }
+    },
+    "methodology": {
+      "paired_input_sha256": {
+        "researcher": "27e0c3d43785d84265e271da498a1a5c62e747cf86bda474cf0b377484867007",
+        "engineer": "932c201523b873a9660c58a9cd6b13ad6db6f0599e3e92160dfab29ba21f5ae6",
+        "student_zh": "461636eb5ca87ba1b88b1e9443a2672731ed9100a5ddac4e47bead25d86ed003"
+      },
+      "repeats": 1,
+      "variants": {
+        "baseline": 0,
+        "refined": 2
+      },
+      "order": "alternating by case and repeat",
+      "denominator": "Expected fixture pages for mock; actual planned pages for live. Live planning failures also count as task failures.",
+      "timing": "Wall time includes execute and background draining; Run creation excluded.",
+      "recovery_protocol": "Separate preplanned runs with one injected provider failure; excluded from primary task/page rates.",
+      "html_validation": "Independent document structure and local target existence; not visual quality."
+    },
+    "total_usage_including_recovery": {
+      "prompt_tokens": 10400,
+      "completion_tokens": 4160,
+      "api_cost_estimate": 0.11439999999999999
+    },
+    "visual_evaluation": {
+      "status": "not_evaluated",
+      "method": "independent blinded human screenshot rubric",
+      "eligible": false,
+      "score": null
+    }
+  },
+  "demo": {
+    "video_url": null,
+    "recording_status": "not_recorded",
+    "screenshot": {
+      "file": "assets/generated-homepage.png",
+      "sha256": "911805572c0b75f41890f5f0c21c5310df9881884211c448df7038033eb346f1",
+      "kind": "historical real Selenium screenshot of fictional profile",
+      "source": "Earlier local prompt-design experiment; qwen3.8-flash; revised index.html",
+      "release_validation": false,
+      "visual_quality_score": null
+    }
+  },
+  "deployment": {
+    "status": "workflow_configured",
+    "commit_sha": null,
+    "reason": "GitHub Pages is configured for Actions; actual publication results are recorded in docs/RELEASE_CHECKS.md."
+  },
+  "cost_notice": "Mock usage is synthetic. Estimates are not actual charges. No new paid model calls in release checks."
+}

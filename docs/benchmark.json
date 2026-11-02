@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "batch_id": "20261102T175314185016Z",
+  "created_at": "2026-11-02T17:53:54.900402+00:00",
+  "python": "3.10.21",
+  "platform": "Windows-10-10.0.26200-SP0",
+  "backend": "mock",
+  "browser": "mock",
+  "token_source": "synthetic_fixture_usage",
+  "paid_api_calls": 0,
+  "cost_notice": "Estimates from configured/legacy rates, not a provider invoice.",
+  "methodology": {
+    "paired_input_sha256": {
+      "researcher": "27e0c3d43785d84265e271da498a1a5c62e747cf86bda474cf0b377484867007",
+      "engineer": "932c201523b873a9660c58a9cd6b13ad6db6f0599e3e92160dfab29ba21f5ae6",
+      "student_zh": "461636eb5ca87ba1b88b1e9443a2672731ed9100a5ddac4e47bead25d86ed003"
+    },
+    "repeats": 1,
+    "variants": {
+      "baseline": 0,
+      "refined": 2
+    },
+    "order": "alternating by case and repeat",
+    "denominator": "Expected fixture pages for mock; actual planned pages for live. Live planning failures also count as task failures.",
+    "timing": "Wall time includes execute and background draining; Run creation excluded.",
+    "recovery_protocol": "Separate preplanned runs with one injected provider failure; excluded from primary task/page rates.",
+    "html_validation": "Independent document structure and local target existence; not visual quality."
+  },
+  "variants": {
+    "baseline": {
+      "tasks_total": 3,
+      "task_success_rate": 1.0,
+      "pages_expected": 7,
+      "page_generation_success_rate": 1.0,
+      "page_completion_rate": 1.0,
+      "average_execution_seconds": 2.2337571665799865,
+      "prompt_tokens": 2400,
+      "completion_tokens": 960,
+      "api_cost_estimate": 0.026399999999999996,
+      "api_cost_actual": null,
+      "average_iterations_per_expected_page": 0.0,
+      "recovery_attempts": 3,
+      "recovery_success_rate": 1.0,
+      "html_validation_pass_rate": 1.0,
+      "usage_complete": true,
+      "visual_quality_score": null
+    },
+    "refined": {
+      "tasks_total": 3,
+      "task_success_rate": 1.0,
+      "pages_expected": 7,
+      "page_generation_success_rate": 1.0,
+      "page_completion_rate": 1.0,
+      "average_execution_seconds": 4.236340366614361,
+      "prompt_tokens": 3800,
+      "completion_tokens": 1520,
+      "api_cost_estimate": 0.0418,
+      "api_cost_actual": null,
+      "average_iterations_per_expected_page": 1.0,
+      "recovery_attempts": 3,
+      "recovery_success_rate": 1.0,
+      "html_validation_pass_rate": 1.0,
+      "usage_complete": true,
+      "visual_quality_score": null
+    }
+  },
+  "total_usage_including_recovery": {
+    "prompt_tokens": 10400,
+    "completion_tokens": 4160,
+    "api_cost_estimate": 0.11439999999999999
+  },
+  "visual_evaluation": {
+    "status": "not_evaluated",
+    "method": "independent blinded human screenshot rubric",
+    "eligible": false,
+    "score": null
+  }
+}

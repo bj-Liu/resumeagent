@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1100" role="img" aria-labelledby="title desc">
+<title id="title">ResumeAgent system architecture</title><desc id="desc">GUI, CLI and official MCP enter Harness Runtime. Runtime manages three agent roles, tools, state, budget, context and traces. Refiner evaluation and artifact validation form an integrated quality role. SQLite checkpoints enable recovery; evaluation tests the entire workflow.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#6c8b72"/></marker></defs>
+<style>text{font-family:Segoe UI,Arial,sans-serif;fill:#193b31}.title{font-size:28px;font-weight:650}.heading{font-size:18px;font-weight:600}.label{font-size:14px}.small{font-size:12px;fill:#65766b}.wire{fill:none;stroke:#6c8b72;stroke-width:2;marker-end:url(#arrow)}.dash{stroke-dasharray:5 5}</style>
+<rect width="1600" height="1100" rx="14" fill="#fafbf7"/>
+<text x="50" y="52" class="title">ResumeAgent / system architecture</text>
+<text x="50" y="80" class="label">One execution owner. Three business roles. Durable, observable website generation.</text>
+<rect x="50" y="115" width="290" height="82" rx="9" fill="#eef4e8" stroke="#cbd9c5"/>
+<text x="70" y="144" class="heading">User interface / GUI</text>
+<text x="70" y="170" class="label">Tkinter studio</text>
+<rect x="365" y="115" width="225" height="82" rx="9" fill="#eef4e8" stroke="#cbd9c5"/>
+<text x="385" y="144" class="heading">CLI</text>
+<text x="385" y="170" class="label">Run controls</text>
+<rect x="740" y="115" width="300" height="82" rx="9" fill="#ffffff" stroke="#cbd9c5"/>
+<text x="760" y="144" class="heading">External MCP Client</text>
+<text x="760" y="170" class="label">Official SDK / local stdio</text>
+<rect x="1110" y="115" width="440" height="82" rx="9" fill="#ffffff" stroke="#cbd9c5"/>
+<text x="1130" y="144" class="heading">MCP Server + JobManager</text>
+<text x="1130" y="170" class="label">Validated tools → bounded background Runs</text>
+<path d="M1040 156H1110" class="wire"/>
+<path d="M195 197V220H500V245" class="wire"/>
+<path d="M477 197V220" class="wire"/>
+<path d="M1330 197V220H1120V245" class="wire"/>
+<rect x="50" y="245" width="1500" height="243" rx="9" fill="#e5eee3" stroke="#a7bd9e"/>
+<text x="70" y="274" class="heading">Harness Runtime — execution management center</text>
+<text x="75" y="310" class="label">Create → plan → concurrent page generation → render → evaluate → bounded refinement → validate → complete</text>
+<text x="75" y="337" class="small">Finite retries · conditional branches · cancellation · request and Run deadlines · artifact-aware checkpoint recovery</text>
+<rect x="75" y="360" width="225" height="105" rx="9" fill="#f9fbf6" stroke="#cbd9c5"/>
+<text x="95" y="389" class="heading">State</text>
+<text x="95" y="415" class="label">Run / Task / Page</text>
+<text x="95" y="436" class="label">SQLite checkpoints</text>
+<rect x="320" y="360" width="225" height="105" rx="9" fill="#f9fbf6" stroke="#cbd9c5"/>
+<text x="340" y="389" class="heading">Context</text>
+<text x="340" y="415" class="label">Stage-specific inputs</text>
+<text x="340" y="436" class="label">Bounded history</text>
+<rect x="565" y="360" width="225" height="105" rx="9" fill="#f9fbf6" stroke="#cbd9c5"/>
+<text x="585" y="389" class="heading">Budget</text>
+<text x="585" y="415" class="label">Tokens / estimated cost</text>
+<text x="585" y="436" class="label">Limits / concurrency</text>
+<rect x="810" y="360" width="225" height="105" rx="9" fill="#f9fbf6" stroke="#cbd9c5"/>
+<text x="830" y="389" class="heading">Tools</text>
+<text x="830" y="415" class="label">Validated registry</text>
+<text x="830" y="436" class="label">Traceable I/O</text>
+<rect x="1055" y="360" width="225" height="105" rx="9" fill="#f9fbf6" stroke="#cbd9c5"/>
+<text x="1075" y="389" class="heading">Tracing</text>
+<text x="1075" y="415" class="label">Run-queryable events</text>
+<text x="1075" y="436" class="label">Redacted diagnostics</text>
+<rect x="1300" y="360" width="225" height="105" rx="9" fill="#f9fbf6" stroke="#cbd9c5"/>
+<text x="1320" y="389" class="heading">Persistence</text>
+<text x="1320" y="415" class="label">Private local artifacts</text>
+<text x="1320" y="436" class="label">Checksums / files</text>
+<path d="M455 488V546" class="wire"/>
+<text x="475" y="519" class="small">managed business calls</text>
+<path d="M1315 488V546" class="wire"/>
+<text x="1335" y="519" class="small">managed tool calls</text>
+<rect x="50" y="546" width="990" height="173" rx="9" fill="#f2f5ec" stroke="#cbd9c5"/>
+<text x="70" y="575" class="heading">Agent layer — three composed mixins</text>
+<rect x="72" y="595" width="296" height="101" rx="9" fill="#ffffff" stroke="#cbd9c5"/>
+<text x="92" y="624" class="heading">Planner</text>
+<text x="92" y="650" class="label">Facts → page specifications</text>
+<text x="92" y="671" class="label">Shared design language</text>
+<rect x="386" y="595" width="296" height="101" rx="9" fill="#ffffff" stroke="#cbd9c5"/>
+<text x="406" y="624" class="heading">Generator</text>
+<text x="406" y="650" class="label">Page specification → HTML/CSS</text>
+<text x="406" y="671" class="label">Concurrent page workers</text>
+<rect x="700" y="595" width="318" height="101" rx="9" fill="#ffffff" stroke="#cbd9c5"/>
+<text x="720" y="624" class="heading">Refiner</text>
+<text x="720" y="650" class="label">Screenshot → evaluation / revision</text>
+<text x="720" y="671" class="label">Visual feedback + user feedback</text>
+<path d="M368 644H386" class="wire"/>
+<path d="M682 644H700" class="wire"/>
+<rect x="1090" y="546" width="460" height="173" rx="9" fill="#eef4e8" stroke="#cbd9c5"/>
+<text x="1110" y="575" class="heading">Tools — actual operations</text>
+<text x="1110" y="601" class="label">Browser / Selenium: render and capture</text>
+<text x="1110" y="622" class="label">Filesystem: save source, images, backups</text>
+<text x="1110" y="643" class="label">Validator: filenames, artifacts and HTML</text>
+<path d="M1090 690H1040V677H1018" class="wire"/>
+<text x="1048" y="680" class="small">screenshot</text>
+<path d="M350 719V788" class="wire"/>
+<text x="370" y="754" class="small">managed model requests</text>
+<rect x="50" y="788" width="610" height="142" rx="9" fill="#ffffff" stroke="#cbd9c5"/>
+<text x="70" y="817" class="heading">LLM Client → LLM Provider</text>
+<text x="70" y="843" class="label">OpenAI / Azure OpenAI / DashScope-Qwen</text>
+<text x="70" y="864" class="label">Provider usage observer → Runtime Budget</text>
+<text x="70" y="885" class="label">A usable vision model, quota and network are required</text>
+<path d="M860 719V788" class="wire"/>
+<rect x="710" y="788" width="390" height="142" rx="9" fill="#fcf7df" stroke="#c6b674" stroke-dasharray="6 4"/>
+<text x="730" y="817" class="heading">Quality Agent role</text>
+<text x="730" y="843" class="label">Integrated gate, not a separate class</text>
+<text x="730" y="864" class="label">Refiner screenshot judgment</text>
+<text x="730" y="885" class="label">+ Filesystem artifact validation</text>
+<path d="M1315 719V759H1000V788" class="wire"/>
+<text x="1160" y="747" class="small">artifact validation</text>
+<path d="M1100 858H1150" class="wire"/>
+<rect x="1150" y="788" width="400" height="142" rx="9" fill="#ffffff" stroke="#cbd9c5"/>
+<text x="1170" y="817" class="heading">Output + checkpoint</text>
+<text x="1170" y="843" class="label">Website files and screenshots</text>
+<text x="1170" y="864" class="label">Completed or resumable Run</text>
+<text x="1170" y="885" class="label">State verifies completed artifacts</text>
+<rect x="50" y="973" width="1500" height="81" rx="9" fill="#eaf0e5" stroke="#cbd9c5"/>
+<text x="70" y="1002" class="heading">Evaluation — tests the managed workflow</text>
+<text x="70" y="1028" class="label">Workflow / Recovery / paired Benchmark / independent blinded visual rubric. HTML validity is not a visual-quality score.</text>
+<path d="M1530 973V938" class="wire dash"/>
+<text x="50" y="1080" class="small">Source: harness/, resumeagent/agents/, resumeagent/tools/, resumeagent/mcp_server.py, storage/, evals/ · no independent QualityAgent class</text></svg>

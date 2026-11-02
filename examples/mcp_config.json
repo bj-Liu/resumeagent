@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "resumeagent": {
+      "command": "python",
+      "args": [
+        "/ABSOLUTE/PATH/TO/resumeagent/mcp/server.py",
+        "--mock"
+      ]
+    }
+  }
+}

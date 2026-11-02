@@ -1,0 +1,8 @@
+# Copy to config.yaml for live use; environment variables take precedence.
+# Never commit real credentials. No YAML is needed for Mock examples.
+LLM_TYPE: openai
+is_azure: false
+model: gpt-4o
+web_type: chrome
+# driver_path: /absolute/path/to/your/browser-driver
+# render_wait: 5
