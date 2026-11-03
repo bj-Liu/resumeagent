@@ -1,0 +1,9 @@
+# Public config.yaml defaults; environment variables take precedence.
+# This clean template is published as config.yaml, never the maintainer's private file.
+# Set credentials only in the environment. Mock examples need no credentials.
+LLM_TYPE: openai
+is_azure: false
+model: gpt-4o
+web_type: chrome
+# driver_path: /absolute/path/to/your/browser-driver
+# render_wait: 5

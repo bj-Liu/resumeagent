@@ -1,0 +1,51 @@
+{
+  "kind": "Actual native Tkinter window capture of saved results",
+  "generation_run": "ca605fa797414e1094758b196232fdac",
+  "generation_status": "completed",
+  "refine_run": "836b5f8b3b024a2494f85c1cf6bbcc0a",
+  "refine_status": "completed",
+  "pages": [
+    {
+      "html_name": "index.html",
+      "status": "completed"
+    },
+    {
+      "html_name": "publications.html",
+      "status": "completed"
+    },
+    {
+      "html_name": "research.html",
+      "status": "completed"
+    },
+    {
+      "html_name": "projects.html",
+      "status": "completed"
+    },
+    {
+      "html_name": "experience.html",
+      "status": "completed"
+    }
+  ],
+  "mode": "read_only_saved_result_viewer",
+  "new_model_calls": 0,
+  "source": "Existing SQLite page specifications and existing actual browser viewport images; no composition of a fake GUI. Native page cards compacted in the presentation utility only.",
+  "captured": "2026-11-03",
+  "images": [
+    {
+      "file": "assets/homepage-studio.png",
+      "sha256": "0b543a083795e22fc4d29ad61252facdeeb14e2f091d0d8797b1f48c39ca4432",
+      "dimensions": [
+        1400,
+        820
+      ]
+    },
+    {
+      "file": "assets/homepage-studio-detail.png",
+      "sha256": "95c31226e723c044e9f4105b78ec20788c3c010566b61267ccd34f7d8ad31afd",
+      "dimensions": [
+        1400,
+        820
+      ]
+    }
+  ]
+}

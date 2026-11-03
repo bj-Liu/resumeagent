@@ -9,17 +9,25 @@ from zipfile import ZipFile, ZIP_DEFLATED
 ROOT = Path(__file__).resolve().parents[1]
 DIRECTORIES = ('resumeagent','harness','storage','mcp','evals','examples','tests','gui_assets','showcase','scripts','.github')
 ROOT_FILES = ('main.py','README.md','LICENSE','requirements.txt','requirements-showcase.txt',
-              '.gitignore','.env.example','config.example.yaml')
+              '.gitignore','.env.example')
 DOC_FILES = ('architecture.md','architecture.mmd','architecture.svg','DEMO_SCRIPT.md',
              'DEMO_PROFILE.md','DEMO_VIDEO.json','LIVE_DEMO.md','RELEASE_CHECKS.md','benchmark.md','benchmark.json','RELEASE_GUIDE.md','SOURCE_MAP.md','SECURITY_AUDIT.md')
 ALLOWED_SUFFIXES = {'.py','.json','.png','.svg','.html','.css','.js','.md','.yaml','.yml','.txt'}
-PRIVATE_NAMES = {'config.yaml','.env','se-metadata.json'}
+PRIVATE_NAMES = {'config.yaml','config.local.yaml','.env','se-metadata.json'}
 PRIVATE_PARTS = {'__pycache__','runs','outputs','mcp','.pytest_cache'}
 
 
 def candidate_files(root=ROOT):
     """Explicit selection: expanding this list is a reviewable release decision."""
     files = [root/name for name in ROOT_FILES if (root/name).is_file()]
+    # The maintainer workspace keeps its credential-bearing config.yaml private.
+    # Publish the clean template under the filename consumed by the application.
+    # A public checkout already has that clean config.yaml and no template alias.
+    configuration = root / 'config.example.yaml'
+    if not configuration.is_file():
+        configuration = root / 'config.yaml'
+    if configuration.is_file():
+        files.append(configuration)
     files.extend(root/'docs'/name for name in DOC_FILES if (root/'docs'/name).is_file())
     for name in DIRECTORIES:
         folder = root/name
@@ -37,6 +45,12 @@ def candidate_files(root=ROOT):
                 continue
             files.append(path)
     return sorted(set(files),key=lambda p:p.relative_to(root).as_posix())
+
+
+def published_path(path, root=ROOT):
+    if path == root / 'config.example.yaml':
+        return 'config.yaml'
+    return path.relative_to(root).as_posix()
 
 
 def known_credentials(root):
@@ -57,7 +71,7 @@ def inspect(files, root=ROOT):
     records=[]
     for path in files:
         data=path.read_bytes()
-        name=path.relative_to(root).as_posix()
+        name=published_path(path, root)
         if any(value.encode() in data for value in secrets):
             issues.append({'path':name,'kind':'matches local credential value'})
         if path.suffix not in ('.png',):
@@ -84,7 +98,7 @@ def prepare(root=ROOT):
     target=output/'resumeagent-source.zip'
     with ZipFile(target,'w',compression=ZIP_DEFLATED) as archive:
         for path in files:
-            archive.write(path,path.relative_to(root).as_posix())
+            archive.write(path,published_path(path, root))
         for directory in ('storage/runs/.gitkeep','storage/outputs/.gitkeep'):
             archive.writestr(directory,b'')
     checksum=hashlib.sha256(target.read_bytes()).hexdigest()

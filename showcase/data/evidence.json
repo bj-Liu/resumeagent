@@ -122,13 +122,16 @@
     "live_evidence": "data/live-demo.json",
     "gui_screenshot": {
       "file": "assets/homepage-studio.png",
-      "sha256": "f8d722038f8422616454a6c390fcaa64b7f14ac01d9f81d9660930cce01d3188",
-      "source": "Original user-supplied platform.png",
+      "sha256": "0b543a083795e22fc4d29ad61252facdeeb14e2f091d0d8797b1f48c39ca4432",
       "dimensions": [
-        2880,
-        1704
+        1400,
+        820
       ],
-      "unchanged": true
+      "source": "Actual native Tkinter window capture of saved results",
+      "mode": "read_only_saved_result_viewer",
+      "provenance": "assets/studio-capture.json",
+      "unchanged": false,
+      "note": "Replaces the previously blank user-supplied screenshot. Existing generated-site captures and demo video are unchanged."
     },
     "duration_seconds": 220.458333,
     "playback_verified": true

@@ -1,314 +1,219 @@
 # ResumeAgent
 
-### An Agent Harness for Personal Website Generation
+### 基于多智能体与 Harness 的个人主页生成系统
 
-ResumeAgent turns a factual personal profile into a multi-page website, then
-renders it in a browser and uses screenshot feedback to refine the result. Its
-Python Harness owns execution, recovery and resource limits; the agents focus on
-planning and generating the website.
+ResumeAgent 是一个面向求职者、科研人员及专业人士的 AI 个人主页生成工具。用户只需提供个人经历、教育背景、科研成果、项目经验及设计偏好，即可通过桌面端 GUI 自动生成具有个性化设计的多页面个人网站，无需手动编写 HTML 或 CSS。
 
-[Project showcase](https://bj-liu.github.io/resumeagent/) ·
-[Architecture](docs/architecture.md) · [Demo script](docs/DEMO_SCRIPT.md) ·
-[Release verification](docs/RELEASE_CHECKS.md) · [Security audit](docs/SECURITY_AUDIT.md) · [MIT license](LICENSE)
+项目采用多智能体协作架构，通过页面规划、内容生成、浏览器渲染、截图评估与迭代优化，完成从个人资料到网站生成的完整流程。
 
-The live showcase is deployed with GitHub Actions. Its evidence section separates
-offline tests, the real five-page model-backed demonstration and its recorded video.
-See [live demo evidence](docs/LIVE_DEMO.md), [fictional profile](docs/DEMO_PROFILE.md),
-[generated site](https://bj-liu.github.io/resumeagent/demo/) and
-[recorded walkthrough](https://github.com/bj-Liu/resumeagent/releases/tag/demo-20261103).
+除了网页生成本身，项目还围绕长流程 Agent 任务设计了一套独立的 **Harness 执行框架**，负责统一管理任务编排、状态持久化、上下文控制、资源预算、工具调用、执行追踪与故障恢复。
 
-## Project overview
+**在线展示：** [ResumeAgent Showcase](https://bj-liu.github.io/resumeagent/)  
+**演示网站：** [在线查看](https://bj-liu.github.io/resumeagent/demo/)
 
-Provide biography, achievements, experience, skills and design feedback in
-English or Chinese. Planner produces validated page specifications; Generator
-writes HTML and optional CSS; Selenium captures each page; Refiner evaluates
-screenshots and revises code within configured limits. Files, usage and execution
-state remain available locally after a failure.
+---
 
-## Motivation
+## 一、项目展示
 
-A website-generation prompt alone does not manage interrupted requests, partial
-success, browser failures or spending limits. ResumeAgent makes these concerns
-explicit so a successful page can be retained while another page is retried.
-It also keeps factual profile data separate from visual design instructions:
-design can change without inventing achievements or contact information.
+### Homepage Studio
 
-## Key features
+[![Homepage Studio：真实五页列表、网页预览、模型选择与完成状态](showcase/assets/homepage-studio.png)](showcase/assets/homepage-studio.png)
 
-- Multi-page asynchronous generation with shared site planning and design policy.
-- Screenshot-driven evaluation, bounded refinement and user-directed edits.
-- Tkinter creative-studio GUI, CLI and an official-SDK MCP stdio server.
-- SQLite Run / Task / Page state, artifact checkpoints and restart recovery.
-- Token accounting, estimated costs, request concurrency and deadline limits.
-- Named, validated tools and structured traces with redacted diagnostics.
-- Offline workflow/recovery tests, paired benchmarks and a separate visual rubric.
+桌面端交互界面，提供个人资料输入、页面管理、网页预览、模型选择及 Agent 执行状态监控等功能。
 
-## System architecture
+### 页面精修
 
-![ResumeAgent architecture](docs/architecture.svg)
+<a href="showcase/assets/homepage-studio-detail.png">
+  <img src="showcase/assets/homepage-studio-detail.png"
+       alt="ResumeAgent 页面精修"
+       width="780">
+</a>
 
-Runtime controls the workflow. Context assembles bounded inputs, StateStore
-persists progress, Budget controls admission and Tracing records execution.
-Agents use the managed LLM and tool paths; Browser and Filesystem perform I/O.
-MCP exposes the same Runtime through bounded background jobs rather than creating
-a second orchestration implementation. See [control and data flow](docs/architecture.md).
+展示指定页面精修完成后的实际网页效果，以及对应的页面设置与生成状态。
 
-## Agent design
+以上截图均来自真实完成的生成任务，通过只读方式恢复展示，并非静态界面仿制。点击图片可查看完整原图。
 
-| Role | Input | Output |
-|---|---|---|
-| Planner | User facts, feedback, optional references | Validated JSON page specifications |
-| Generator | Page specification and shared context | HTML and optional independent CSS |
-| Refiner | Screenshot, source, facts and feedback | Visual evaluation or revised source |
-| Quality Agent **role** | Visual judgment plus artifact validation | Continue refinement, validate, or finish |
+### Demo 演示
 
-There are three agent mixins, composed by `HomepageDesignAgent`. **There is no
-standalone `QualityAgent` class.** Quality checking is integrated into Refiner's
-`evaluate_screenshot_async` and Filesystem validation. The diagram's quality role
-does not imply an additional autonomous agent or a separate model call.
+**演示内容：** 个人资料输入、Agent 规划、五页面生成、浏览器渲染、截图反馈、页面精修与失败恢复。
 
-Planner output uses `<designed_pages>` around a JSON array. Existing filename
-validators reject absolute paths, traversal and duplicate page filenames.
-English/Chinese prompts share the output protocol. User facts are the only
-source of resume claims; generated content should still be reviewed by its owner.
+[**观看 Demo（3 倍速，约 73 秒）**](https://github.com/bj-Liu/resumeagent/releases/download/demo-20261103/resumeagent-demo-20261103-3x.mp4) · [GitHub Release](https://github.com/bj-Liu/resumeagent/releases/tag/demo-20261103)
 
-## Harness engineering
+演示视频约 3 分 40 秒，采用标注加速与剪辑，展示真实模型调用与网页生成过程。演示人物张三的教育背景、论文、公司与经历均为明确标注的虚构资料，不代表真实履历。
 
-| Module | What it manages |
+---
+
+## 二、系统架构
+
+系统采用多智能体协作架构，将页面生成任务拆分为三个主要角色：
+
+- **Planner：** 根据用户资料与设计要求，规划网站结构和页面内容。
+- **Generator：** 根据页面规划生成 HTML/CSS，支持多页面异步并发生成。
+- **Refiner：** 结合浏览器截图、用户反馈和质量评估结果，对页面进行迭代优化。
+
+三个 Agent 由统一的 Harness Runtime 管理执行，底层通过 LLM Client 和工具模块完成模型调用、浏览器渲染及文件操作。Runtime 根据截图评价和迭代上限决定是否继续精修。
+
+---
+
+## 三、Harness 执行框架
+
+Harness 是项目的核心技术组成部分，负责管理多阶段 Agent 工作流的完整执行过程。
+
+[![ResumeAgent 系统架构：Harness Runtime 统一管理 Agent、状态、上下文、预算、工具和追踪](docs/architecture.svg)](docs/architecture.svg)
+
+Runtime 作为统一执行管理中心，整合 State、Context、Budget、Tools 和 Tracing，并通过 `storage/database.py` 实现 SQLite 持久化，为 Agent 提供任务调度、状态管理、上下文控制、资源约束、工具执行与故障恢复能力。
+
+该框架将业务决策与底层执行管理解耦，使长流程任务具备可追踪、可恢复和可控制的执行能力：
+
+- **状态与恢复：** 按 Run、Task、Page 保存进度和检查点，恢复时核对已有产物，继续未完成的任务。
+- **资源约束：** 统计 Token 和估算成本，限制并发、超时、迭代次数及任务总执行时间。
+- **统一工具与追踪：** 校验工具参数，记录阶段、模型、工具、耗时、用量和错误元数据。
+
+质量评估由 Refiner 的视觉评估与文件校验共同完成，并非额外独立的 Agent 类。详细说明见[架构文档](docs/architecture.md)。
+
+---
+
+## 四、MCP 工具集成
+
+项目基于官方 Python MCP SDK 提供本地 MCP Server，通过标准化接口向外部客户端开放主页生成能力。
+
+目前提供三个工具：
+
+| 工具 | 功能 |
 |---|---|
-| `harness/runtime.py` | Stage order, per-page workers, conditional refinement, finite retries, cancellation and resume |
-| `harness/state.py`, `storage/database.py` | SQLite Run / Task / Page records and checkpoints |
-| `harness/context.py` | Stage-specific facts, page specifications, feedback, paths and bounded history |
-| `harness/budget.py` | Token/cost limits, request concurrency, request timeout, Run deadline and iteration count |
-| `harness/tools.py` | Tool registration, argument validation, results and errors |
-| `harness/tracing.py` | Run-queryable structured events and redacted developer diagnostics |
-| `harness/jobs.py` | Bounded background jobs and MCP-origin access checks |
+| `generate_homepage` | 提交个人资料，启动主页生成任务并返回 Run ID |
+| `get_generation_status` | 查询任务进度及页面状态 |
+| `preview_homepage` | 获取指定页面的本地 HTML 与截图预览信息 |
 
-The page workers are concurrent; one shared Selenium browser is protected by a
-lock. Recovery verifies completed artifacts before skipping them. Budget stops
-new work when limits are reached; an in-flight provider call may finish later
-and its late usage is recorded. These limits are not a provider-side billing cap.
+MCP Server 通过本地 stdio 与客户端通信，复用现有 Harness Runtime，不额外构建独立的任务执行流程。[客户端示例](examples/mcp_client.py)默认使用 Mock，可用于不产生模型费用的接口验证。
 
-## Execution workflow
+---
 
-Create Run ? Planning ? Concurrent page generation ? Browser rendering ? Screenshot evaluation ? Bounded refinement ? Validation ? Completion. Failures preserve checkpoints for resume.
+## 五、安装与运行
 
-`Run` is the website job, `Task` is an individual stage execution, and `Page` is
-one generated document. Failures preserve errors and completed work. Resume is
-artifact-aware; it does not blindly regenerate every page.
+### 环境要求
 
-## MCP integration
+- Python 3.10+
+- Windows / Linux（当前真实 GUI 验证环境为 Windows；Linux GUI 需安装 Tk 并提供桌面显示环境）
+- Chrome、Edge 或 Firefox，以及对应浏览器驱动
+- 可用的多模态 LLM API 与模型额度
 
-The server uses the [official Python MCP SDK](https://github.com/modelcontextprotocol/python-sdk)
-over **local stdio**, with three tools:
+### 安装
 
-| Tool | Purpose |
-|---|---|
-| `generate_homepage` | Validate a profile, submit a Runtime job, return its Run ID |
-| `get_generation_status` | Query overall progress, page state and usage |
-| `preview_homepage` | Return confined local preview metadata for a Run/Page pair |
+以下命令以 Windows PowerShell 为例；已有 `machine_learning` 环境时跳过创建步骤。
 
-Inputs are bounded and validated. Clients cannot supply arbitrary output paths,
-API keys or model overrides. Preview returns local file information, not a hosted
-website. MCP jobs must belong to the server's MCP origin. The stdio process must
-stay alive while background jobs execute. This is not an authenticated multi-user
-HTTP service or an execution sandbox.
-
-## Installation
-
-Python 3.10+ is required. The release is checked with Python 3.10 in the
-`machine_learning` conda environment. Use a dedicated environment for a new install:
-
-```bash
+```powershell
 git clone https://github.com/bj-Liu/resumeagent.git
 cd resumeagent
+
 conda create -n machine_learning python=3.10
 conda activate machine_learning
+
 python -m pip install -r requirements.txt
 ```
 
-Tkinter is included in standard Windows Python/conda installations. Some Linux
-distributions require their `python3-tk` package and a graphical display. Install
-Chrome, Edge or Firefox for real rendering. Selenium Manager resolves a driver
-when online; set `WEBDRIVER_PATH` to a compatible local driver for offline use.
-Mock tests do not need browser installation or paid API access.
+### 配置模型
 
-## Configuration
+仓库已提供不含密钥的 `config.yaml`，根据实际使用的模型修改其中的非敏感设置，例如使用 Qwen 和 Edge：
 
-Copy `config.example.yaml` to `config.yaml` and adjust non-secret settings. The
-loader checks `RESUMEAGENT_CONFIG`, then root/package YAML paths. Missing private YAML
-is allowed for clean-checkout imports and offline tests. YAML environment values
-fill missing environment variables; already-set environment values take priority.
-
-`.env.example` lists supported environment names. **The application does not
-automatically load `.env`**: export values in your shell or use your launcher.
-
-```powershell
-# PowerShell example; do not put a real key in source control.
-$env:LLM_TYPE = "qwen"
-$env:DASHSCOPE_API_KEY = "<your local key>"
-python main.py --gui --model <an-available-multimodal-model>
+```yaml
+LLM_TYPE: qwen
+is_azure: false
+model: qwen3.8-flash
+web_type: edge
+# driver_path: 本机浏览器驱动路径（需要时填写）
 ```
 
-Set `LLM_TYPE: qwen` and `model` in YAML when using Qwen as the normal default.
-OpenAI-compatible, Azure OpenAI and DashScope/Qwen branches remain available in
-`resumeagent/llm/client.py`. Model availability, regional endpoints, image support
-and account quota must be checked with the provider. No model is promised to be
-free or permanently available. Do not commit local YAML, `.env`, state databases,
-profile catalogs, logs or generated personal websites.
+通过环境变量提供 API Key，以下仅为占位符：
 
-## GUI usage
+```powershell
+$env:DASHSCOPE_API_KEY = "YOUR_DASHSCOPE_API_KEY"
+```
 
-```bash
+请勿将真实 API Key 写入公开配置，或将数据库、个人履历提交至仓库。私有配置可另存为已忽略的 `config.local.yaml`，通过环境变量 `RESUMEAGENT_CONFIG` 指定其路径。其他模型的环境变量见 [.env.example](.env.example)；项目不会自动加载 `.env`。
+
+### 启动 GUI
+
+```powershell
 python main.py --gui
-# Optional explicit model/output folder:
-python main.py --gui --model MODEL --save_file ./my-website
 ```
 
-Enter your actual profile, select language/CSS framework, choose a fresh output
-folder, and click **Plan**. Review the page specifications, then **Auto Generate**.
-Use page selection, Canvas preview, Create Website, Complete Page, Refine Page,
-Refine Website, Restore Backup and Open Website as needed. Execution stays managed
-by Harness; errors include a Run ID and local diagnostics path. Cancel and wait
-for background work to drain before closing the window. GUI operation requires
-a display; it is independent of the MCP server.
+输入个人资料与设计要求，选择新的保存目录，点击 **Plan** 生成页面规划，确认后点击 **Auto Generate** 启动网站生成。也可通过 `--model` 指定模型。
 
-## CLI usage
+### 启动 MCP Server
 
-```bash
-python main.py --basic_information "A fictional AI graduate student" \
-  --experience "A Python website-generation prototype" \
-  --professional_skills "Python, SQLite, HTML, CSS" \
-  --feedback "Use a clear editorial layout; do not invent achievements" \
-  --max_iterations 1 --max_concurrency 2 --request_timeout 120 \
-  --max_run_seconds 600 --max_cost 1
-
-python main.py --status RUN_ID
-python main.py --trace RUN_ID
-python main.py --resume RUN_ID
-python main.py --cancel RUN_ID
-```
-
-Use the same `--storage_root` / `--database` when inspecting or resuming a custom
-store. Default Runtime artifacts go to `storage/outputs/<run_id>/`; `--save_file`
-chooses an explicit output folder. `--refine_times` aliases `--max_iterations`.
-`python -m resumeagent` is also supported. A completely offline recovery example:
-
-```bash
-python examples/harness_demo.py --fail-once
-```
-
-## MCP client usage
-
-```bash
-# Official SDK client + real stdio transport, mocked LLM/browser, no API charge:
-python examples/mcp_client.py
-
-# Live calls require local credentials, a multimodal model and browser:
-python examples/mcp_client.py --live --browser edge
-
-# A server launched by another MCP client:
-python mcp/server.py --mock
-python mcp/server.py --browser edge --model MODEL --max-cost 1
-```
-
-Adapt [examples/mcp_config.json](examples/mcp_config.json) to an absolute server
-path and the Python executable inside your environment. The example intentionally
-uses `--mock`; remove it only when live API use is intended. Server options include
-`--storage-root`, `--max-active` and `--max-pending`. Do not add `mcp/__init__.py`:
-the launch directory must not shadow the installed official `mcp` package.
-
-## Evaluation & testing
-
-```bash
-python -m compileall resumeagent harness storage mcp evals examples tests
-python -m evals.run_tests --output test-artifacts/tests.log
-python evals/benchmark.py --output test-artifacts/benchmark
-```
-
-The default benchmark uses fixed fictional fixtures and mocks. Baseline/refined
-variants use identical input hashes and alternating order. Recovery experiments
-are separate from primary success rates. Reports contain task/page success,
-duration, tokens, estimated cost, iterations, recovery and independent structural
-HTML checks. Mock token counts are synthetic; their estimated cost is **not paid
-API expenditure**. HTML checks do not measure visual quality.
-
-`evals/visual.py` supports independent blinded human screenshot evaluation and
-rejects mock screenshots for that purpose. No human visual score has been invented.
-For a real browser with mock LLM and no model fees (PowerShell):
+完成上述 Qwen 配置后：
 
 ```powershell
-$env:RESUMEAGENT_REAL_BROWSER = "edge"
-python -m unittest discover -s evals -k real_selenium -v
+python mcp/server.py --browser edge --model qwen3.8-flash
 ```
 
-See [measured release results](docs/RELEASE_CHECKS.md) and
-[machine-readable public evidence](showcase/data/evidence.json). These describe
-the environment and distinguish mock transport tests, real browser checks and
-historical generated screenshots. A release check does not prove every live
-provider/account/model configuration works.
+该入口等待 MCP Client 通过 stdio 建立连接，不是 HTTP 服务。使用其他模型或浏览器时替换相应参数。离线客户端示例：
 
-## Cost tracking
+```powershell
+python examples/mcp_client.py
+```
 
-LLM usage callbacks feed Runtime budgets and persisted Run usage. The legacy token
-ledger is retained. Configure per-million input/output `BudgetLimits.prices` using
-one consistent currency when enforcing `max_cost`. Legacy model rates may mix
-USD and CNY; they are estimates, not a currency conversion or provider invoice.
-Token limits, concurrency, retries and time limits provide additional controls.
-Do not interpret a numeric default cost ceiling as a guaranteed RMB billing cap.
+---
 
-## Project structure
+## 六、测试与评估
+
+项目提供自动化测试，覆盖工作流执行、任务恢复、工具调用及资源统计。
+
+```powershell
+python -m evals.run_tests
+```
+
+运行默认 Mock Benchmark，不调用付费模型：
+
+```powershell
+python evals/benchmark.py
+```
+
+测试与评估主要覆盖：
+
+- **Workflow：** 多阶段任务执行与页面生成。
+- **Recovery：** 任务中断、失败重试与状态恢复。
+- **Benchmark：** 执行效率、成功率、资源消耗及恢复结果的统计。
+- **Visual Evaluation：** Refiner 在生成流程中进行截图评价；独立评测工具支持对真实截图进行匿名人工评分，不从 HTML 校验结果推导视觉质量。
+
+已有回归记录为 **95 项测试，94 项通过、1 项默认跳过真实 Selenium 用例**。Mock 测试、独立真实浏览器验证与真实模型调用分别统计，模拟 Token 和成本不代表真实 API 账单。默认 Mock Benchmark 不提供真实视觉质量分数。
+
+详见[测试记录](docs/RELEASE_CHECKS.md)、[Benchmark 说明](docs/benchmark.md)与[真实 Demo 报告](docs/LIVE_DEMO.md)。
+
+---
+
+## 七、项目结构
 
 ```text
-resumeagent/          agents, bilingual prompts, LLM adapters, tools, frontend
-harness/              runtime, state, context, budget, tools, tracing, jobs
-storage/              SQLite implementation; private runs/ and outputs/
-mcp/server.py         official-SDK server launch shim
-evals/                workflow, recovery, benchmark, visual evaluation
-tests/                regression and GUI smoke tests
-examples/             offline Harness demo and MCP client
-gui_assets/           GUI background asset
-docs/                 architecture, release checks and recording script
-showcase/             static presentation; no API calls or backend
-scripts/              static validation, build and release packaging
-.github/workflows/    tested showcase deployment pipeline
+resumeagent/
+├── agents/          # 多智能体模块
+├── prompts/         # Prompt 管理
+├── llm/             # 模型客户端与适配
+├── tools/           # 浏览器、文件及校验工具
+└── frontend/        # GUI
+
+harness/
+├── runtime.py       # 任务执行与调度
+├── state.py         # 状态管理
+├── context.py       # 上下文管理
+├── budget.py        # 资源预算
+├── tools.py         # 工具管理
+├── tracing.py       # 执行追踪
+└── jobs.py          # 后台任务管理
+
+storage/             # 数据持久化；运行数据库留在本地
+mcp/                 # MCP Server 启动入口
+evals/              # 评测模块
+tests/               # 自动化测试
+examples/            # 使用示例
+showcase/            # 项目展示页面
+docs/                # 项目文档
+scripts/             # 辅助脚本
 ```
 
-`gui_old.py`, `gui_2.py` and old prompt variants are retained as historical source;
-the active GUI is `resumeagent/frontend/gui.py`. They are not additional launch
-entry points. Private backups, local reports and generated outputs stay outside
-the public source package. Build the standalone showcase with:
+---
 
-```bash
-python -m pip install -r requirements-showcase.txt
-python scripts/build_showcase.py --output release-dist/showcase
-python -m http.server 8080 --directory release-dist/showcase
-```
+## License
 
-Node 22+ is used only for JavaScript syntax checking, not as an application
-dependency. GitHub Actions validates HTML/CSS/JS and local asset paths before
-uploading the static artifact. In repository Settings → Pages, select **GitHub
-Actions** if it is not already enabled. See [deployment notes](docs/RELEASE_CHECKS.md).
-
-## Limitations
-
-- Live execution needs a usable provider account, sufficient quota, network access
-  and a compatible multimodal model. Automated tests are offline; the separately labeled live demo uses real paid calls.
-- Generated HTML runs in a browser; do not treat it as trusted or sandboxed code.
-- SQLite, diagnostics, screenshots and output files can contain personal data.
-  Keep them local and review material before sharing.
-- A single browser serializes rendering; generation concurrency is separate.
-- Visual quality is subjective. Current tests verify behavior and structure, not
-  a universal design-quality score or benchmark advantage over other products.
-- MCP is a local stdio integration, not a hosted service. Cancellation cannot
-  necessarily abort an already-submitted provider request.
-- The recorded live demo includes a failed refinement and same-Run CLI recovery.
-  It is one fictional example, separate from the Mock benchmark and not a visual-quality score.
-
-## Roadmap
-
-- Expand the recorded examples with reproducible inputs and independent visual review.
-- Extend provider-specific installation and live integration coverage.
-- Collect blinded visual evaluations on fixed inputs before making quality claims.
-- Improve browser isolation and packaging without duplicating Harness ownership.
-- Keep API, prompt and state compatibility covered by regression tests.
+本项目采用 [MIT License](LICENSE) 开源协议。

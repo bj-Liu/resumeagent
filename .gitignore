@@ -224,6 +224,9 @@ storage/mcp/
 
 # Active local provider credentials
 /config.yaml
+# Public config.yaml is a tracked, secret-free template in the release checkout.
+# Keep private overrides out of Git and select them with RESUMEAGENT_CONFIG.
+/config.local.yaml
 
 # Release work, backups and private runtime artifacts
 /.release-backups/
