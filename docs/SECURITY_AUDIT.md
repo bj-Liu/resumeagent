@@ -22,9 +22,12 @@ are included in this report.
   messages are not omitted. Provider formats include OpenAI/Qwen, GitHub,
   AWS, Google, Slack and private-key blocks; unknown local values are checked by
   exact matching. Five synthetic detector tests run in CI without real secrets.
-- Inspected README/showcase copy, the published fictional-profile screenshot,
-  architecture and original diagram-style video cover. There is no new recording
-  containing a terminal, provider dashboard, credentials or private profile.
+- Inspected README/showcase copy, the original GUI screenshot, generated fictional
+  demo pages, final webpage screenshots and the edited 3:40 video. The published
+  video uses only the application window and actual generated-site browser
+  viewports; no editor, terminal, provider dashboard or private configuration.
+  Raw captures, SQLite and diagnostics remain private. Visual review is not a
+  claim of exhaustive OCR.
 
 The audit script is `scripts/security_audit.py`; the release candidate scanner is
 `scripts/prepare_release.py`. Final staged source and the new commit are rescanned
@@ -72,3 +75,27 @@ Local private configurations and the pre-release backup still contain credential
 Keep them private and do not upload the whole workspace. Review generated websites
 and screenshots before sharing; SQLite state and local developer diagnostics may
 contain user information even when API keys are redacted.
+
+## Final live-demo publication audit
+
+Before synchronization, scanned **697 local text files**, **150 proposed public
+files**, **147 currently tracked files**, and all **7 commits / 168 reachable file
+blobs / 7 commit-or-tag metadata objects**. Candidate, tracked and history findings
+were zero. The two local findings are ignored private YAML configurations, not
+public candidate files. The synchronized candidate and final commit are scanned
+again before main is pushed. The scan emits paths/classifications only.
+
+The complete fictional input, ten generated HTML/CSS artifacts, screenshot
+provenance and metadata-only trace export were reviewed. Public traces deliberately
+omit prompts, model replies, user-profile text and absolute local paths. The MP4
+is a separately reviewed Release asset with SHA-256 and editing provenance;
+large raw recordings and developer/browser binaries are excluded from Git.
+
+No detected real key exists in the inspected current source or reachable public
+history. The public repository contains environment-variable-based adapters and
+placeholder examples, not the local YAML credentials. Local configurations and
+private backups still require careful handling. If any key has been displayed
+outside a trusted private context, rotate it at the provider; repository cleanup
+alone is insufficient.
+
+The final Git index was independently scanned: **170 indexed files, zero findings**. Both private YAML paths, `.env`, raw recordings, logs, test artifacts and release backups are absent from the index. Reachable history is rescanned after commit and before push.

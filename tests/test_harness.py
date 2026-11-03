@@ -316,7 +316,9 @@ class SlowPage(DemoLLM):
  async def response_async(self,messages,**kwargs):
   scope=CURRENT_EXECUTION.get()
   if scope.stage=='generation' and scope.runtime.state.page(scope.page_id)['spec']['html_name']=='projects.html':
-   await asyncio.sleep(60)
+   # Hold this page until the parent deliberately kills the process. A fixed
+   # sleep races slow CI disks and can finish before the checkpoint is observed.
+   await asyncio.Event().wait()
   return await super().response_async(messages,**kwargs)
 agent=HomepageDesignAgent(model='demo-model',save_file=str(root/'out'),llm=SlowPage(),browser=DemoBrowser());agent.gen_img=False
 runtime=Runtime(agent,storage_root=root/'storage',limits=BudgetLimits(max_retries=0,max_concurrency=3))
@@ -327,12 +329,13 @@ asyncio.run(runtime.execute(run_id))
         process=subprocess.Popen([sys.executable,'-c',worker_code,str(self.root)],cwd=Path(__file__).resolve().parents[1],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
         try:
             marker=self.root/'worker-id.txt'
-            deadline=time.monotonic()+20
+            deadline=time.monotonic()+120
             while not marker.exists() and time.monotonic()<deadline:
                 await asyncio.sleep(.05)
             self.assertTrue(marker.exists(),'Child worker did not initialize')
             runtime=self.runtime()
             run_id=marker.read_text()
+            deadline=time.monotonic()+120
             while time.monotonic()<deadline:
                 pages=runtime.state.pages(run_id)
                 if sum(p['status']=='completed' for p in pages)==2:

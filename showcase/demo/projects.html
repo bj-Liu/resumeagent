@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>项目作品 · 张三（虚构演示）</title>
+<link rel="stylesheet" href="projects.css">
+</head>
+<body>
+
+<div class="disclaimer-bar" role="note">
+  <span class="db-mark">◆</span>
+  <span>虚构履历 · 产品演示 —— 本页所有项目、技术栈与成果均为虚构设定，不代表真实交付。</span>
+</div>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="index.html">
+      <span class="brand-name">张三</span>
+      <span class="brand-sub">Zhang San · LLM Agent</span>
+    </a>
+    <nav class="main-nav" aria-label="主导航">
+      <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navList">
+        <span class="sr-only">打开导航菜单</span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+      </button>
+      <ul class="nav-list" id="navList">
+        <li><a href="index.html">首页</a></li>
+        <li><a href="publications.html">论文</a></li>
+        <li><a href="research.html">科研经历</a></li>
+        <li><a href="projects.html" aria-current="page">项目</a></li>
+        <li><a href="experience.html">实习经历</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <!-- ============ 页首：标题 + 索引 ============ -->
+  <section class="page-head">
+    <div class="wrap head-grid">
+      <div class="head-main">
+        <p class="kicker">Projects / 项目作品</p>
+        <h1 class="page-title">三个虚构学生项目的<br>实现细节与技术栈</h1>
+        <p class="lead">从简历生成到检索记忆，再到可复现科研工具链——每个项目都围绕“能解释、可恢复、受资源约束”的智能体系统展开。以下内容为演示设定，非实测结果。</p>
+      </div>
+      <aside class="head-index" aria-label="项目目录">
+        <p class="index-label">Contents</p>
+        <ol class="index-list">
+          <li><a href="#resumeagent"><span class="idx-num">01</span><span class="idx-name">ResumeAgent Lab</span><span class="idx-tag">2026.03—08</span></a></li>
+          <li><a href="#memory-notebook"><span class="idx-num">02</span><span class="idx-name">Agent Memory Notebook</span><span class="idx-tag">2025.11—2026.02</span></a></li>
+          <li><a href="#repro-kit"><span class="idx-num">03</span><span class="idx-name">Reproducible Research Kit</span><span class="idx-tag">2024.10—2025.05</span></a></li>
+        </ol>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ============ 项目 01：ResumeAgent Lab ============ -->
+  <article class="project" id="resumeagent">
+    <div class="wrap proj-grid">
+      <div class="proj-text">
+        <div class="proj-meta">
+          <span class="proj-num">01</span>
+          <span class="demo-chip">虚构学生项目</span>
+        </div>
+        <h2 class="proj-title">ResumeAgent Lab</h2>
+        <p class="proj-date">2026.03 — 2026.08</p>
+        <p class="proj-intro">把个人资料转化为学术网站，包含规划、HTML/CSS、浏览器截图和视觉反馈的完整闭环。</p>
+
+        <div class="field">
+          <h3 class="field-label">技术栈</h3>
+          <ul class="stack-list">
+            <li>Python</li><li>LLM</li><li>Selenium</li><li>Tkinter</li><li>SQLite</li><li>HTML/CSS</li>
+          </ul>
+        </div>
+
+        <div class="field">
+          <h3 class="field-label">实现成果</h3>
+          <ul class="result-list">
+            <li>多页面工件输出</li>
+            <li>Run 追踪记录</li>
+            <li>断点恢复机制</li>
+            <li>演示测试集</li>
+          </ul>
+        </div>
+
+        <p class="repo-note">演示仓库链接待补充 · 仅页内锚点，无真实外链或下载。</p>
+      </div>
+
+      <figure class="proj-figure">
+        <svg viewBox="0 0 640 170" role="img" aria-labelledby="flowTitle flowDesc" class="flow-svg">
+          <title id="flowTitle">ResumeAgent Lab 执行流程图</title>
+          <desc id="flowDesc">一个从左到右的五步流程：输入、规划、生成、渲染、优化，各步骤之间用箭头连接，表示资料被逐步转化为网页并迭代改进的过程。</desc>
+          <defs>
+            <marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+              <path d="M0,0 L9,4.5 L0,9 Z" fill="#2d5a4b"/>
+            </marker>
+          </defs>
+          <!-- connectors -->
+          <line x1="118" y1="70" x2="138" y2="70" stroke="#2d5a4b" stroke-width="1.6" marker-end="url(#arrow)"/>
+          <line x1="246" y1="70" x2="266" y2="70" stroke="#2d5a4b" stroke-width="1.6" marker-end="url(#arrow)"/>
+          <line x1="374" y1="70" x2="394" y2="70" stroke="#2d5a4b" stroke-width="1.6" marker-end="url(#arrow)"/>
+          <line x1="502" y1="70" x2="522" y2="70" stroke="#2d5a4b" stroke-width="1.6" marker-end="url(#arrow)"/>
+          <!-- feedback loop -->
+          <path d="M560,100 C560,150 80,150 80,100" fill="none" stroke="#2d5a4b" stroke-width="1.4" stroke-dasharray="5 5" marker-end="url(#arrow)"/>
+          <text x="320" y="158" text-anchor="middle" font-size="12" fill="#2d5a4b" letter-spacing="1">视觉反馈 · 迭代优化</text>
+          <!-- nodes -->
+          <g class="flow-node">
+            <rect x="20" y="40" width="98" height="60" rx="2"/>
+            <text x="69" y="66" text-anchor="middle" font-size="15" fill="#1c2b24">输入</text>
+            <text x="69" y="84" text-anchor="middle" font-size="10" fill="#6b7a72">INPUT</text>
+          </g>
+          <g class="flow-node">
+            <rect x="148" y="40" width="98" height="60" rx="2"/>
+            <text x="197" y="66" text-anchor="middle" font-size="15" fill="#1c2b24">规划</text>
+            <text x="197" y="84" text-anchor="middle" font-size="10" fill="#6b7a72">PLAN</text>
+          </g>
+          <g class="flow-node">
+            <rect x="276" y="40" width="98" height="60" rx="2"/>
+            <text x="325" y="66" text-anchor="middle" font-size="15" fill="#1c2b24">生成</text>
+            <text x="325" y="84" text-anchor="middle" font-size="10" fill="#6b7a72">GENERATE</text>
+          </g>
+          <g class="flow-node">
+            <rect x="404" y="40" width="98" height="60" rx="2"/>
+            <text x="453" y="66" text-anchor="middle" font-size="15" fill="#1c2b24">渲染</text>
+            <text x="453" y="84" text-anchor="middle" font-size="10" fill="#6b7a72">RENDER</text>
+          </g>
+          <g class="flow-node">
+            <rect x="532" y="40" width="98" height="60" rx="2"/>
+            <text x="581" y="66" text-anchor="middle" font-size="15" fill="#1c2b24">优化</text>
+            <text x="581" y="84" text-anchor="middle" font-size="10" fill="#6b7a72">OPTIMIZE</text>
+          </g>
+        </svg>
+        <figcaption>图 1 · 输入 → 规划 → 生成 → 渲染 → 优化（原生 SVG，无外部图片）</figcaption>
+      </figure>
+    </div>
+  </article>
+
+  <!-- ============ 项目 02：Agent Memory Notebook ============ -->
+  <article class="project alt" id="memory-notebook">
+    <div class="wrap proj-grid">
+      <div class="proj-text">
+        <div class="proj-meta">
+          <span class="proj-num">02</span>
+          <span class="demo-chip">虚构项目</span>
+        </div>
+        <h2 class="proj-title">Agent Memory Notebook</h2>
+        <p class="proj-date">2025.11 — 2026.02</p>
+        <p class="proj-intro">按任务阶段筛选事实、近期记录及失败提示的检索记忆原型。</p>
+
+        <div class="field">
+          <h3 class="field-label">技术栈</h3>
+          <ul class="stack-list">
+            <li>Python</li><li>PyTorch</li><li>RAG</li><li>FAISS</li><li>JSONL</li>
+          </ul>
+        </div>
+
+        <div class="field">
+          <h3 class="field-label">实现成果</h3>
+          <ul class="result-list">
+            <li>记忆查询接口</li>
+            <li>三种上下文策略</li>
+            <li>消融实验模板</li>
+          </ul>
+        </div>
+
+        <p class="repo-note">演示仓库链接待补充 · 不虚构准确率指标。</p>
+      </div>
+
+      <div class="proj-code">
+        <div class="code-window">
+          <div class="code-bar"><span class="dot"></span><span class="file">memory_query.py</span></div>
+<pre><code><span class="cm"># 按任务阶段筛选记忆片段</span>
+<span class="kw">def</span> <span class="fn">select_memory</span>(stage, budget):
+    facts   = index.query(<span class="st">"fact"</span>, stage)
+    recent  = index.query(<span class="st">"recent"</span>, window=<span class="num">3</span>)
+    hints   = index.query(<span class="st">"failure"</span>, stage)
+    <span class="kw">return</span> pack(facts + recent + hints, budget)</code></pre>
+        </div>
+        <ul class="method-list">
+          <li><span class="m-num">A</span>完整历史基线</li>
+          <li><span class="m-num">B</span>最近窗口策略</li>
+          <li><span class="m-num">C</span>检索式记忆策略</li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <!-- ============ 项目 03：Reproducible Research Kit ============ -->
+  <article class="project" id="repro-kit">
+    <div class="wrap proj-grid">
+      <div class="proj-text">
+        <div class="proj-meta">
+          <span class="proj-num">03</span>
+          <span class="demo-chip">虚构项目</span>
+        </div>
+        <h2 class="proj-title">Reproducible Research Kit</h2>
+        <p class="proj-date">2024.10 — 2025.05</p>
+        <p class="proj-intro">统一训练配置、数据版本、实验日志和结果导出的科研工具包。</p>
+
+        <div class="field">
+          <h3 class="field-label">技术栈</h3>
+          <ul class="stack-list">
+            <li>Python</li><li>Hydra</li><li>Docker</li><li>GitHub Actions</li><li>Matplotlib</li>
+          </ul>
+        </div>
+
+        <div class="field">
+          <h3 class="field-label">实现成果</h3>
+          <ul class="result-list">
+            <li>命令行实验入口</li>
+            <li>配置校验</li>
+            <li>结果表格导出</li>
+            <li>示例测试流程</li>
+          </ul>
+        </div>
+
+        <p class="repo-note">演示仓库链接待补充 · 项目外链均指向页内详情锚点。</p>
+      </div>
+
+      <div class="proj-code">
+        <div class="code-window">
+          <div class="code-bar"><span class="dot"></span><span class="file">run.sh</span></div>
+<pre><code><span class="cm"># 统一实验入口</span>
+$ python -m kit.run \
+    config=<span class="st">train/base.yaml</span> \
+    data.version=<span class="num">v3</span> \
+    out=<span class="st">results/$(date +%F)</span></code></pre>
+        </div>
+        <ul class="method-list">
+          <li><span class="m-num">✓</span>配置 schema 校验</li>
+          <li><span class="m-num">✓</span>数据版本锁定</li>
+          <li><span class="m-num">✓</span>结构化实验日志</li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <!-- ============ 底部返回导航 ============ -->
+  <nav class="back-nav" aria-label="页面跳转">
+    <div class="wrap back-inner">
+      <a class="back-btn" href="index.html">← 返回首页</a>
+      <ul class="back-links">
+        <li><a href="publications.html">论文</a></li>
+        <li><a href="research.html">科研经历</a></li>
+        <li><a href="experience.html">实习经历</a></li>
+      </ul>
+    </div>
+  </nav>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <p class="footer-decl">虚构履历 · 产品演示 —— 本页面为设计演示，人物、机构、项目与成果均为虚构，不可投递、不可联系真实作者。</p>
+    <p class="footer-copy">© 2026 Zhang San (Demo) · example.invalid</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var toggle = document.getElementById('navToggle');
+  var list = document.getElementById('navList');
+  if (!toggle || !list) return;
+  toggle.addEventListener('click', function () {
+    var open = toggle.getAttribute('aria-expanded') === 'true';
+    toggle.setAttribute('aria-expanded', String(!open));
+    list.classList.toggle('is-open', !open);
+  });
+  // 点击导航项后收起移动菜单
+  list.querySelectorAll('a').forEach(function (a) {
+    a.addEventListener('click', function () {
+      toggle.setAttribute('aria-expanded', 'false');
+      list.classList.remove('is-open');
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

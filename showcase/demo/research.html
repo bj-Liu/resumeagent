@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>科研经历 · 张三（虚构演示）</title>
+<link rel="stylesheet" href="research.css">
+<script type="text/javascript">
+/* 移动导航切换 —— 渐进增强：无 JS 时导航默认可见 */
+(function () {
+  document.documentElement.classList.add('js');
+
+  function init() {
+    var toggle = document.querySelector('.nav-toggle');
+    if (!toggle) return;
+    var nav = document.getElementById('primary-nav');
+    if (!nav) return;
+
+    toggle.addEventListener('click', function () {
+      var open = nav.classList.toggle('is-open');
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      toggle.setAttribute('aria-controls', 'primary-nav');
+    });
+
+    // 点击导航链接后收起菜单（移动端体验）
+    nav.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', function () {
+        if (window.matchMedia('(max-width: 760px)').matches) {
+          nav.classList.remove('is-open');
+          toggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+    });
+  }
+
+  if (document.readyState !== 'loading') {
+    init();
+  } else {
+    document.addEventListener('DOMContentLoaded', init);
+  }
+})();
+</script>
+</head>
+<body>
+
+<!-- 常驻虚构声明 -->
+<div class="disclaimer-bar" role="note" aria-label="内容性质说明">
+  <span class="db-mark" aria-hidden="true"></span>
+  <strong>虚构履历 · 产品演示</strong>
+  <span class="db-sep" aria-hidden="true">—</span>
+  <span>本页所有机构、课题组、角色与成果均为虚构演示，不代表真实录用或可投递联系。</span>
+</div>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="index.html">
+      <span class="brand-name">张三</span>
+      <span class="brand-sub">Zhang San · LLM Agent</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav">
+      <span class="nav-toggle-label">目录</span>
+      <span class="nav-toggle-icon" aria-hidden="true"><i></i><i></i><i></i></span>
+    </button>
+    <nav id="primary-nav" class="site-nav" aria-label="主导航">
+      <ul>
+        <li><a href="index.html">首页</a></li>
+        <li><a href="publications.html">论文</a></li>
+        <li><a href="research.html" aria-current="page">科研经历</a></li>
+        <li><a href="projects.html">项目</a></li>
+        <li><a href="experience.html">实习经历</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- 页首 -->
+  <section class="page-head container">
+    <div class="ph-grid">
+      <div class="ph-main">
+        <p class="eyebrow">Research Experience</p>
+        <h1 class="page-title">科研经历</h1>
+        <p class="lede">两段研究助理经历，围绕“能解释、可恢复且受资源约束的智能体系统”展开。以下按时间倒序排列，逐条覆盖背景问题、具体工作、方法论与演示成果；成果严格限定为原型、文档与脚本，不声称性能提升数字。</p>
+      </div>
+      <aside class="ph-index" aria-label="经历索引">
+        <p class="idx-title">Index / 索引</p>
+        <ol class="idx-list">
+          <li><a href="#re-tsinghua"><span class="idx-num">01</span><span class="idx-org">清华大学计算机系 · 可靠智能体系统课题组</span><span class="idx-date">2025.10 — 2026.10</span></a></li>
+          <li><a href="#re-buaa"><span class="idx-num">02</span><span class="idx-org">北京航空航天大学 · 检索与交互计算实验组</span><span class="idx-date">2024.09 — 2025.06</span></a></li>
+        </ol>
+      </aside>
+    </div>
+  </section>
+
+  <!-- 时间轴 -->
+  <section class="timeline-section container" aria-label="科研经历时间轴">
+    <div class="tl-line" aria-hidden="true"></div>
+
+    <!-- 节点 01 -->
+    <article class="tl-node" id="re-tsinghua">
+      <div class="tl-marker" aria-hidden="true"><span class="dot"></span></div>
+      <div class="tl-body">
+        <header class="node-head">
+          <div class="node-meta">
+            <span class="node-num">01</span>
+            <span class="node-role">研究助理 · Research Assistant</span>
+          </div>
+          <time class="node-date" datetime="2025-10/2026-10">2025.10 — 2026.10</time>
+        </header>
+        <h2 class="node-org">清华大学计算机系<span class="org-group">· “可靠智能体系统课题组”</span></h2>
+        <p class="fiction-tag">虚构组名 · 虚构角色</p>
+
+        <dl class="fact-list">
+          <div class="fact-row">
+            <dt>背景问题</dt>
+            <dd>长期 LLM 任务在 API 失败和工具超时后常需整体重跑，缺乏对未完成阶段的受控恢复能力。</dd>
+          </div>
+          <div class="fact-row">
+            <dt>具体工作</dt>
+            <dd>设计 Run / Task / Page 状态模型、阶段检查点与工件指纹；建立 API、生成、浏览器和预算故障注入用例；分析在途请求与取消后的使用量归属。</dd>
+          </div>
+          <div class="fact-row">
+            <dt>方法论</dt>
+            <dd>采用有限重试、异步调度、SQLite 事务与结构化追踪等机制组织执行与恢复流程。</dd>
+          </div>
+          <div class="fact-row">
+            <dt>演示成果</dt>
+            <dd>形成可恢复执行原型、故障分类文档与复现实验脚本；不提供未经验证的性能提升数字。</dd>
+          </div>
+        </dl>
+
+        <div class="method-tags" aria-label="关键技术词">
+          <code>Run / Task / Page</code>
+          <code>Checkpoint</code>
+          <code>Artifact Fingerprint</code>
+          <code>Fault Injection</code>
+          <code>Bounded Retry</code>
+          <code>asyncio</code>
+          <code>SQLite Transaction</code>
+          <code>Structured Trace</code>
+        </div>
+      </div>
+    </article>
+
+    <!-- 节点 02 -->
+    <article class="tl-node" id="re-buaa">
+      <div class="tl-marker" aria-hidden="true"><span class="dot"></span></div>
+      <div class="tl-body">
+        <header class="node-head">
+          <div class="node-meta">
+            <span class="node-num">02</span>
+            <span class="node-role">本科科研助理 · Undergraduate RA</span>
+          </div>
+          <time class="node-date" datetime="2024-09/2025-06">2024.09 — 2025.06</time>
+        </header>
+        <h2 class="node-org">北京航空航天大学<span class="org-group">· “检索与交互计算实验组”</span></h2>
+        <p class="fiction-tag">虚构组名 · 虚构角色</p>
+
+        <dl class="fact-list">
+          <div class="fact-row">
+            <dt>背景问题</dt>
+            <dd>研究 Agent 在多步工具任务中的上下文冗余与错误记忆问题。</dd>
+          </div>
+          <div class="fact-row">
+            <dt>具体工作</dt>
+            <dd>搭建文本切片、混合检索和阶段摘要原型，整理任务依赖与错误标签；比较完整历史、最近窗口和检索式记忆三种策略。</dd>
+          </div>
+          <div class="fact-row">
+            <dt>方法论</dt>
+            <dd>结合 RAG、向量检索、消融实验与人工错误分析评估不同记忆策略的表现。</dd>
+          </div>
+          <div class="fact-row">
+            <dt>演示成果</dt>
+            <dd>交付公开样式的实验说明、数据卡模板和演示报告；不声称真实论文发表。</dd>
+          </div>
+        </dl>
+
+        <div class="method-tags" aria-label="关键技术词">
+          <code>RAG</code>
+          <code>Vector Retrieval</code>
+          <code>Chunking</code>
+          <code>Hybrid Search</code>
+          <code>Stage Summary</code>
+          <code>Ablation</code>
+          <code>Error Analysis</code>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <!-- 底部返回导航 -->
+  <section class="page-foot-nav container">
+    <div class="pf-note">
+      <p class="pf-title">继续浏览</p>
+      <p class="pf-text">这些科研经历对应三篇虚构演示论文与三个学生项目，可在其他页面查看完整条目。</p>
+    </div>
+    <div class="pf-links">
+      <a class="btn btn-primary" href="index.html">返回首页</a>
+      <a class="btn btn-ghost" href="publications.html">查看论文</a>
+      <a class="btn btn-ghost" href="projects.html">查看项目</a>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <p class="fb-name">张三 · Zhang San</p>
+      <p class="fb-desc">关注能解释、可恢复且受资源约束的智能体系统。<span class="fiction-inline">虚构演示人物</span></p>
+    </div>
+    <nav class="footer-nav" aria-label="页脚导航">
+      <a href="index.html">首页</a>
+      <a href="publications.html">论文</a>
+      <a href="research.html" aria-current="page">科研经历</a>
+      <a href="projects.html">项目</a>
+      <a href="experience.html">实习经历</a>
+    </nav>
+    <div class="footer-contact">
+      <p class="fc-title">联系方式（占位 · 不可投递）</p>
+      <ul>
+        <li><span class="fc-key">邮箱</span><span class="fc-val">zhangsan@example.invalid</span></li>
+        <li><span class="fc-key">GitHub</span><span class="fc-val">example.invalid/zhangsan</span></li>
+        <li><span class="fc-key">学术主页</span><span class="fc-val">example.invalid/zhangsan/research</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-statement">
+    <div class="container">
+      <p>© 2026 张三 · 虚构履历 · 产品演示。教育、论文、成绩、奖项、公司、实习、项目与联系方式均为虚构演示，不构成真实录用、背书或可投递联系。</p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

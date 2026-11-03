@@ -11,7 +11,7 @@ DIRECTORIES = ('resumeagent','harness','storage','mcp','evals','examples','tests
 ROOT_FILES = ('main.py','README.md','LICENSE','requirements.txt','requirements-showcase.txt',
               '.gitignore','.env.example','config.example.yaml')
 DOC_FILES = ('architecture.md','architecture.mmd','architecture.svg','DEMO_SCRIPT.md',
-             'RELEASE_CHECKS.md','benchmark.md','benchmark.json','RELEASE_GUIDE.md','SOURCE_MAP.md','SECURITY_AUDIT.md')
+             'DEMO_PROFILE.md','DEMO_VIDEO.json','LIVE_DEMO.md','RELEASE_CHECKS.md','benchmark.md','benchmark.json','RELEASE_GUIDE.md','SOURCE_MAP.md','SECURITY_AUDIT.md')
 ALLOWED_SUFFIXES = {'.py','.json','.png','.svg','.html','.css','.js','.md','.yaml','.yml','.txt'}
 PRIVATE_NAMES = {'config.yaml','.env','se-metadata.json'}
 PRIVATE_PARTS = {'__pycache__','runs','outputs','mcp','.pytest_cache'}

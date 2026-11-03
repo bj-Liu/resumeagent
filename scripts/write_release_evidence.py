@@ -53,6 +53,10 @@ def write(source):
                       'reason':'GitHub Pages is configured for Actions; actual publication results are recorded in docs/RELEASE_CHECKS.md.'}),
         'cost_notice':'Mock usage is synthetic. Estimates are not actual charges. No new paid model calls in release checks.'
     }
+    # Re-running offline evidence export must not relabel a recorded live demo
+    # as the historical screenshot or erase its independently measured usage.
+    evidence['demo'].update(existing.get('demo', {}))
+    evidence['cost_notice'] = existing.get('cost_notice', evidence['cost_notice'])
     target = ROOT/'showcase/data/evidence.json'
     target.parent.mkdir(parents=True,exist_ok=True)
     target.write_text(json.dumps(evidence,indent=2,ensure_ascii=False)+'\n',encoding='utf-8')

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>论文发表 · 张三 | 虚构演示</title>
+    <link rel="stylesheet" href="publications.css">
+</head>
+<body>
+    <!-- 常驻顶部声明 -->
+    <div class="demo-banner" role="alert">
+        <span class="banner-text">⚠️ 虚构履历 · 产品演示 — 本页面所有个人信息、论文及机构均为占位数据，不可用于真实联系或学术引用。</span>
+    </div>
+
+    <!-- 导航 -->
+    <nav class="main-nav" aria-label="主导航">
+        <div class="nav-container">
+            <a href="index.html" class="logo">张三 / Zhang San</a>
+            <button class="menu-toggle" aria-expanded="false" aria-controls="nav-menu">
+                <span class="sr-only">切换菜单</span>
+                <span></span><span></span><span></span>
+            </button>
+            <ul id="nav-menu" class="nav-links">
+                <li><a href="index.html">首页</a></li>
+                <li><a href="publications.html" class="active" aria-current="page">论文</a></li>
+                <li><a href="research.html">科研经历</a></li>
+                <li><a href="projects.html">项目</a></li>
+                <li><a href="experience.html">实习经历</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <header class="page-header">
+            <h1 class="serif-title">Publications / 论文发表</h1>
+            <p class="subtitle">以下三篇论文均为<strong>虚构演示内容</strong>。会议/期刊名称不存在，无真实 DOI 或录用记录。</p>
+        </header>
+
+        <section class="publication-list">
+            
+            <!-- Paper 1 -->
+            <article class="paper-item" id="paper-checkpoint">
+                <div class="paper-meta">
+                    <span class="year">2026</span>
+                    <span class="venue italic">Demo Symposium on Reliable AI Systems<br><small>(虚构演示会议)</small></span>
+                </div>
+                <div class="paper-content">
+                    <h2 class="serif-heading">
+                        Checkpointed Agents: Recoverable Execution for Long-Horizon Language-Model Tasks
+                        <span class="demo-badge">Demo</span>
+                    </h2>
+                    <p class="authors">Zhang San, Lin Example, Chen Demo <span class="note">(均为虚构作者)</span></p>
+                    
+                    <div class="abstract-wrapper">
+                        <button class="toggle-btn" aria-expanded="false" aria-controls="abs-1">展开完整摘要</button>
+                        <div id="abs-1" class="abstract-text hidden">
+                            <p>提出以阶段检查点和可验证工件为中心的执行协议，将失败恢复从整任务重跑转变为对未完成阶段的受控重试，讨论取消与在途请求的资源核算边界。</p>
+                        </div>
+                    </div>
+
+                    <div class="links-area">
+                        <a href="#paper-checkpoint" class="anchor-link">页内锚点 #paper-checkpoint</a>
+                        <span class="placeholder-note">· 演示占位，无真实 DOI/外链</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Paper 2 -->
+            <article class="paper-item" id="paper-memory">
+                <div class="paper-meta">
+                    <span class="year">2026</span>
+                    <span class="venue italic">Journal of Demonstration Agent Research<br><small>(虚构演示期刊)</small></span>
+                </div>
+                <div class="paper-content">
+                    <h2 class="serif-heading">
+                        Selective Memory for Tool-Using Agents under Context Budgets
+                        <span class="demo-badge">Demo</span>
+                    </h2>
+                    <p class="authors">Zhang San, Wang Example <span class="note">(虚构)</span></p>
+                    
+                    <div class="abstract-wrapper">
+                        <button class="toggle-btn" aria-expanded="false" aria-controls="abs-2">展开完整摘要</button>
+                        <div id="abs-2" class="abstract-text hidden">
+                            <p>探索基于任务阶段和工具依赖的上下文筛选方法，以紧凑的事实、最近结果和失败提示支持工具调用，提供用于分析记忆污染与上下文冗余的实验设计。</p>
+                        </div>
+                    </div>
+
+                    <div class="links-area">
+                        <a href="#paper-memory" class="anchor-link">页内锚点 #paper-memory</a>
+                        <span class="placeholder-note">· 演示占位，不提供真实外链</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Paper 3 -->
+            <article class="paper-item" id="paper-vision">
+                <div class="paper-meta">
+                    <span class="year">2025</span>
+                    <span class="venue italic">Demo Workshop on Human-Centered Generative Interfaces<br><small>(虚构演示会议)</small></span>
+                </div>
+                <div class="paper-content">
+                    <h2 class="serif-heading">
+                        Seeing the Page: Screenshot-Guided Evaluation of Generated Academic Websites
+                        <span class="demo-badge">Demo</span>
+                    </h2>
+                    <p class="authors">Liu Demo, Zhang San, Lin Example <span class="note">(虚构)</span></p>
+                    
+                    <div class="abstract-wrapper">
+                        <button class="toggle-btn" aria-expanded="false" aria-controls="abs-3">展开完整摘要</button>
+                        <div id="abs-3" class="abstract-text hidden">
+                            <p>将结构校验与视觉评价分开，使用浏览器截图、人工评分规则和成对输入比较分析网站生成过程，强调 HTML 合法不等于视觉质量。</p>
+                        </div>
+                    </div>
+
+                    <div class="links-area">
+                        <a href="#paper-vision" class="anchor-link">页内锚点 #paper-vision</a>
+                        <span class="placeholder-note">· 演示占位，无真实 DOI</span>
+                    </div>
+                </div>
+            </article>
+
+        </section>
+
+        <footer class="page-footer">
+            <a href="index.html" class="back-home-btn">← 返回首页</a>
+            <p class="footer-disclaimer">© 2024-2026 张三 (虚构演示) · 所有联系方式为 example.invalid 占位符，不可投递。</p>
+        </footer>
+    </main>
+
+    <script>
+        // Mobile Navigation Toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navMenu = document.getElementById('nav-menu');
+
+        if (menuToggle && navMenu) {
+            menuToggle.addEventListener('click', () => {
+                const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+                menuToggle.setAttribute('aria-expanded', !isExpanded);
+                navMenu.classList.toggle('open');
+            });
+        }
+
+        // Abstract Expand/Collapse Logic
+        const toggleButtons = document.querySelectorAll('.toggle-btn');
+
+        toggleButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const targetId = this.getAttribute('aria-controls');
+                const abstractEl = document.getElementById(targetId);
+                
+                if (!abstractEl) return;
+
+                const isHidden = abstractEl.classList.contains('hidden');
+                
+                if (isHidden) {
+                    abstractEl.classList.remove('hidden');
+                    this.textContent = '收起摘要';
+                    this.setAttribute('aria-expanded', 'true');
+                } else {
+                    abstractEl.classList.add('hidden');
+                    this.textContent = '展开完整摘要';
+                    this.setAttribute('aria-expanded', 'false');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

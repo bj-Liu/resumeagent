@@ -1,0 +1,110 @@
+{
+  "notice": "Only genuine recorded frames; input and wait intervals accelerated as captioned. Resume recorded in private CLI logs, disclosed in captions and linked report. No simulated Agent progress.",
+  "clips": [
+    {
+      "source": "gui-raw.mkv",
+      "start_seconds": 0,
+      "source_duration_seconds": 8,
+      "speed": 1,
+      "caption": "ResumeAgent | Actual GUI recording - fictional Zhang San profile",
+      "clip": "clip-00.mp4"
+    },
+    {
+      "source": "gui-raw.mkv",
+      "start_seconds": 50,
+      "source_duration_seconds": 250,
+      "speed": 12.5,
+      "caption": "Actual GUI input and settings | 12.5x",
+      "clip": "clip-01.mp4"
+    },
+    {
+      "source": "gui-raw.mkv",
+      "start_seconds": 300,
+      "source_duration_seconds": 390,
+      "speed": 19.5,
+      "caption": "Rich fictional education, papers, research and projects | GUI input 19.5x",
+      "clip": "clip-02.mp4"
+    },
+    {
+      "source": "gui-raw.mkv",
+      "start_seconds": 750,
+      "source_duration_seconds": 92,
+      "speed": 6,
+      "caption": "Planner | Real qwen3.8-flash requests - waiting 6x",
+      "clip": "clip-03.mp4"
+    },
+    {
+      "source": "gui-raw.mkv",
+      "start_seconds": 843,
+      "source_duration_seconds": 44,
+      "speed": 4,
+      "caption": "Five validated page specifications | 4x",
+      "clip": "clip-04.mp4"
+    },
+    {
+      "source": "gui-raw.mkv",
+      "start_seconds": 887,
+      "source_duration_seconds": 238,
+      "speed": 10,
+      "caption": "Generator + Selenium + screenshot evaluation | waiting 10x",
+      "clip": "clip-05.mp4"
+    },
+    {
+      "source": "gui-raw.mkv",
+      "start_seconds": 1145,
+      "source_duration_seconds": 40,
+      "speed": 4,
+      "caption": "Five-page generation completed | actual preview 4x",
+      "clip": "clip-06.mp4"
+    },
+    {
+      "source": "gui-refinement-indexed.mkv",
+      "start_seconds": 50,
+      "source_duration_seconds": 110,
+      "speed": 5,
+      "caption": "GUI feedback | Fix the observed 3px mobile overflow - 5x",
+      "clip": "clip-07.mp4"
+    },
+    {
+      "source": "gui-refinement-indexed.mkv",
+      "start_seconds": 160,
+      "source_duration_seconds": 108,
+      "speed": 9,
+      "caption": "Refiner | Real multimodal request - waiting 9x",
+      "clip": "clip-08.mp4"
+    },
+    {
+      "source": "gui-refinement-indexed.mkv",
+      "start_seconds": 285,
+      "source_duration_seconds": 35,
+      "speed": 5,
+      "caption": "Stale browser session / response error; same Run recovered via public CLI",
+      "clip": "clip-09.mp4"
+    },
+    {
+      "source": "browser-tour-recorded-v2.mp4",
+      "start_seconds": 0,
+      "source_duration_seconds": 71,
+      "speed": 1,
+      "caption": "Final artifact | Actual Selenium navigation and abstract expansion - 1x",
+      "clip": "clip-10.mp4"
+    }
+  ],
+  "file": "resumeagent-demo-20261103.mp4",
+  "sha256": "0544cabe40b608031f506116bae2170e5c60c787294afa18ced7d8727e55e0d6",
+  "bytes": 3447483,
+  "duration_seconds": 220.458,
+  "video": {
+    "codec": "H.264",
+    "width": 1920,
+    "height": 1080,
+    "fps": 24,
+    "audio": false
+  },
+  "source_browser_capture": {
+    "kind": "actual Selenium viewport recording",
+    "seconds": 71,
+    "fps": 4
+  },
+  "privacy_review": "Original app-window-only GUI capture and generated fictional-site viewports; visual contact sheet reviewed. No desktop/editor/configuration footage included. Not exhaustive OCR."
+}

@@ -47,7 +47,7 @@ async function loadEvidence() {
     const metrics = [
       [String(evidence.tests.passed), "Automated tests passed", `${evidence.tests.total} discovered · ${evidence.tests.skipped} opt-in skip · ${evidence.tests.failures} failures/errors`],
       [`${evidence.benchmark.primary_completed}/${evidence.benchmark.primary_total}`, "Mock workflow Runs completed", `${evidence.benchmark.recovery_completed}/${evidence.benchmark.recovery_total} separate recovery experiments succeeded`],
-      ["0", "Paid API calls in release checks", "Real SDK transport and real Selenium checks use mocked model responses."]
+      ["5/5", "Real demo pages completed", "Live Qwen generation, Selenium screenshots and recovered refinement. Separate from Mock benchmark."]
     ];
     metrics.forEach(([value, label, detail]) => {
       const metric = document.createElement("div"); metric.className = "metric";
@@ -61,6 +61,7 @@ async function loadEvidence() {
         if (/\.(mp4|webm)$/i.test(url.pathname)) {
           const video = document.getElementById("recorded-video"); video.src = url.href; video.hidden = false;
           document.querySelector(".demo-cover > img").hidden = true;
+          document.querySelector(".recording-label").hidden = true;
         }
         document.querySelector(".recording-label").textContent = "RECORDED WALKTHROUGH AVAILABLE";
       }

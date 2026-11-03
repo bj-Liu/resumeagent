@@ -2,27 +2,28 @@
 
 These are local measurements, not a claim that the GitHub publication or every
 live provider integration has succeeded. Python 3.10.21, Windows, conda
-`machine_learning`. No paid model calls were made during this release check.
+`machine_learning`. Automated tests use mocks; the separately documented
+[live demo](LIVE_DEMO.md) uses real Qwen calls and reports their usage.
 
 ## Measured results
 
 | Check | Actual result | Scope |
 |---|---|---|
-| Complete regression suite | **95 discovered; 94 passed, 1 opt-in skip; 0 failures/errors** in 219.063 s | `python -m evals.run_tests` |
+| Complete regression suite | **95 discovered; 94 passed, 1 opt-in skip; 0 failures/errors** in 158.458 s | Latest complete `python -m evals.run_tests` run |
 | Final clean Git clone | **95 discovered; 94 passed, 1 opt-in skip; 0 failures/errors** in 213.507 s | No private YAML or old Demo files; same suite |
 | Real Selenium opt-in | **1 passed** in 37.031 s | Real Edge; mocked LLM; no provider fees |
 | GUI | Passed real Tk startup and GUI mock workflow subprocesses | Plan, generation, edit/refinement, page switching, preview dispatch, backup/restore, recovery, diagnostics and shutdown |
 | Official MCP client | Passed stdio handshake and all three tools | Mock model/browser; generation, polling and local preview |
 | Harness recovery example | Injected failure → failed checkpoint → completed after resume | Completed pages retained; fake provider failure explicitly injected |
 | Paired benchmark | 6/6 primary Runs completed; 6/6 separate recoveries succeeded | Three fixed fictional profiles × baseline/refined; one repeat; mock model/browser |
-| Mermaid | Three documentation blocks parsed by Mermaid 11.12.2 | README architecture/workflow and architecture document |
+| System architecture | One presentation SVG is used in README and showcase | The second detailed Mermaid diagram is no longer displayed or staged on Pages |
 | Static build | Passed HTML/CSS/JS/SVG/JSON and local resource checks | Node 22.16.0, html5lib and tinycss2; isolated project-path build |
 | Static failure cases | 6 passed | Bad CSS, bad JS, missing assets, traversal, inconsistent counters and valid anchors |
 | Showcase browser QA | Passed at actual 1440 px and 390 px viewport widths | Real Edge; no overflow or broken images; tabs, keyboard, menu and copy |
 | GUI main entry | Passed | Actual `main.py --gui` entry and mapped Tk event loop; timed normal close; no generation calls |
 | Source package scan | No findings in reviewed candidate | Exact local credential matches and credential-shaped strings; private files excluded |
-| Live paid model run | Not repeated in this release | Release checks intentionally use mocks; earlier screenshot is labeled historical |
-| Demo video | Not recorded | Script and original placeholder cover provided |
+| Live demo | Five pages generated, rendered and evaluated; project refined and recovered | Real GUI / qwen3.8-flash / Selenium; see LIVE_DEMO.md |
+| Demo video | Edited real GUI and browser footage | Accelerated waits and failed/refined Run recovery disclosed |
 
 The complete tests cover provider failures, generation/render errors, interruption,
 budget exhaustion, checkpoint reuse, tool validation and diagnostics. They do not
@@ -143,5 +144,23 @@ python -m http.server 8080 --directory release-dist/showcase
 Real Selenium opt-in and GUI need a supported browser/driver and display as
 described in README. `scripts/check_showcase_browser.py` optionally verifies the
 built static site in Selenium. `scripts/render_architecture_svg.py` renders the
-presentation SVG using only Python's standard library; the editable Mermaid
-source describes the same responsibilities with fuller control-flow detail.
+single presentation SVG using only Python's standard library. The detailed legacy
+Mermaid diagram is not displayed in README or the showcase.
+
+## Follow-up release checks
+
+The Windows CI process-kill recovery test originally shared a short startup and
+checkpoint timeout. Slow runner I/O could leave only one completed page when the
+parent checked. The test now independently waits for startup and two completed
+checkpoints; its blocked third page waits for process termination rather than a
+fixed sleep. The exact two-completed-pages and resume-only-failed-page assertions
+are retained. The local complete suite passed 95 discovered / 94 passed / one
+opt-in skip in 158.458 seconds. No production workflow change was needed.
+
+The user-supplied Homepage Studio screenshot is copied byte-for-byte, preserves
+its 2880?1704 ratio and opens at full resolution. Its empty central preview is
+explicitly identified; new final-page screenshots and the actual five-page site
+are separate demo artifacts. Only the original presentation System Architecture
+is displayed.
+
+Final showcase validation checked 36 staged static files and six inline JavaScript blocks in generated pages. Six fail-closed build tests and five credential-detector tests passed. The final site passed real Edge checks at 1440px and 390px. Git whitespace review found nine pre-existing trailing-space lines in the generated publications HTML/CSS; these artifacts are deliberately kept byte-identical to actual model output. No authored-code whitespace error was introduced.

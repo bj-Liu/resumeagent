@@ -11,7 +11,7 @@
     "passed": 94,
     "skipped": 1,
     "failures": 0,
-    "seconds": 219.063
+    "seconds": 158.458
   },
   "real_browser": {
     "status": "passed",
@@ -108,15 +108,27 @@
     }
   },
   "demo": {
-    "video_url": null,
-    "recording_status": "not_recorded",
+    "video_url": "https://github.com/bj-Liu/resumeagent/releases/download/demo-20261103/resumeagent-demo-20261103.mp4",
+    "recording_status": "recorded_and_edited",
     "screenshot": {
-      "file": "assets/generated-homepage.png",
-      "sha256": "911805572c0b75f41890f5f0c21c5310df9881884211c448df7038033eb346f1",
-      "kind": "historical real Selenium screenshot of fictional profile",
-      "source": "Earlier local prompt-design experiment; qwen3.8-flash; revised index.html",
-      "release_validation": false,
+      "file": "assets/demo-index-1440.png",
+      "sha256": "95cda5cf666cab94d1cc632a8421f8ce45cad860e4b4639a4b96cafcd597f68e",
+      "kind": "Actual final Selenium capture from recorded live demonstration",
+      "source": "GUI / Harness / qwen3.8-flash; fictional Zhang San researcher profile",
+      "release_validation": true,
       "visual_quality_score": null
+    },
+    "report": "docs/LIVE_DEMO.md",
+    "live_evidence": "data/live-demo.json",
+    "gui_screenshot": {
+      "file": "assets/homepage-studio.png",
+      "sha256": "f8d722038f8422616454a6c390fcaa64b7f14ac01d9f81d9660930cce01d3188",
+      "source": "Original user-supplied platform.png",
+      "dimensions": [
+        2880,
+        1704
+      ],
+      "unchanged": true
     }
   },
   "deployment": {
@@ -126,5 +138,5 @@
     "workflow_url": "https://github.com/bj-Liu/resumeagent/actions/runs/41502441363",
     "browser_verification": "Live Edge checks passed at 1440px and 390px"
   },
-  "cost_notice": "Mock usage is synthetic. Estimates are not actual charges. No new paid model calls in release checks."
+  "cost_notice": "Offline benchmark usage is synthetic. The separately labeled recorded live demo has 20 actual Qwen requests; estimated CNY 0.279674 based on provider token counters, not an invoice."
 }

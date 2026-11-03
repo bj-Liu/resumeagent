@@ -1,0 +1,278 @@
+{
+  "checked_date": "2026-11-03",
+  "model": "qwen3.8-flash",
+  "execution": "actual existing GUI -> Harness; official CLI resumes failed refinement; no model mocks",
+  "fictional_profile": true,
+  "runs": [
+    {
+      "id": "32b044a6d5db4b5597adeed60d70b868",
+      "status": "completed",
+      "stage": "completion",
+      "elapsed": 83.92200000002049,
+      "usage": {
+        "prompt_tokens": 33321,
+        "completion_tokens": 7916,
+        "cost": 0.72901,
+        "cost_source": "configured_or_legacy_estimate",
+        "pending_requests": 0,
+        "pending_tools": 0
+      },
+      "created_at": "2026-11-02T19:17:33.807726+00:00",
+      "updated_at": "2026-11-02T19:18:57.763907+00:00",
+      "llm_requests": 6,
+      "pages": [
+        {
+          "html_name": "index.html",
+          "status": "pending",
+          "stage": "generation"
+        },
+        {
+          "html_name": "publications.html",
+          "status": "pending",
+          "stage": "generation"
+        },
+        {
+          "html_name": "research.html",
+          "status": "pending",
+          "stage": "generation"
+        },
+        {
+          "html_name": "projects.html",
+          "status": "pending",
+          "stage": "generation"
+        },
+        {
+          "html_name": "experience.html",
+          "status": "pending",
+          "stage": "generation"
+        }
+      ]
+    },
+    {
+      "id": "ca605fa797414e1094758b196232fdac",
+      "status": "completed",
+      "stage": "completion",
+      "elapsed": 233.375,
+      "usage": {
+        "prompt_tokens": 62381,
+        "completion_tokens": 32375,
+        "cost": 2.24256,
+        "cost_source": "configured_or_legacy_estimate",
+        "pending_requests": 0,
+        "pending_tools": 0
+      },
+      "created_at": "2026-11-02T19:19:49.783638+00:00",
+      "updated_at": "2026-11-02T19:23:43.215999+00:00",
+      "llm_requests": 11,
+      "pages": [
+        {
+          "html_name": "index.html",
+          "status": "completed",
+          "stage": "completion"
+        },
+        {
+          "html_name": "publications.html",
+          "status": "completed",
+          "stage": "completion"
+        },
+        {
+          "html_name": "research.html",
+          "status": "completed",
+          "stage": "completion"
+        },
+        {
+          "html_name": "projects.html",
+          "status": "completed",
+          "stage": "completion"
+        },
+        {
+          "html_name": "experience.html",
+          "status": "completed",
+          "stage": "completion"
+        }
+      ]
+    },
+    {
+      "id": "836b5f8b3b024a2494f85c1cf6bbcc0a",
+      "status": "completed",
+      "stage": "completion",
+      "elapsed": 203.59400000004098,
+      "usage": {
+        "prompt_tokens": 45876,
+        "completion_tokens": 21343,
+        "cost": 1.52591,
+        "cost_source": "configured_or_legacy_estimate",
+        "pending_requests": 0,
+        "pending_tools": 0
+      },
+      "created_at": "2026-11-03T03:55:09.590265+00:00",
+      "updated_at": "2026-11-03T04:02:02.265191+00:00",
+      "llm_requests": 3,
+      "pages": [
+        {
+          "html_name": "projects.html",
+          "status": "completed",
+          "stage": "completion"
+        }
+      ]
+    }
+  ],
+  "usage": {
+    "requests": 20,
+    "prompt_tokens": 141578,
+    "completion_tokens": 61634,
+    "estimated_cny": 0.279674,
+    "currency": "CNY",
+    "rate_per_million": {
+      "input": 0.8,
+      "output": 2.7
+    },
+    "invoice_actual": null,
+    "source": "provider token counters; public Beijing list prices, excluding discounts/caching",
+    "rate_reference": "https://help.aliyun.com/en/model-studio/qwen3-8-flash"
+  },
+  "browser_checks": [
+    {
+      "page": "experience.html",
+      "viewport": 1440,
+      "scrollWidth": 1425,
+      "fiction": true,
+      "brokenImages": [],
+      "characters": 661
+    },
+    {
+      "page": "index.html",
+      "viewport": 1440,
+      "scrollWidth": 1425,
+      "fiction": true,
+      "brokenImages": [],
+      "characters": 1759
+    },
+    {
+      "page": "projects.html",
+      "viewport": 1440,
+      "scrollWidth": 1425,
+      "fiction": true,
+      "brokenImages": [],
+      "characters": 1536
+    },
+    {
+      "page": "publications.html",
+      "viewport": 1440,
+      "scrollWidth": 1425,
+      "fiction": true,
+      "brokenImages": [],
+      "characters": 870
+    },
+    {
+      "page": "research.html",
+      "viewport": 1440,
+      "scrollWidth": 1425,
+      "fiction": true,
+      "brokenImages": [],
+      "characters": 1412
+    },
+    {
+      "page": "experience.html",
+      "viewport": 390,
+      "scrollWidth": 390,
+      "fiction": true,
+      "brokenImages": [],
+      "characters": 647
+    },
+    {
+      "page": "index.html",
+      "viewport": 390,
+      "scrollWidth": 390,
+      "fiction": true,
+      "brokenImages": [],
+      "characters": 1758
+    },
+    {
+      "page": "projects.html",
+      "viewport": 390,
+      "scrollWidth": 390,
+      "fiction": true,
+      "brokenImages": [],
+      "characters": 1524
+    },
+    {
+      "page": "publications.html",
+      "viewport": 390,
+      "scrollWidth": 390,
+      "fiction": true,
+      "brokenImages": [],
+      "characters": 856
+    },
+    {
+      "page": "research.html",
+      "viewport": 390,
+      "scrollWidth": 390,
+      "fiction": true,
+      "brokenImages": [],
+      "characters": 1415
+    }
+  ],
+  "artifacts": [
+    {
+      "file": "experience.css",
+      "sha256": "ee02e79a65bb4f5ae171bfa17338b85708bb67d1818064a5239d109ead5a9a99",
+      "bytes": 6426
+    },
+    {
+      "file": "experience.html",
+      "sha256": "ba9e3e0589a194e11830f064b95bc8836490643d51b4564fb8ea375abdeb0de0",
+      "bytes": 5414
+    },
+    {
+      "file": "index.css",
+      "sha256": "2f83c7f875f5c2e4c2850a9bd2856ef2d1bcafd6e1fde01468c5fbda694ee373",
+      "bytes": 15850
+    },
+    {
+      "file": "index.html",
+      "sha256": "24fbb0e1b937824441b14a0e3636c8f0da712f9471fa557fc40114b69931278f",
+      "bytes": 14282
+    },
+    {
+      "file": "projects.css",
+      "sha256": "a3df5d78a76048d9da4ab0cbea328d7d7aaee0e5a10152c93ee1824e8dbfb4ad",
+      "bytes": 14070
+    },
+    {
+      "file": "projects.html",
+      "sha256": "11d1ff4da2414520eae3fc784dce1ed19fe33031121df3979d2651b35cc5f87d",
+      "bytes": 12897
+    },
+    {
+      "file": "publications.css",
+      "sha256": "daab96f603a54d6708cbf10b0f91309a27d7cde855c034449423c86fd670d3d6",
+      "bytes": 8219
+    },
+    {
+      "file": "publications.html",
+      "sha256": "6dbad45990709126f58c567cf539643d1be057bc0011d40cc4b716020f63cb51",
+      "bytes": 8534
+    },
+    {
+      "file": "research.css",
+      "sha256": "691eae84458f815b528b57264ceb37ead8ceedf8c7e8b22c9ef0a73588cd5661",
+      "bytes": 11984
+    },
+    {
+      "file": "research.html",
+      "sha256": "7aeeb6d13a9069501dacf996e82daa15c65b4ac813ee69a917f561f1187a761e",
+      "bytes": 10182
+    }
+  ],
+  "recovery": {
+    "run_id": "836b5f8b3b024a2494f85c1cf6bbcc0a",
+    "initial_errors": [
+      "InvalidSessionIdException",
+      "Invalid refinement response"
+    ],
+    "resolution": "Same Run resumed through public CLI with a fresh Selenium session; no validator or Agent changes",
+    "status": "completed"
+  },
+  "visual_quality_score": null
+}

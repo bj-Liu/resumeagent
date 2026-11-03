@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>实习经历 · 张三（虚构演示）</title>
+<link rel="stylesheet" href="experience.css">
+</head>
+<body>
+
+<div class="disclaimer-bar">
+  <div class="container disclaimer-inner">
+    <span class="tag-fic">虚构履历 · 产品演示</span>
+    <p>本页所有公司、岗位、时间与成果均为虚构演示，不存在真实雇主或可投递联系。</p>
+  </div>
+</div>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="index.html">
+      <span class="brand-name">张三</span>
+      <span class="brand-sub">Zhang San<span class="fic-inline">· 虚构演示</span></span>
+    </a>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">
+      <span class="sr-only">打开导航</span>
+      <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+    </button>
+    <nav id="primary-nav" class="primary-nav" aria-label="主导航">
+      <ul>
+        <li><a href="index.html">首页</a></li>
+        <li><a href="publications.html">论文</a></li>
+        <li><a href="research.html">科研经历</a></li>
+        <li><a href="projects.html">项目</a></li>
+        <li><a href="experience.html" aria-current="page">实习经历</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main class="container page-main">
+
+  <section class="page-head">
+    <p class="eyebrow"><span class="num">§ 05</span> Internship Experience</p>
+    <h1 class="page-title">实习经历</h1>
+    <p class="lede">两段工程实习：一段面向 Agent 系统的状态与工具接口，一段面向小模型微调的实验脚手架。以下条目均为虚构演示，不含真实客户、营收或线上业务指标。</p>
+  </section>
+
+  <ol class="timeline">
+
+    <li class="tl-item">
+      <div class="tl-date">
+        <time datetime="2026-06">2026.06</time>
+        <span class="tl-arrow" aria-hidden="true">—</span>
+        <time datetime="2026-09">2026.09</time>
+      </div>
+      <div class="tl-body">
+        <div class="org-row">
+          <h2 class="org">澄明智能研究院</h2>
+          <span class="tag-fic">虚构公司</span>
+        </div>
+        <p class="role">Agent Systems Engineering Intern<span class="fic-inline">（虚构实习）</span></p>
+
+        <dl class="detail-list">
+          <div class="dl-row">
+            <dt>技术栈</dt>
+            <dd class="tech"><b>Python</b> · <b>asyncio</b> · <b>FastAPI</b> · <b>SQLite</b> · <b>Docker</b></dd>
+          </div>
+          <div class="dl-row">
+            <dt>主要贡献</dt>
+            <dd>
+              <ul class="contrib">
+                <li>实现任务状态接口与可追踪的工具适配器。</li>
+                <li>编写失败重放脚本，搭建容器化开发环境。</li>
+                <li>参与日志脱敏与成本预算设计。</li>
+              </ul>
+            </dd>
+          </div>
+          <div class="dl-row">
+            <dt>演示交付</dt>
+            <dd>内部测试原型与使用文档；无真实客户或营收指标。</dd>
+          </div>
+        </dl>
+      </div>
+    </li>
+
+    <li class="tl-item">
+      <div class="tl-date">
+        <time datetime="2024-07">2024.07</time>
+        <span class="tl-arrow" aria-hidden="true">—</span>
+        <time datetime="2024-09">2024.09</time>
+      </div>
+      <div class="tl-body">
+        <div class="org-row">
+          <h2 class="org">远川数据实验室</h2>
+          <span class="tag-fic">虚构公司</span>
+        </div>
+        <p class="role">Machine Learning Engineering Intern<span class="fic-inline">（虚构实习）</span></p>
+
+        <dl class="detail-list">
+          <div class="dl-row">
+            <dt>技术栈</dt>
+            <dd class="tech"><b>PyTorch</b> · <b>Transformers</b> · <b>LoRA</b> · <b>Pandas</b> · <b>Git</b></dd>
+          </div>
+          <div class="dl-row">
+            <dt>主要贡献</dt>
+            <dd>
+              <ul class="contrib">
+                <li>整理训练配置与评测输入。</li>
+                <li>构建小模型微调实验脚手架。</li>
+                <li>补充回归用例与结果记录模板。</li>
+              </ul>
+            </dd>
+          </div>
+          <div class="dl-row">
+            <dt>演示交付</dt>
+            <dd>可复现的样例训练流程；不声称线上部署或真实业务提升。</dd>
+          </div>
+        </dl>
+      </div>
+    </li>
+
+  </ol>
+
+  <footer class="page-foot">
+    <div class="foot-note">
+      <span class="tag-fic">虚构履历 · 产品演示</span>
+      <p>以上公司与岗位均为虚构演示设定，不代表任何真实雇佣关系。</p>
+    </div>
+    <a class="back-link" href="index.html">← 返回首页</a>
+  </footer>
+
+</main>
+
+<script>
+(function () {
+  var toggle = document.querySelector('.nav-toggle');
+  var nav = document.getElementById('primary-nav');
+  if (!toggle || !nav) return;
+  toggle.addEventListener('click', function () {
+    var open = nav.classList.toggle('is-open');
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+})();
+</script>
+
+</body>
+</html>

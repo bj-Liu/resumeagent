@@ -87,7 +87,7 @@ def build(output, node='node'):
     shutil.copytree(ROOT / 'showcase', output)
     docs = output / 'docs'
     docs.mkdir(exist_ok=True)
-    for filename in ('architecture.md', 'architecture.mmd', 'architecture.svg', 'DEMO_SCRIPT.md', 'RELEASE_CHECKS.md'):
+    for filename in ('architecture.md', 'architecture.svg', 'DEMO_SCRIPT.md', 'DEMO_PROFILE.md', 'DEMO_VIDEO.json', 'LIVE_DEMO.md', 'RELEASE_CHECKS.md'):
         shutil.copy2(ROOT / 'docs' / filename, docs / filename)
     for filename in ('README.md', 'LICENSE'):
         shutil.copy2(ROOT / filename, docs / filename)

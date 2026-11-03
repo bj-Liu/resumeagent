@@ -12,7 +12,10 @@ planning and generating the website.
 [Release verification](docs/RELEASE_CHECKS.md) · [Security audit](docs/SECURITY_AUDIT.md) · [MIT license](LICENSE)
 
 The live showcase is deployed with GitHub Actions. Its evidence section separates
-measured tests, historical generated output and the still-unrecorded demo video.
+offline tests, the real five-page model-backed demonstration and its recorded video.
+See [live demo evidence](docs/LIVE_DEMO.md), [fictional profile](docs/DEMO_PROFILE.md),
+[generated site](https://bj-liu.github.io/resumeagent/demo/) and
+[recorded walkthrough](https://github.com/bj-Liu/resumeagent/releases/tag/demo-20261103).
 
 ## Project overview
 
@@ -43,60 +46,6 @@ design can change without inventing achievements or contact information.
 ## System architecture
 
 ![ResumeAgent architecture](docs/architecture.svg)
-
-<!-- ARCHITECTURE_BEGIN -->
-```mermaid
-flowchart TB
-    subgraph interfaces["Entry points"]
-        GUI["Tkinter GUI / CLI"]
-        MC["External MCP Client"] --> MS["Official Python MCP Server"]
-        MS --> JM["JobManager: bounded background Runs"]
-    end
-    GUI --> RT["Harness Runtime: execution owner"]
-    JM --> RT
-    subgraph control["Harness services"]
-        CT["Context: stage inputs"]
-        BU["Budget: usage, cost, concurrency, timeout"]
-        ST["StateStore + SQLite: Run / Task / Page"]
-        TR["Tracing: structured events + redacted diagnostics"]
-        TO["Tool Registry: validation and execution"]
-    end
-    CT -. assembles .-> RT
-    BU -. admits or stops .-> RT
-    RT -->|checkpoint| ST
-    RT -->|events| TR
-    RT -->|managed calls| TO
-    subgraph agents["Business roles: three agent mixins"]
-        PL["Planner: page specifications"]
-        GE["Generator: HTML / CSS"]
-        RE["Refiner: screenshot evaluation + revision"]
-    end
-    RT -->|planning| PL
-    RT -->|per-page concurrent generation| GE
-    RT -->|evaluation / bounded refinement| RE
-    PL & GE & RE --> LC["LLMClient: provider adapters + usage observer"]
-    LC --> LP["OpenAI / Azure OpenAI / Qwen"]
-    subgraph tools["Tools and quality gate"]
-        FS["Filesystem: artifacts and images"]
-        BR["Browser: Selenium rendering / screenshots"]
-        VA["Validator: filenames, artifacts, HTML"]
-        QA["Quality Agent role: integrated gate, not a separate class"]
-    end
-    TO --> FS & BR & VA
-    BR -->|screenshot| RE
-    RE -->|needs_refinement + feedback| RT
-    VA --> QA
-    RE -. visual judgment .-> QA
-    QA -. validation decision .-> RT
-    RT --> OUT["Completed output or resumable checkpoint"]
-    EV["Evaluation: Workflow / Recovery / Benchmark / blinded visual rubric"] -. tests .-> RT
-    EV -. reviews artifacts .-> OUT
-    classDef central fill:#1d6553,color:#ffffff,stroke:#1d6553;
-    classDef quality fill:#fff5da,color:#514631,stroke:#c7b676,stroke-dasharray:5 4;
-    class RT central;
-    class QA quality;
-```
-<!-- ARCHITECTURE_END -->
 
 Runtime controls the workflow. Context assembles bounded inputs, StateStore
 persists progress, Budget controls admission and Tracing records execution.
@@ -142,19 +91,7 @@ and its late usage is recorded. These limits are not a provider-side billing cap
 
 ## Execution workflow
 
-```mermaid
-flowchart LR
-  C[Create Run] --> P[Planning]
-  P --> G[Concurrent page generation]
-  G --> B[Browser rendering]
-  B --> E[Screenshot evaluation]
-  E -->|needs changes and budget remains| R[Refinement]
-  R --> B
-  E -->|accepted or iteration limit| V[Artifact validation]
-  V --> F[Completion]
-  G -. failure / cancellation / budget .-> S[Persist checkpoint]
-  S -->|resume unfinished work| G
-```
+Create Run ? Planning ? Concurrent page generation ? Browser rendering ? Screenshot evaluation ? Bounded refinement ? Validation ? Completion. Failures preserve checkpoints for resume.
 
 `Run` is the website job, `Task` is an individual stage execution, and `Page` is
 one generated document. Failures preserve errors and completed work. Resume is
@@ -356,7 +293,7 @@ Actions** if it is not already enabled. See [deployment notes](docs/RELEASE_CHEC
 ## Limitations
 
 - Live execution needs a usable provider account, sufficient quota, network access
-  and a compatible multimodal model. No paid API calls are part of release tests.
+  and a compatible multimodal model. Automated tests are offline; the separately labeled live demo uses real paid calls.
 - Generated HTML runs in a browser; do not treat it as trusted or sandboxed code.
 - SQLite, diagnostics, screenshots and output files can contain personal data.
   Keep them local and review material before sharing.
@@ -365,12 +302,12 @@ Actions** if it is not already enabled. See [deployment notes](docs/RELEASE_CHEC
   a universal design-quality score or benchmark advantage over other products.
 - MCP is a local stdio integration, not a hosted service. Cancellation cannot
   necessarily abort an already-submitted provider request.
-- The demo recording is pending. The showcase labels its historical generated
-  screenshot and recording placeholder explicitly.
+- The recorded live demo includes a failed refinement and same-Run CLI recovery.
+  It is one fictional example, separate from the Mock benchmark and not a visual-quality score.
 
 ## Roadmap
 
-- Record the end-to-end demo using the published script and public fictional facts.
+- Expand the recorded examples with reproducible inputs and independent visual review.
 - Extend provider-specific installation and live integration coverage.
 - Collect blinded visual evaluations on fixed inputs before making quality claims.
 - Improve browser isolation and packaging without duplicating Harness ownership.

@@ -1,0 +1,410 @@
+/* Design System Variables */
+:root {
+    --bg-color: #f7f7f2;       /* Warm paper white */
+    --text-main: #191919;      /* Deep ink */
+    --text-muted: #666666;     /* Gray metadata */
+    --accent-green: #2d5a4b;   /* Forest green */
+    --border-color: #e0e0dc;   /* Subtle divider */
+    --font-serif: "Songti SC", "SimSun", "Times New Roman", serif;
+    --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --spacing-unit: 1rem;
+}
+
+/* Reset & Base */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    font-family: var(--font-sans);
+    line-height: 1.8; /* Specific requirement for reading experience */
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Demo Banner */
+.demo-banner {
+    background-color: #fff3cd;
+    color: #856404;
+    padding: 0.5rem 1rem;
+    text-align: center;
+    font-size: 0.85rem;
+    border-bottom: 1px solid #ffeeba;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.banner-text {
+    display: block;
+    max-width: 1120px;
+    margin: 0 auto;
+}
+
+/* Navigation */
+.main-nav {
+    border-bottom: 1px solid var(--border-color);
+    background-color: var(--bg-color);
+    position: sticky;
+    top: 32px; /* Below banner */
+    z-index: 90;
+}
+
+.nav-container {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-family: var(--font-serif);
+    font-weight: bold;
+    font-size: 1.2rem;
+    text-decoration: none;
+    color: var(--text-main);
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    transition: color 0.2s;
+    position: relative;
+}
+
+.nav-links a:hover {
+    color: var(--text-main);
+}
+
+.nav-links a.active {
+    color: var(--accent-green);
+    font-weight: 600;
+}
+
+.nav-links a.active::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(--accent-green);
+}
+
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+}
+
+.menu-toggle span {
+    display: block;
+    width: 20px;
+    height: 2px;
+    background-color: var(--text-main);
+    margin: 4px 0;
+    transition: 0.3s;
+}
+
+/* Main Container */
+.container {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+}
+
+/* Page Header */
+.page-header {
+    margin-bottom: 4rem;
+    border-left: 4px solid var(--accent-green);
+    padding-left: 1.5rem;
+}
+
+.serif-title {
+    font-family: var(--font-serif);
+    font-size: 2.5rem;
+    font-weight: normal;
+    margin-bottom: 0.5rem;
+    color: var(--text-main);
+}
+
+.subtitle {
+    color: var(--text-muted);
+    font-size: 1rem;
+    max-width: 600px;
+}
+
+/* Publication List Layout */
+.publication-list {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+.paper-item {
+    display: grid;
+    grid-template-columns: 180px 1fr; /* Left meta, Right content */
+    gap: 2rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.paper-item:last-child {
+    border-bottom: none;
+}
+
+/* Meta Column */
+.paper-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: 14px;
+    color: var(--text-muted);
+    padding-top: 0.2rem;
+}
+
+.year {
+    font-weight: bold;
+    color: var(--text-main);
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+}
+
+.venue {
+    line-height: 1.4;
+}
+
+.italic {
+    font-style: italic;
+}
+
+/* Content Column */
+.paper-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.serif-heading {
+    font-family: var(--font-serif);
+    font-size: 24px; /* Specified size */
+    font-weight: normal;
+    line-height: 1.3;
+    color: var(--text-main);
+    display: inline-block;
+}
+
+.demo-badge {
+    font-family: var(--font-sans);
+    font-size: 0.6rem;
+    background-color: #eee;
+    color: #888;
+    padding: 2px 6px;
+    border-radius: 2px;
+    vertical-align: middle;
+    margin-left: 8px;
+    letter-spacing: 0.5px;
+    border: 1px solid #ddd;
+}
+
+.authors {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+}
+
+.note {
+    font-size: 0.85rem;
+    opacity: 0.8;
+}
+
+/* Abstract Interaction */
+.abstract-wrapper {
+    margin-top: 0.5rem;
+}
+
+.toggle-btn {
+    background: none;
+    border: none;
+    color: var(--accent-green);
+    font-size: 0.9rem;
+    cursor: pointer;
+    padding: 0;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    font-weight: 500;
+}
+
+.toggle-btn:hover {
+    color: #1a3a2f;
+}
+
+.abstract-text {
+    margin-top: 1rem;
+    padding: 1.5rem;
+    background-color: rgba(45, 90, 75, 0.05); /* Very subtle tint */
+    border-left: 2px solid var(--accent-green);
+    font-size: 0.95rem;
+    color: #333;
+    transition: all 0.3s ease;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Links Area */
+.links-area {
+    margin-top: 1rem;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.anchor-link {
+    color: var(--text-muted);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--text-muted);
+}
+
+.anchor-link:hover {
+    color: var(--accent-green);
+    border-bottom-color: var(--accent-green);
+}
+
+.placeholder-note {
+    color: #999;
+    font-style: italic;
+}
+
+/* Footer */
+.page-footer {
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.back-home-btn {
+    text-decoration: none;
+    color: var(--accent-green);
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--accent-green);
+    border-radius: 2px;
+    transition: background 0.2s, color 0.2s;
+}
+
+.back-home-btn:hover {
+    background-color: var(--accent-green);
+    color: white;
+}
+
+.footer-disclaimer {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-align: right;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: var(--bg-color);
+        border-bottom: 1px solid var(--border-color);
+        padding: 1rem 2rem;
+        gap: 1rem;
+    }
+
+    .nav-links.open {
+        display: flex;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    .paper-item {
+        grid-template-columns: 1fr; /* Stack meta and content */
+        gap: 1rem;
+    }
+
+    .paper-meta {
+        flex-direction: row;
+        align-items: baseline;
+        gap: 1rem;
+        order: -1; /* Move meta to top visually if needed, but spec says above title */
+    }
+    
+    /* Adjusting for mobile spec: Metadata moves above title */
+    .paper-content {
+        order: 1;
+    }
+    
+    .serif-title {
+        font-size: 2rem;
+    }
+
+    .container {
+        padding: 2rem 1.5rem;
+    }
+
+    .page-footer {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+    }
+    
+    .footer-disclaimer {
+        text-align: left;
+    }
+}
+
+/* Accessibility & Motion */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+:focus-visible {
+    outline: 2px solid var(--accent-green);
+    outline-offset: 2px;
+}
