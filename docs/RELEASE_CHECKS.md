@@ -163,4 +163,12 @@ explicitly identified; new final-page screenshots and the actual five-page site
 are separate demo artifacts. Only the original presentation System Architecture
 is displayed.
 
-Final showcase validation checked 36 staged static files and six inline JavaScript blocks in generated pages. Six fail-closed build tests and five credential-detector tests passed. The final site passed real Edge checks at 1440px and 390px. Git whitespace review found nine pre-existing trailing-space lines in the generated publications HTML/CSS; these artifacts are deliberately kept byte-identical to actual model output. No authored-code whitespace error was introduced.
+Final showcase validation checked 36 staged static files and six inline JavaScript blocks in generated pages. Six fail-closed build tests and five credential-detector tests passed. The final site passed real Edge checks at 1440px and 390px. Git whitespace review found nine pre-existing trailing-space lines in the generated publications HTML/CSS; their code content is preserved from actual model output. Git normalizes CRLF to LF; both original-source and public-file hashes are recorded. No authored-code whitespace error was introduced.
+
+## Recorded-demo deployment verification
+
+Commit [`f083b65`](https://github.com/bj-Liu/resumeagent/commit/f083b65c35c130862f1cfcaa3400ef7def9b4e52) was published with its exact Git tree/parent after a zero-finding post-commit security audit (170 files; 8 commits; 204 file blobs; 8 metadata objects). Normal Git transport failed with connection resets; the official Git Data API fast-forwarded that same SHA with `force: false`.
+
+[Pages build and deployment](https://github.com/bj-Liu/resumeagent/actions/runs/41587295627) succeeded. Real Edge checks of the live URL passed at 1440px and 390px. The original GUI screenshot matched its local SHA-256; all ten public HTML/CSS files matched their Git-normalized checksums. The external MP4 loaded and played in Edge: duration 220.458333 s, 1920?1080, currentTime advanced. GitHub's asset SHA-256 matched the local edited video.
+
+The remote pre-demo backup is `backup/main-before-demo-20261103`; the original pre-Harness backup is also retained. No history rewrite, forced ref update or repository recreation was used. The final follow-up only records these observed results and distinguishes source/public text hashes.

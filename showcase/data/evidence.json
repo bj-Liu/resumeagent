@@ -129,14 +129,16 @@
         1704
       ],
       "unchanged": true
-    }
+    },
+    "duration_seconds": 220.458333,
+    "playback_verified": true
   },
   "deployment": {
-    "status": "deployed",
-    "commit_sha": "3a8151b4fb8889a1d2e9590e3f6bcb1e61a91314",
+    "status": "deployed_and_browser_verified",
+    "commit_sha": "f083b65c35c130862f1cfcaa3400ef7def9b4e52",
     "url": "https://bj-liu.github.io/resumeagent/",
-    "workflow_url": "https://github.com/bj-Liu/resumeagent/actions/runs/41502441363",
-    "browser_verification": "Live Edge checks passed at 1440px and 390px"
+    "workflow_url": "https://github.com/bj-Liu/resumeagent/actions/runs/41587295627",
+    "browser_verification": "Live Edge at 1440px and 390px passed; original GUI image and all ten published artifact hashes matched; MP4 played at 1920x1080 for 220.458 seconds."
   },
   "cost_notice": "Offline benchmark usage is synthetic. The separately labeled recorded live demo has 20 actual Qwen requests; estimated CNY 0.279674 based on provider token counters, not an invoice."
 }

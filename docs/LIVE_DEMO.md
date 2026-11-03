@@ -84,3 +84,5 @@ include stages, tools, models, usage and failures, but no prompts/responses,
 profile text, API keys or absolute local paths.
 
 [Video checksum and editing provenance](DEMO_VIDEO.json).
+
+Git normalizes generated HTML/CSS from CRLF to LF; the source code content is unchanged. `source_sha256` describes original local model-output bytes and `published_sha256` describes public Git bytes. Screenshots retain their original bytes.

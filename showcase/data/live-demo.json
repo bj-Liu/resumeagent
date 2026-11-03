@@ -216,53 +216,63 @@
   "artifacts": [
     {
       "file": "experience.css",
-      "sha256": "ee02e79a65bb4f5ae171bfa17338b85708bb67d1818064a5239d109ead5a9a99",
-      "bytes": 6426
+      "bytes": 6426,
+      "published_sha256": "ee3d649ce1567f2c34e9dee72484968a7c1c422ea5210b5a2583a17ec6ce6294",
+      "source_sha256": "ee02e79a65bb4f5ae171bfa17338b85708bb67d1818064a5239d109ead5a9a99"
     },
     {
       "file": "experience.html",
-      "sha256": "ba9e3e0589a194e11830f064b95bc8836490643d51b4564fb8ea375abdeb0de0",
-      "bytes": 5414
+      "bytes": 5414,
+      "published_sha256": "9f15a75eb1fe3feb8d8ba2e04c3d159ba70dea7f8f1fa1ef10c59034a7c629c6",
+      "source_sha256": "ba9e3e0589a194e11830f064b95bc8836490643d51b4564fb8ea375abdeb0de0"
     },
     {
       "file": "index.css",
-      "sha256": "2f83c7f875f5c2e4c2850a9bd2856ef2d1bcafd6e1fde01468c5fbda694ee373",
-      "bytes": 15850
+      "bytes": 15850,
+      "published_sha256": "37a5da694415b460006ba3e0a17242cf8ab2b4c26def1359f6c87f3008a738de",
+      "source_sha256": "2f83c7f875f5c2e4c2850a9bd2856ef2d1bcafd6e1fde01468c5fbda694ee373"
     },
     {
       "file": "index.html",
-      "sha256": "24fbb0e1b937824441b14a0e3636c8f0da712f9471fa557fc40114b69931278f",
-      "bytes": 14282
+      "bytes": 14282,
+      "published_sha256": "f39445d5f677e656c0308227282723da33c127c9494af94e58444f77e730e29e",
+      "source_sha256": "24fbb0e1b937824441b14a0e3636c8f0da712f9471fa557fc40114b69931278f"
     },
     {
       "file": "projects.css",
-      "sha256": "a3df5d78a76048d9da4ab0cbea328d7d7aaee0e5a10152c93ee1824e8dbfb4ad",
-      "bytes": 14070
+      "bytes": 14070,
+      "published_sha256": "97ea47a3832d19fc5650bf2f7a2f6a33511c5809e817ca3ed8d196e6b8290d09",
+      "source_sha256": "a3df5d78a76048d9da4ab0cbea328d7d7aaee0e5a10152c93ee1824e8dbfb4ad"
     },
     {
       "file": "projects.html",
-      "sha256": "11d1ff4da2414520eae3fc784dce1ed19fe33031121df3979d2651b35cc5f87d",
-      "bytes": 12897
+      "bytes": 12897,
+      "published_sha256": "7c3c4103eb4e32cc9d880f3bbe9d94125cc288920588e2e09b08be17249d831b",
+      "source_sha256": "11d1ff4da2414520eae3fc784dce1ed19fe33031121df3979d2651b35cc5f87d"
     },
     {
       "file": "publications.css",
-      "sha256": "daab96f603a54d6708cbf10b0f91309a27d7cde855c034449423c86fd670d3d6",
-      "bytes": 8219
+      "bytes": 8219,
+      "published_sha256": "ab891599c6e3f09784e06f381b3196b7755d4fe5a003888009ba314fbb3e96f7",
+      "source_sha256": "daab96f603a54d6708cbf10b0f91309a27d7cde855c034449423c86fd670d3d6"
     },
     {
       "file": "publications.html",
-      "sha256": "6dbad45990709126f58c567cf539643d1be057bc0011d40cc4b716020f63cb51",
-      "bytes": 8534
+      "bytes": 8534,
+      "published_sha256": "3b55d16b4a25a6cf18b0eae4989388e3d00e143b6bab4e9e49586237cca4a238",
+      "source_sha256": "6dbad45990709126f58c567cf539643d1be057bc0011d40cc4b716020f63cb51"
     },
     {
       "file": "research.css",
-      "sha256": "691eae84458f815b528b57264ceb37ead8ceedf8c7e8b22c9ef0a73588cd5661",
-      "bytes": 11984
+      "bytes": 11984,
+      "published_sha256": "415fde9d5658352e824019607cf5f7e7532bebabe9385366fffdd4cf4bf881a1",
+      "source_sha256": "691eae84458f815b528b57264ceb37ead8ceedf8c7e8b22c9ef0a73588cd5661"
     },
     {
       "file": "research.html",
-      "sha256": "7aeeb6d13a9069501dacf996e82daa15c65b4ac813ee69a917f561f1187a761e",
-      "bytes": 10182
+      "bytes": 10182,
+      "published_sha256": "e437737e7fecc8ff9703651ea857da260086752cde27e2d6aa11e8327118bc7f",
+      "source_sha256": "7aeeb6d13a9069501dacf996e82daa15c65b4ac813ee69a917f561f1187a761e"
     }
   ],
   "recovery": {
@@ -274,5 +284,6 @@
     "resolution": "Same Run resumed through public CLI with a fresh Selenium session; no validator or Agent changes",
     "status": "completed"
   },
-  "visual_quality_score": null
+  "visual_quality_score": null,
+  "publication_note": "Generated source content is unchanged. Git normalizes CRLF to LF in public HTML/CSS; source_sha256 records original local bytes and published_sha256 records published Git bytes. Binary screenshots are unchanged."
 }
