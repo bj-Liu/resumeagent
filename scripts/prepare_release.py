@@ -10,8 +10,8 @@ ROOT = Path(__file__).resolve().parents[1]
 DIRECTORIES = ('resumeagent','harness','storage','mcp','evals','examples','tests','gui_assets','showcase','scripts','.github')
 ROOT_FILES = ('main.py','README.md','LICENSE','requirements.txt','requirements-showcase.txt',
               '.gitignore','.env.example')
-DOC_FILES = ('architecture.md','architecture.mmd','architecture.svg','DEMO_SCRIPT.md',
-             'DEMO_PROFILE.md','DEMO_VIDEO.json','LIVE_DEMO.md','RELEASE_CHECKS.md','benchmark.md','benchmark.json','RELEASE_GUIDE.md','SOURCE_MAP.md','SECURITY_AUDIT.md')
+DOC_FILES = ('architecture.md','architecture.svg','DEMO_SCRIPT.md','DEMO_PROFILE.md',
+             'DEMO_VIDEO.json','LIVE_DEMO.md','RELEASE_CHECKS.md','benchmark.md','benchmark.json')
 ALLOWED_SUFFIXES = {'.py','.json','.png','.svg','.html','.css','.js','.md','.yaml','.yml','.txt'}
 PRIVATE_NAMES = {'config.yaml','config.local.yaml','.env','se-metadata.json'}
 PRIVATE_PARTS = {'__pycache__','runs','outputs','mcp','.pytest_cache'}
